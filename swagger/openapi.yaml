@@ -1,20 +1,209 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
-  title: HelloWorld API
+  title: Car Tuning API
+  description: API for real tuners. 
   version: 1.0.0
+
+
+
+servers:
+  - url: http://backend.vm1.test
+    description: VM1 backend
+  - url: http://backend.vm2.test
+    description: VM2 backend
+  - url: http://backend.vm3.test
+    description: VM3 backend
+  - url: http://backend.vm4.test
+    description: VM4 backend
+  - url: http://backend.vm5.test
+    description: VM5 backend
+  - url: http://backend.vm6.test
+    description: VM6 backend
+
 paths:
-  /hello:
+
+  /carbrands:
     get:
-      operationId: hello.world
-      summary: Returns a greeting
+      summary: Get all car brands
       responses:
         '200':
-          description: A friendly greeting
+          description: List of car brands
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Hello, world!
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarBrand'
+
+    post:
+      summary: Create car brand
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarBrand'
+      responses:
+        '201':
+          description: Created
+
+  /carmodels:
+    get:
+      summary: Get all car models
+      responses:
+        '200':
+          description: List of car models
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarModel'
+
+
+
+    post:
+      summary: Create car model
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+      responses:
+        '201':
+          description: Created
+
+  /companies:
+    get:
+      summary: Get all tuning companies
+      responses:
+        '200':
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TuningCompany'
+
+
+    post:
+      summary: Create company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TuningCompany'
+      responses:
+        '201':
+          description: Created
+
+  /servicecategories:
+    get:
+      summary: Get service categories
+      responses:
+        '200':
+          description: List of service categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceCategory'
+
+    post:
+      summary: Create service category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceCategory'
+      responses:
+        '201':
+          description: Created
+
+  /companyservices:
+    post:
+      summary: Assign service to company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyService'
+      responses:
+        '201':
+          description: Created
+
+  /companycarmodels:
+    post:
+      summary: Assign car model to company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCarModel'
+      responses:
+        '201':
+          description: Created
+
+
+
+
+components:
+
+
+  schemas:
+
+    CarBrand:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CarModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        brandId:
+          type: integer
+
+    TuningCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        websiteURL:
+          type: string
+
+    ServiceCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    CompanyService:
+      type: object
+      properties:
+        companyId:
+          type: integer
+        categoryId:
+          type: integer
+
+    CompanyCarModel:
+      type: object
+      properties:
+        companyId:
+          type: integer
+        modelId:
+          type: integer
