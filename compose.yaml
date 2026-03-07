@@ -136,3 +136,4 @@ services:
     image: dockage/mailcatcher:0.9.0
     networks:
       - fullstack
+      
