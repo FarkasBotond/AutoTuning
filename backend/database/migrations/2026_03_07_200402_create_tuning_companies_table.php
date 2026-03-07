@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string("name", 50);
             $table->text("description");
             $table->string("website_url");
-            $table->timestamps();
         });
     }
 
