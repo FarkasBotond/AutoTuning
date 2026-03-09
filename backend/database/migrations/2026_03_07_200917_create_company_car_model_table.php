@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('company_car_model', function (Blueprint $table) {
             $table->foreignId("company_id")->constrained("tuning_companies", "id");
             $table->foreignId("model_id")->constrained("car_models", "id");
-            $table->primary(["company_id", "model_id"]);
         });
     }
 

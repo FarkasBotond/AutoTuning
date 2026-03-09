@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('company_service', function (Blueprint $table) {
             $table->foreignId("company_id")->constrained("tuning_companies", "id");
             $table->foreignId("category_id")->constrained("service_categories", "id");
-            $table->primary(["company_id", "category_id"]);
         });
     }
 
