@@ -9,8 +9,12 @@ class CarModel extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'brand_id',
         'name',
-        'brand_id'
+        'gen',
+        'mod',
+        'startyear',
+        'endyear',
     ];
 
     public function brand()

@@ -10,6 +10,8 @@ class TuningCompanySeeder extends Seeder
     public function run(): void
     {
 
+//TODO: legyne real adat/weblap ?????
+
         DB::table('tuning_companies')->insert([
             ['name' => 'Maxton Design', 'description' => 'Body kits, splitters es aerodinamika elemek gyartasa.', 'website_url' => 'https://maxtondesign.com'],
             ['name' => 'ABT Sportsline', 'description' => 'Audi/VW/Skoda/Seat tuning, teljesitmeny es optika.', 'website_url' => 'https://www.abt-sportsline.com'],
