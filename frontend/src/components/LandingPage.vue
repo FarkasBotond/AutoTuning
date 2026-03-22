@@ -1,3 +1,6 @@
+<script setup>
+</script>
+
 <template>
     <Layout>
         <div class="products">Landing content</div>
