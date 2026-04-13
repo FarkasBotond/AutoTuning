@@ -1,4 +1,5 @@
 <script setup>
+import SearchBar from '@/components/ui/SearchBar.vue'
 </script>
 
 <template>
@@ -8,13 +9,7 @@
                 <img>
             </div>
             <div class="search">
-                <nav class="navigation">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-
-                    <input type="text" placeholder="Search...">
-                </nav>
+                <SearchBar />
             </div>
 
             <div class="user-section">
@@ -43,7 +38,7 @@
             <div class="contact">
                 Contact
             </div>
-            
+
         </footer>
     </div>
 </template>
