@@ -1,18 +1,61 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
+  <div class="detailed-page">
 
-    <Layout>
-        <div>
-            <h2>Product</h2>
+    <header class="header">
+      <div class="logo">
+        <img src="" alt="Logo">
+      </div>
 
-            <div class="row">
-                <div class="col-8">Image</div>
-                <div class="col-4">Details</div>
-            </div>
+      <div class="search">
+        <nav class="navigation">
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
 
-            <div>Related products</div>
+          <input type="text" placeholder="Search...">
+        </nav>
+      </div>
+
+      <div class="user-section">
+        <div class="profile">
+          <button>Profile</button>
         </div>
-    </Layout>
 
-</template>
+        <div class="cart">
+          <button>Cart</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="menu">
+      </div>
+
+      <section class="product-content">
+        <div class="top-content">
+          <div class="product-image">
+            <img src="" alt="Product image">
+          </div>
+
+          <div class="product-details">
+
+          </div>
+        </div>
+
+        <div class="related-products">
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="contact">
+        Contact
+      </div>
+    </footer>
+
+  </div>
+</template>F
