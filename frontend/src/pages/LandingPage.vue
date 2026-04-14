@@ -7,7 +7,7 @@ import logo from '@/assets/logo.png'
     <div class="landing-page">
         <header>
             <div class="logo">
-                <img :src="logo" alt="Autotuning logó">
+                <img :src="logo" alt="Logó">
             </div>
             <div class="search">
                 <SearchBar />

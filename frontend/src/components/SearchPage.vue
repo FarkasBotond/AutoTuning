@@ -8,7 +8,7 @@ import logo from '@/assets/logo.png'
 
     <header class="header">
       <div class="logo">
-        <img :src="logo" alt="Autotuning logó">
+        <img :src="logo" alt="Logó">
       </div>
 
       <div class="search">
