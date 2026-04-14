@@ -1,5 +1,6 @@
 <script setup>
 import SearchBar from '@/components/ui/SearchBar.vue'
+import logo from '@/assets/logo.png'
 </script>
 
 <template>
@@ -7,7 +8,7 @@ import SearchBar from '@/components/ui/SearchBar.vue'
 
     <header class="header">
       <div class="logo">
-        <img src="" alt="Logo">
+        <img :src="logo" alt="Autotuning logó">
       </div>
 
       <div class="search">
