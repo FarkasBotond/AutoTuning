@@ -5,6 +5,11 @@ Készítők: Pongrácz Gábor, Farkas Botond, Bárdos Simon
 
 # Fejlesztői leírás
 
+### Bejelentkezés és regisztráció
+
+Email cím -> email formátumúnak kell lennie (pl.: xxx@yyy.zzz)
+Jelszó -> minimum 8 karakter, regisztrációnál 2x kell beírni hogy iztos ne történjen elírás. Hash-elve van eltárolva, pma.vm1.test-en így jelenik meg pl. egy jelszó: $2y$12$Inrh8bebaiF4TvyQOtzJRuQVva4ZOiqGZWA2uPnKTWS...
+
 ## Backend
 Laravel 12-es verziót használtunk.
 
