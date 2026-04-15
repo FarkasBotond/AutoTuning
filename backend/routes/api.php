@@ -11,3 +11,8 @@ Route::post('/registration', [RegistrationController::class, 'registration'])->n
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show')->whereNumber('id');
 
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
