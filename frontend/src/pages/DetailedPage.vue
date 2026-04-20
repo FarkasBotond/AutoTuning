@@ -2,6 +2,7 @@
 import SearchBar from '@/components/ui/SearchBar.vue'
 import logo from '@/assets/logo.png'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
+import SideMenu from '@components/layout/SideMenu.vue';
 </script>
 
 <template>
@@ -10,8 +11,7 @@ import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
       <BaseHeadLine />
 
     <main class="main-content">
-      <div class="menu">
-      </div>
+      <SideMenu/>
 
       <section class="product-content">
         <div class="top-content">
