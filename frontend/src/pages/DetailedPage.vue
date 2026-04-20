@@ -38,3 +38,9 @@ import SideMenu from '@components/layout/SideMenu.vue';
 
   </div>
 </template>
+
+<route lang="yaml">
+name: detailed
+meta:
+  title: Detailed
+</route>

@@ -27,3 +27,9 @@ import SideMenu from '@components/layout/SideMenu.vue';
         </footer>
     </div>
 </template>
+
+<route lang="yaml">
+name: landing
+meta:
+  title: Landing
+</route>
