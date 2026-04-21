@@ -1,0 +1,277 @@
+.model-detail-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.breadcrumb-link {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: #d1d5db;
+}
+
+.breadcrumb-current {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.back-button:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+  transform: translateX(-2px);
+}
+
+.model-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.model-header {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.model-header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.model-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.model-brand {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.model-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.model-specs h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.spec-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spec-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.tunings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.tunings-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.tunings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tuning-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.tuning-item:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.tuning-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.tuning-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.tuning-description {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.tuning-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.feature {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #eff6ff;
+  color: #0c63e4;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tuning-action {
+  margin-left: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tuning-action:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1.1rem;
+}
+
+.error {
+  color: #dc2626;
+  background: #fecaca;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .model-detail-container {
+    padding: 1rem;
+  }
+
+  .model-header h1 {
+    font-size: 1.875rem;
+  }
+
+  .specs-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .tuning-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tuning-action {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .breadcrumb {
+    flex-wrap: wrap;
+  }
+}
