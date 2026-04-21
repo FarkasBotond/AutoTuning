@@ -11,7 +11,7 @@ class UpdateCarModelRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check() && auth()->user()->role === 'admin';
     }
 
     /**
@@ -22,8 +22,12 @@ class UpdateCarModelRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'brand_id' => 'required|exists:car_brands,id',
             'name' => 'required|string|max:50',
-            'brand_id' => 'required|exists:car_brands,id'
+            'gen' => 'required|string|max:50',
+            'mod' => 'required|string|max:50',
+            'startyear' => 'required|integer|min:1900',
+            'endyear' => 'nullable|integer|min:1900'
         ];
     }
 }
