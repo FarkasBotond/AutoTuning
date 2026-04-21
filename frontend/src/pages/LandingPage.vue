@@ -4,6 +4,7 @@ import logo from '@/assets/logo.png'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@components/layout/SideMenu.vue';
 import ProductCard from '@components/ProductCard.vue';
+import BaseFooter from '@components/BaseFooter.vue';
 
 const products = [
     {
@@ -45,12 +46,7 @@ const products = [
             />
         </main>
 
-        <footer>
-            <div class="contact">
-                Contact
-            </div>
-
-        </footer>
+        <BaseFooter/>
     </div>
 </template>
 

@@ -35,11 +35,7 @@ import SideMenu from '@components/layout/SideMenu.vue';
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="contact">
-        Contact
-      </div>
-    </footer>
+    <BaseFooter/>
 
   </div>
 </template>
