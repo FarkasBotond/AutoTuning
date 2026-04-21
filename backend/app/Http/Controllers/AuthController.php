@@ -13,11 +13,18 @@ class AuthController extends Controller
         $data = $request->validated();
 
         if (Auth::attempt($data)) {
-            $token = $request->user()->createToken('app');
+            $user = $request->user();
+            $token = $user->createToken('app');
 
             return response()->json([
                 'data' => [
-                    'token' => $token->plainTextToken
+                    'token' => $token->plainTextToken,
+                    'user' => [
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'name' => $user->name,
+                        'role' => $user->role
+                    ]
                 ]
             ]);
         } else {
