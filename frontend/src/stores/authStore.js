@@ -12,6 +12,8 @@ export const useAuthStore = defineStore(
 
     const isAuthenticated = computed(() => !!token.value)
 
+    const isAdmin = computed(() => user.value?.role === 'admin')
+
     const login = async (email, password) => {
       isLoading.value = true
       error.value = null
@@ -21,8 +23,7 @@ export const useAuthStore = defineStore(
         
         if (response.data && response.data.token) {
           token.value = response.data.token
-          // You can extend this to fetch user data
-          user.value = { email }
+          user.value = response.data.user || { email }
           return true
         }
         return false
@@ -50,6 +51,7 @@ export const useAuthStore = defineStore(
       isLoading,
       error,
       isAuthenticated,
+      isAdmin,
       login,
       logout,
       clearError
