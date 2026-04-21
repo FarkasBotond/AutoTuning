@@ -16,5 +16,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CarDataSeeder::class,
         ]);
+
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin'
+        ]);
     }
 }
