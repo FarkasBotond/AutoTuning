@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCarBrandRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreCarBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->role === 'admin';
+        return Auth::check() && Auth::user()?->role === 'admin';
     }
 
     /**

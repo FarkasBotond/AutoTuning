@@ -14,6 +14,12 @@ Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show')->
 
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
+// Public read-only routes
+Route::get('/car-brands', [CarBrandController::class, 'index'])->name('car-brands.index');
+Route::get('/car-brands/{carBrand}', [CarBrandController::class, 'show'])->name('car-brands.show');
+Route::get('/car-models', [CarModelController::class, 'index'])->name('car-models.index');
+Route::get('/car-models/{carModel}', [CarModelController::class, 'show'])->name('car-models.show');
+
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -21,6 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Admin routes
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::apiResource('car-brands', CarBrandController::class);
-    Route::apiResource('car-models', CarModelController::class);
+    Route::post('/car-brands', [CarBrandController::class, 'store'])->name('car-brands.store');
+    Route::put('/car-brands/{carBrand}', [CarBrandController::class, 'update'])->name('car-brands.update');
+    Route::delete('/car-brands/{carBrand}', [CarBrandController::class, 'destroy'])->name('car-brands.destroy');
+    Route::post('/car-models', [CarModelController::class, 'store'])->name('car-models.store');
+    Route::put('/car-models/{carModel}', [CarModelController::class, 'update'])->name('car-models.update');
+    Route::delete('/car-models/{carModel}', [CarModelController::class, 'destroy'])->name('car-models.destroy');
 });
