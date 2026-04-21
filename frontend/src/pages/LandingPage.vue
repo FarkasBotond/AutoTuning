@@ -36,14 +36,20 @@ const products = [
             <BaseHeadLine/>
 
 
-        <main>
-            <SideMenu/>
+        <main class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 lg:flex-row">
+            <aside class="w-full lg:w-[280px] xl:w-[300px] shrink-0">
+                <SideMenu />
+            </aside>
 
-            <ProductCard
-            v-for="product in products"
-            :key="product.id"
-            :product="product"
-            />
+            <section class="flex-1">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <ProductCard
+                        v-for="product in products"
+                        :key="product.id"
+                        :product="product"
+                    />
+                </div>
+            </section>
         </main>
 
         <BaseFooter/>
@@ -53,5 +59,5 @@ const products = [
 <route lang="yaml">
 name: landing
 meta:
-  title: Landing
+  title: landing
 </route>

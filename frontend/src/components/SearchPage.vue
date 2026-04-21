@@ -43,5 +43,5 @@ import SideMenu from '@components/layout/SideMenu.vue';
 <route lang="yaml">
 name: search
 meta:
-  title: Search
+  title: search
 </route>

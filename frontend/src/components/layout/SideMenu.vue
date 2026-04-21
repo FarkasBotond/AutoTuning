@@ -86,50 +86,75 @@ const brands = [
     'volvo'
 ]
 
+const formatBrandName = (brand) => {
+    return brand
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+}
+
 </script>
 
 <template>
-    <aside class="w-full rounded-xl bg-gradient-to-b from-zinc-700 to-zinc-900 p-4 box-border">
-        <div class="mb-4 grid grid-cols-2 items-center border-b border-white/20">
+    <aside class="w-full overflow-hidden rounded-2xl border border-zinc-700 bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white shadow-xl">
+        <div class="grid grid-cols-2 border-b border-zinc-700 bg-white/[0.03]">
             <button
                 @click="activeTab = 'categories'"
-                class="relative px-2 py-4 text-center text-xl font-bold uppercase tracking-wide text-white transition"
-                :class="activeTab === 'categories' ? 'after:absolute after:left-[15%] after:right-[15%] after:bottom-0 after:h-[3px] after:rounded-full after:bg-white' : ''">
-            
+                class="relative px-3 py-4 text-center text-base font-bold uppercase tracking-wide transition md:text-lg"
+                :class="activeTab === 'categories'
+                    ? 'text-white'
+                    : 'text-zinc-400 hover:text-white'">
                 Kategóriák
+                <span
+                    v-if="activeTab === 'categories'"
+                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-white"
+                ></span>
             </button>
 
             <button
                 @click="activeTab = 'brands'"
-                class="relative border-l border-white/20 px-2 py-4 text-center text-xl font-bold uppercase tracking-wide text-white transition"
-                :class="activeTab === 'brands' ? 'after:absolute after:left-[15%] after:right-[15%] after:bottom-0 after:h-[3px] after:rounded-full after:bg-white' : ''">
-            
+                class="relative border-l border-zinc-700 px-3 py-4 text-center text-base font-bold uppercase tracking-wide transition md:text-lg"
+                :class="activeTab === 'brands'
+                    ? 'text-white'
+                    : 'text-zinc-400 hover:text-white'">
                 Gyártók
+                <span
+                    v-if="activeTab === 'brands'"
+                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-white"
+                ></span>
             </button>
         </div>
 
-        <div v-if="activeTab === 'categories'" class="flex flex-col gap-3">
-            <div
-                v-for="item in categories"
-                :key="item.id"
-                class="relative h-[72px] cursor-pointer overflow-hidden rounded-xl bg-cover bg-center"
-                :style="{ backgroundImage: `url(${item.image})` }">
-            
-                <div class="absolute inset-0 bg-black/50"></div>
+        <div class="max-h-[720px] overflow-y-auto p-3">
+            <div v-if="activeTab === 'categories'" class="space-y-3">
+                <div
+                    v-for="item in categories"
+                    :key="item.id"
+                    class="group relative flex h-[72px] cursor-pointer items-center overflow-hidden rounded-xl border border-zinc-700 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 px-4 transition duration-200 hover:border-zinc-500 hover:shadow-lg"
+                    :style="item.image ? { backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}"
+                >
+                    <div
+                        class="absolute inset-0 bg-black/45"
+                        :class="item.image ? '' : 'hidden'"
+                    ></div>
 
-                <span class="absolute left-4 top-1/2 z-10 -translate-y-1/2 text-2xl font-bold text-white">
-                    {{ item.title }}
-                </span>
+                    <div class="absolute inset-y-0 left-0 w-1 rounded-l-xl bg-red-500 opacity-0 transition group-hover:opacity-100"></div>
+
+                    <span class="relative z-10 pr-3 text-lg font-bold leading-tight text-white md:text-xl">
+                        {{ item.title }}
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <div v-else class="flex flex-col gap-3">
-            <div
-                v-for="brand in brands"
-                :key="brand"
-                class="cursor-pointer rounded-xl bg-white/10 px-4 py-4 text-lg font-semibold text-white transition hover:bg-white/20">
-            
-                {{ brand }}
+            <div v-else class="grid grid-cols-1 gap-2">
+                <button
+                    v-for="brand in brands"
+                    :key="brand"
+                    type="button"
+                    class="rounded-xl border border-zinc-700 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-zinc-200 transition hover:border-zinc-500 hover:bg-white/[0.08] hover:text-white"
+                >
+                    {{ formatBrandName(brand) }}
+                </button>
             </div>
         </div>
     </aside>

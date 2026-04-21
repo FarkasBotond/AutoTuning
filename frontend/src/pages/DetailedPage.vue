@@ -38,5 +38,5 @@ import SideMenu from '@components/layout/SideMenu.vue';
 <route lang="yaml">
 name: detailed
 meta:
-  title: Detailed
+  title: detailed
 </route>
