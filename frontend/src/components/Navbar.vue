@@ -6,6 +6,7 @@
       <div class="nav-links">
         <template v-if="authStore.isAuthenticated">
           <span class="user-email">{{ authStore.user?.email }}</span>
+          <router-link v-if="authStore.isAdmin" to="/admin" class="nav-btn admin-btn">Admin Panel</router-link>
           <button @click="handleLogout" class="nav-btn logout-btn">Logout</button>
         </template>
         <template v-else>
@@ -98,6 +99,16 @@ const handleLogout = () => {
 
 .logout-btn {
   border: 2px solid white;
+}
+
+.admin-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+}
+
+.admin-btn:hover {
+  background: white;
+  color: #667eea;
 }
 
 @media (max-width: 600px) {
