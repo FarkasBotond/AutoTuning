@@ -26,7 +26,77 @@ const products = [
         oldPrice: 94670,
         price: 81630,
         stockText: 'Raktáron'
-    }
+    },
+    {
+        id: 3,
+        name: 'Garrett turbó',
+        brand: 'Garrett',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 250000,
+        price: 225000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 4,
+        name: 'Légszűrő',
+        brand: 'K&N',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 35000,
+        price: 28500,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 5,
+        name: 'Led fényszóró BMW E46',
+        brand: 'Osram',
+        image: '',
+        badge: 'Új',
+        oldPrice: 32000,
+        price: 30000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 6,
+        name: 'Kipufogóvég',
+        brand: 'RaceCarbon',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 15000,
+        price: 1000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 7,
+        name: 'Sportkesztyű',
+        brand: 'Racing',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 5000,
+        price: 4500,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 8,
+        name: '3 küllős kormány',
+        brand: 'Momo',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 95000,
+        price: 82000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 9,
+        name: 'Rendszámtáblatartó',
+        brand: 'HMN',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 6900,
+        price: 6700,
+        stockText: 'Raktáron'
+    },
 ]
 </script>
 
