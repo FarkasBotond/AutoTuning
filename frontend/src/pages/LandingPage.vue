@@ -31,5 +31,9 @@ import SideMenu from '@components/layout/SideMenu.vue';
 <route lang="yaml">
 name: landing
 meta:
+<<<<<<< HEAD
   title: Landing
+=======
+  title: Landing Page
+>>>>>>> 00e9019 (Vue files (admin login and admin panel/page for changes))
 </route>
