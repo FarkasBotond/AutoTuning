@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 import BaseLayout from '@layouts/BaseLayout.vue'
 import { useBrandStore } from '@stores/brandStore'
 import { useAuthStore } from '@stores/authStore'
-import '../styles/home.css'
 
 const router = useRouter()
 const brandStore = useBrandStore()
@@ -38,33 +37,33 @@ const handleBrandClick = (brandId) => {
 
 <template>
   <BaseLayout>
-    <div class="home-container">
-      <h1 class="home-title">Car Brands</h1>
+    <div class="mx-auto max-w-4xl px-8 py-8">
+      <h1 class="mb-8 text-center text-4xl font-bold text-gray-900">Car Brands</h1>
 
-      <div v-if="isLoading" class="loading">
+      <div v-if="isLoading" class="px-4 py-12 text-center text-lg">
         <p>Loading brands...</p>
       </div>
 
-      <div v-else-if="error" class="error">
+      <div v-else-if="error" class="px-4 py-12 text-center text-lg text-red-600">
         <p>{{ error }}</p>
       </div>
 
-      <div v-else class="brands-grid">
+      <div v-else class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         <div
           v-for="brand in brands"
           :key="brand.id"
-          class="brand-card"
+          class="group cursor-pointer rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
           @click="handleBrandClick(brand.id)"
         >
-          <div class="brand-card-content">
-            <h2>{{ brand.name }}</h2>
-            <p v-if="brand.description" class="brand-description">{{ brand.description }}</p>
-            <p class="brand-hover">Click to view models →</p>
+          <div class="flex flex-col gap-2">
+            <h2 class="text-xl font-semibold text-gray-900">{{ brand.name }}</h2>
+            <p v-if="brand.description" class="text-sm text-gray-600">{{ brand.description }}</p>
+            <p class="mt-4 text-sm font-medium text-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Click to view models →</p>
           </div>
         </div>
       </div>
 
-      <div v-if="brands.length === 0 && !isLoading" class="empty-state">
+      <div v-if="brands.length === 0 && !isLoading" class="px-4 py-12 text-center text-lg text-gray-600">
         <p>No brands available</p>
       </div>
     </div>

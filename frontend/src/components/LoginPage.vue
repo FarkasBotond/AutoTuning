@@ -1,17 +1,17 @@
 <template>
-  <div class="login-container">
-    <div class="login-card">
-      <h1>Login</h1>
+  <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-12">
+    <div class="w-full max-w-md rounded-2xl bg-white px-8 py-10 shadow-lg">
+      <h1 class="mb-8 text-center text-3xl font-bold text-gray-900">Login</h1>
       
-      <form @submit.prevent="handleLogin" class="login-form">
+      <form @submit.prevent="handleLogin" class="flex flex-col gap-6">
         <!-- Error Message -->
-        <div v-if="authStore.error" class="error-message">
+        <div v-if="authStore.error" class="rounded-lg border-l-4 border-red-500 bg-red-50 px-4 py-3 text-sm text-red-700">
           {{ authStore.error }}
         </div>
 
         <!-- Email Field -->
-        <div class="form-group">
-          <label for="email">Email</label>
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-sm font-semibold text-gray-700">Email</label>
           <input
             id="email"
             v-model="formData.email"
@@ -20,12 +20,13 @@
             required
             :disabled="authStore.isLoading"
             @focus="authStore.clearError()"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Password Field -->
-        <div class="form-group">
-          <label for="password">Password</label>
+        <div class="flex flex-col gap-2">
+          <label for="password" class="text-sm font-semibold text-gray-700">Password</label>
           <input
             id="password"
             v-model="formData.password"
@@ -34,18 +35,23 @@
             required
             :disabled="authStore.isLoading"
             @focus="authStore.clearError()"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" :disabled="authStore.isLoading" class="submit-btn">
+        <button 
+          type="submit" 
+          :disabled="authStore.isLoading" 
+          class="mt-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 font-semibold text-white transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
+        >
           {{ authStore.isLoading ? 'Logging in...' : 'Login' }}
         </button>
       </form>
 
       <!-- Register Link -->
-      <div class="register-link">
-        Don't have an account? <router-link to="/register">Register here</router-link>
+      <div class="mt-6 text-center text-sm text-gray-600">
+        Don't have an account? <router-link to="/register" class="font-semibold text-blue-600 transition-colors hover:text-blue-700">Register here</router-link>
       </div>
     </div>
   </div>
@@ -80,124 +86,14 @@ const handleLogin = async () => {
       email: '',
       password: ''
     }
-    // Redirect to dashboard or home page
-    router.push('/')
+    // Redirect to landing page
+    router.push('/landing')
   }
 }
 </script>
 
 <style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-    Arial, sans-serif;
-}
-
-.login-card {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-label {
-  font-weight: 500;
-  color: #555;
-  font-size: 0.95rem;
-}
-
-input {
-  padding: 0.75rem 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  font-family: inherit;
-}
-
-input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-input:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.submit-btn {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  margin-top: 0.5rem;
-}
-
-.submit-btn:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.error-message {
-  background-color: #fee;
-  color: #c33;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  border-left: 4px solid #c33;
-}
-
-.register-link {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.register-link a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.register-link a:hover {
+/* Styles are handled via Tailwind classes */
   color: #764ba2;
 }
 

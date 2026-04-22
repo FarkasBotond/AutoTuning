@@ -23,6 +23,6 @@ body {
 
 .main-content {
   min-height: calc(100vh - 60px);
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 }
 </style>

@@ -61,7 +61,7 @@ const handleRegister = async () => {
       )
 
       if (loginSuccess) {
-        router.push('/')
+        router.push('/landing')
       }
     } else {
       // Handle validation errors - Laravel returns errors at root level
@@ -84,19 +84,19 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="register-container">
-    <div class="register-card">
-      <h1>Create Account</h1>
+  <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-12">
+    <div class="w-full max-w-md rounded-2xl bg-white px-8 py-10 shadow-lg">
+      <h1 class="mb-8 text-center text-3xl font-bold text-gray-900">Create Account</h1>
 
-      <form @submit.prevent="handleRegister" class="register-form">
+      <form @submit.prevent="handleRegister" class="flex flex-col gap-6">
         <!-- Error Message -->
-        <div v-if="error" class="error-message">
+        <div v-if="error" class="rounded-lg border-l-4 border-red-500 bg-red-50 px-4 py-3 text-sm text-red-700">
           {{ error }}
         </div>
 
         <!-- Name Field -->
-        <div class="form-group">
-          <label for="name">Full Name</label>
+        <div class="flex flex-col gap-2">
+          <label for="name" class="text-sm font-semibold text-gray-700">Full Name</label>
           <input
             id="name"
             v-model="formData.name"
@@ -104,12 +104,13 @@ const handleRegister = async () => {
             placeholder="Enter your full name"
             required
             :disabled="isLoading"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Email Field -->
-        <div class="form-group">
-          <label for="email">Email</label>
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-sm font-semibold text-gray-700">Email</label>
           <input
             id="email"
             v-model="formData.email"
@@ -117,12 +118,13 @@ const handleRegister = async () => {
             placeholder="Enter your email"
             required
             :disabled="isLoading"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Password Field -->
-        <div class="form-group">
-          <label for="password">Password</label>
+        <div class="flex flex-col gap-2">
+          <label for="password" class="text-sm font-semibold text-gray-700">Password</label>
           <input
             id="password"
             v-model="formData.password"
@@ -130,12 +132,13 @@ const handleRegister = async () => {
             placeholder="Enter your password"
             required
             :disabled="isLoading"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Confirm Password Field -->
-        <div class="form-group">
-          <label for="password_confirmation">Confirm Password</label>
+        <div class="flex flex-col gap-2">
+          <label for="password_confirmation" class="text-sm font-semibold text-gray-700">Confirm Password</label>
           <input
             id="password_confirmation"
             v-model="formData.password_confirmation"
@@ -143,11 +146,27 @@ const handleRegister = async () => {
             placeholder="Confirm your password"
             required
             :disabled="isLoading"
+            class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" :disabled="isLoading" class="submit-btn">
+        <button 
+          type="submit" 
+          :disabled="isLoading" 
+          class="mt-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 font-semibold text-white transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {{ isLoading ? 'Creating Account...' : 'Register' }}
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <div class="mt-6 text-center text-sm text-gray-600">
+        Already have an account? <router-link to="/login" class="font-semibold text-blue-600 transition-colors hover:text-blue-700">Login here</router-link>
+      </div>
+    </div>
+  </div>
+</template>
           {{ isLoading ? 'Creating Account...' : 'Register' }}
         </button>
       </form>
@@ -167,116 +186,5 @@ meta:
 </route>
 
 <style scoped>
-.register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 60px);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1rem;
-}
-
-.register-card {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 450px;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-label {
-  font-weight: 500;
-  color: #555;
-  font-size: 0.95rem;
-}
-
-input {
-  padding: 0.75rem 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  font-family: inherit;
-}
-
-input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-input:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.submit-btn {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  margin-top: 0.5rem;
-}
-
-.submit-btn:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.error-message {
-  background-color: #fee;
-  color: #c33;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  border-left: 4px solid #c33;
-}
-
-.login-link {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.login-link a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.login-link a:hover {
-  color: #764ba2;
-}
+/* Styles are handled via Tailwind classes */
 </style>

@@ -5,7 +5,6 @@ import BaseLayout from '@layouts/BaseLayout.vue'
 import { useModelStore } from '@stores/modelStore'
 import { useBrandStore } from '@stores/brandStore'
 import { useAuthStore } from '@stores/authStore'
-import '../../styles/model-detail.css'
 
 const router = useRouter()
 const route = useRoute()
@@ -57,101 +56,91 @@ const goToBrands = () => {
 
 <template>
   <BaseLayout>
-    <div class="model-detail-container">
-      <div class="breadcrumb">
-        <button class="breadcrumb-link" @click="goToBrands">Brands</button>
-        <span class="breadcrumb-separator">/</span>
-        <button class="breadcrumb-link" @click="goBack">
+    <div class="mx-auto max-w-4xl px-8 py-8">
+      <div class="mb-6 flex items-center gap-2 text-sm text-gray-600">
+        <button class="font-medium text-blue-600 transition-colors hover:text-blue-700 hover:underline" @click="goToBrands">Brands</button>
+        <span class="text-gray-400">/</span>
+        <button class="font-medium text-blue-600 transition-colors hover:text-blue-700 hover:underline" @click="goBack">
           {{ brand?.name || 'Brand' }}
         </button>
-        <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-current">{{ model?.name || 'Model' }}</span>
+        <span class="text-gray-400">/</span>
+        <span class="font-medium text-gray-900">{{ model?.name || 'Model' }}</span>
       </div>
 
-      <button class="back-button" @click="goBack">← Back to Models</button>
+      <button class="mb-8 inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-100 px-5 py-3 text-sm font-medium text-gray-900 transition-all hover:border-gray-400 hover:bg-gray-200 hover:-translate-x-0.5 sm:w-auto" @click="goBack">
+        ← Back to Models
+      </button>
 
-      <div v-if="isLoading" class="loading">
+      <div v-if="isLoading" class="px-4 py-12 text-center text-lg">
         <p>Loading model details...</p>
       </div>
 
-      <div v-else-if="error" class="error">
+      <div v-else-if="error" class="rounded-lg border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
         <p>{{ error }}</p>
       </div>
 
-      <div v-else-if="model" class="model-detail">
-        <div class="model-header">
-          <div class="model-header-content">
-            <h1>{{ model.name }}</h1>
-            <p v-if="brand" class="model-brand">{{ brand.name }}</p>
+      <div v-else-if="model" class="flex flex-col gap-8">
+        <div class="rounded-xl bg-gradient-to-r from-pink-500 via-red-500 to-red-600 px-8 py-10 text-white shadow-lg">
+          <div class="flex flex-col gap-2">
+            <h1 class="text-4xl font-bold">{{ model.name }}</h1>
+            <p v-if="brand" class="text-lg opacity-90">{{ brand.name }}</p>
           </div>
         </div>
 
-        <div class="model-specs">
-          <h2>Model Specifications</h2>
-          <div class="specs-grid">
-            <div v-if="model.gen" class="spec-item">
-              <span class="spec-label">Generation:</span>
-              <span class="spec-value">{{ model.gen }}</span>
+        <div class="flex flex-col gap-6 rounded-xl border border-gray-200 bg-white p-8">
+          <h2 class="mb-2 text-2xl font-semibold text-gray-900">Model Specifications</h2>
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-if="model.gen" class="flex flex-col gap-1 rounded-lg border-l-4 border-blue-500 bg-gray-50 p-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Generation:</span>
+              <span class="text-xl font-bold text-gray-900">{{ model.gen }}</span>
             </div>
-            <div v-if="model.mod" class="spec-item">
-              <span class="spec-label">Modification:</span>
-              <span class="spec-value">{{ model.mod }}</span>
+            <div v-if="model.mod" class="flex flex-col gap-1 rounded-lg border-l-4 border-blue-500 bg-gray-50 p-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Modification:</span>
+              <span class="text-xl font-bold text-gray-900">{{ model.mod }}</span>
             </div>
-            <div v-if="model.startyear" class="spec-item">
-              <span class="spec-label">Production Start:</span>
-              <span class="spec-value">{{ model.startyear }}</span>
+            <div v-if="model.startyear" class="flex flex-col gap-1 rounded-lg border-l-4 border-blue-500 bg-gray-50 p-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Production Start:</span>
+              <span class="text-xl font-bold text-gray-900">{{ model.startyear }}</span>
             </div>
-            <div v-if="model.endyear" class="spec-item">
-              <span class="spec-label">Production End:</span>
-              <span class="spec-value">{{ model.endyear }}</span>
+            <div v-if="model.endyear" class="flex flex-col gap-1 rounded-lg border-l-4 border-blue-500 bg-gray-50 p-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Production End:</span>
+              <span class="text-xl font-bold text-gray-900">{{ model.endyear }}</span>
             </div>
-            <div v-if="!model.endyear && model.startyear" class="spec-item">
-              <span class="spec-label">Status:</span>
-              <span class="spec-value">Current Production</span>
+            <div v-if="!model.endyear && model.startyear" class="flex flex-col gap-1 rounded-lg border-l-4 border-blue-500 bg-gray-50 p-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Status:</span>
+              <span class="text-xl font-bold text-gray-900">Current Production</span>
             </div>
           </div>
         </div>
 
-        <div class="tunings-section">
-          <h2>Available Tunings</h2>
-          <div class="tunings-list">
-            <div class="tuning-item">
-              <div class="tuning-info">
-                <h3>Premium Performance Tuning</h3>
-                <p class="tuning-description">Enhance your vehicle's performance with our premium tuning package</p>
-                <div class="tuning-features">
-                  <span class="feature">ECU Optimization</span>
-                  <span class="feature">Power Increase</span>
-                  <span class="feature">Better Efficiency</span>
+        <div class="flex flex-col gap-6 rounded-xl border border-gray-200 bg-white p-8">
+          <h2 class="mb-2 text-2xl font-semibold text-gray-900">Available Tunings</h2>
+          <div class="flex flex-col gap-4">
+            <div v-for="(tuning, idx) in [
+              {
+                title: 'Premium Performance Tuning',
+                desc: 'Enhance your vehicle\'s performance with our premium tuning package',
+                features: ['ECU Optimization', 'Power Increase', 'Better Efficiency']
+              },
+              {
+                title: 'Sport Edition',
+                desc: 'Aggressive tuning for sports enthusiasts',
+                features: ['Maximum Power', 'Custom Exhaust', 'Suspension Upgrade']
+              },
+              {
+                title: 'Eco Mode',
+                desc: 'Optimize fuel efficiency and emissions',
+                features: ['Reduced Consumption', 'Eco Friendly', 'Extended Range']
+              }
+            ]" :key="idx" class="flex flex-col gap-4 rounded-lg border border-gray-200 p-6 transition-all hover:border-blue-500 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
+              <div class="flex flex-col gap-3 sm:flex-1">
+                <h3 class="text-lg font-semibold text-gray-900">{{ tuning.title }}</h3>
+                <p class="text-gray-600">{{ tuning.desc }}</p>
+                <div class="flex flex-wrap gap-2">
+                  <span v-for="feature in tuning.features" :key="feature" class="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">{{ feature }}</span>
                 </div>
               </div>
-              <button class="tuning-action">View Details</button>
-            </div>
-
-            <div class="tuning-item">
-              <div class="tuning-info">
-                <h3>Sport Edition</h3>
-                <p class="tuning-description">Aggressive tuning for sports enthusiasts</p>
-                <div class="tuning-features">
-                  <span class="feature">Maximum Power</span>
-                  <span class="feature">Custom Exhaust</span>
-                  <span class="feature">Suspension Upgrade</span>
-                </div>
-              </div>
-              <button class="tuning-action">View Details</button>
-            </div>
-
-            <div class="tuning-item">
-              <div class="tuning-info">
-                <h3>Eco Mode</h3>
-                <p class="tuning-description">Optimize fuel efficiency and emissions</p>
-                <div class="tuning-features">
-                  <span class="feature">Reduced Consumption</span>
-                  <span class="feature">Eco Friendly</span>
-                  <span class="feature">Extended Range</span>
-                </div>
-              </div>
-              <button class="tuning-action">View Details</button>
+              <button class="mt-4 whitespace-nowrap rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95 sm:mt-0 sm:ml-6">View Details</button>
             </div>
           </div>
         </div>
