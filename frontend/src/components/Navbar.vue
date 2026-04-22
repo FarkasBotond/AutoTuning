@@ -59,33 +59,5 @@ const handleLogout = () => {
 </script>
 
 <style scoped>
-/* No custom styles needed - using Tailwind classes */
-  border: 2px solid white;
-}
-
-.admin-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid white;
-}
-
-.admin-btn:hover {
-  background: white;
-  color: #667eea;
-}
-
-@media (max-width: 600px) {
-  .nav-container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .user-email {
-    display: none;
-  }
-}
+/* All styles handled via Tailwind classes */
 </style>

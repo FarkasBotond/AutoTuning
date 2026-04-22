@@ -167,17 +167,6 @@ const handleRegister = async () => {
     </div>
   </div>
 </template>
-          {{ isLoading ? 'Creating Account...' : 'Register' }}
-        </button>
-      </form>
-
-      <!-- Login Link -->
-      <div class="login-link">
-        Already have an account? <router-link to="/login">Login here</router-link>
-      </div>
-    </div>
-  </div>
-</template>
 
 <route lang="yaml">
 name: register
@@ -186,5 +175,5 @@ meta:
 </route>
 
 <style scoped>
-/* Styles are handled via Tailwind classes */
+/* All styles handled via Tailwind classes */
 </style>

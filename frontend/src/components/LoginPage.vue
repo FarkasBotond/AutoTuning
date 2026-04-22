@@ -93,23 +93,5 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-/* Styles are handled via Tailwind classes */
-  color: #764ba2;
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-  .login-card {
-    padding: 1.5rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .login-form {
-    gap: 1rem;
-  }
-}
+/* All styles handled via Tailwind classes */
 </style>
