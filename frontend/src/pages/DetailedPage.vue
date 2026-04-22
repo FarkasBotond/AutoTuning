@@ -10,7 +10,7 @@ import SideMenu from '@components/layout/SideMenu.vue';
 
       <BaseHeadLine />
 
-    <main class="main-content">
+    <main class="mx-auto flex max-w-[1450px] gap-6 px-4 py-4">
       <SideMenu/>
 
       <section class="product-content">

@@ -106,7 +106,7 @@ const products = [
             <BaseHeadLine/>
 
 
-        <main class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 lg:flex-row">
+        <main class="mx-auto flex max-w-[1450px] gap-6 px-4 py-4">
             <aside class="w-full lg:w-[280px] xl:w-[300px] shrink-0">
                 <SideMenu />
             </aside>
