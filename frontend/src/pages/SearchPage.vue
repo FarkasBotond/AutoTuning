@@ -1,78 +1,75 @@
 <script setup>
-import SearchBar from '@/components/ui/SearchBar.vue'
-import logo from '@/assets/logo.png'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
-import SideMenu from '@components/layout/SideMenu.vue';
-import BaseFooter from '@components/BaseFooter.vue';
-import ProductCard from '@components/ProductCard.vue';
-
+import SideMenu from '@/components/layout/SideMenu.vue'
+import BaseFooter from '@/components/BaseFooter.vue'
+import ProductCard from '@/components/ProductCard.vue'
 
 const products = [
-    {
-        id: 1,
-        name: 'Állítható sportfutómű Audi A3',
-        brand: 'TA Technix',
-        image: '',
-        badge: 'Újdonság',
-        oldPrice: 126000,
-        price: 103790,
-        stockText: 'Raktáron'
-    },
-    {
-        id: 2,
-        name: 'Sportülés fekete',
-        brand: 'Bride',
-        image: '',
-        badge: 'Akció',
-        oldPrice: 94670,
-        price: 81630,
-        stockText: 'Raktáron'
-    },
-    {
-        id: 3,
-        name: 'Garrett turbó',
-        brand: 'Garrett',
-        image: '',
-        badge: 'Akció',
-        oldPrice: 250000,
-        price: 225000,
-        stockText: 'Raktáron'
-    },
-    {
-        id: 4,
-        name: 'Légszűrő',
-        brand: 'K&N',
-        image: '',
-        badge: 'Akció',
-        oldPrice: 35000,
-        price: 28500,
-        stockText: 'Raktáron'
-    },
-    {
-        id: 5,
-        name: 'Led fényszóró BMW E46',
-        brand: 'Osram',
-        image: '',
-        badge: 'Új',
-        oldPrice: 32000,
-        price: 30000,
-        stockText: 'Raktáron'
-    },
-    {
-        id: 6,
-        name: 'Kipufogóvég',
-        brand: 'RaceCarbon',
-        image: '',
-        badge: 'Akció',
-        oldPrice: 15000,
-        price: 1000,
-        stockText: 'Raktáron'
-    },
+  {
+    id: 1,
+    name: 'Allithato sportfutomu Audi A3',
+    brand: 'TA Technix',
+    image: '',
+    badge: 'Ujdonsag',
+    oldPrice: 126000,
+    price: 103790,
+    stockText: 'Raktaron'
+  },
+  {
+    id: 2,
+    name: 'Sportules fekete',
+    brand: 'Bride',
+    image: '',
+    badge: 'Akcio',
+    oldPrice: 94670,
+    price: 81630,
+    stockText: 'Raktaron'
+  },
+  {
+    id: 3,
+    name: 'Garrett turbo',
+    brand: 'Garrett',
+    image: '',
+    badge: 'Akcio',
+    oldPrice: 250000,
+    price: 225000,
+    stockText: 'Raktaron'
+  },
+  {
+    id: 4,
+    name: 'Legszuro',
+    brand: 'K&N',
+    image: '',
+    badge: 'Akcio',
+    oldPrice: 35000,
+    price: 28500,
+    stockText: 'Raktaron'
+  },
+  {
+    id: 5,
+    name: 'Led fenyszoro BMW E46',
+    brand: 'Osram',
+    image: '',
+    badge: 'Uj',
+    oldPrice: 32000,
+    price: 30000,
+    stockText: 'Raktaron'
+  },
+  {
+    id: 6,
+    name: 'Kipufogoveg',
+    brand: 'RaceCarbon',
+    image: '',
+    badge: 'Akcio',
+    oldPrice: 15000,
+    price: 1000,
+    stockText: 'Raktaron'
+  },
 ]
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-100">
+  <div class="min-h-screen bg-zinc-200">
     <BaseHeadLine />
 
     <main class="mx-auto flex max-w-[1450px] gap-6 px-4 py-4">
@@ -80,7 +77,7 @@ const products = [
         <SideMenu />
       </aside>
 
-      <section class="flex-1 rounded-2xl bg-zinc-200 p-4">
+      <section class="flex-1 rounded-2xl bg-zinc-100 p-4">
         <div class="mb-4 flex items-center justify-between rounded-xl bg-zinc-200 px-4 py-3">
           <h2 class="text-3xl font-bold text-zinc-900">Keresési eredmények</h2>
 
@@ -97,23 +94,11 @@ const products = [
         </div>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <div v-for="item in placeholders" :key="item"
-            class="flex h-56 items-center justify-center rounded-xl border border-zinc-300 bg-white text-2xl font-bold text-zinc-500 shadow-sm">
-            Product
-          </div>
+          <ProductCard v-for="product in products" :key="product.id" :product="product" />
         </div>
-        <section class="flex-1">
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    <ProductCard
-                        v-for="product in products"
-                        :key="product.id"
-                        :product="product"
-                    />
-                </div>
-            </section>
       </section>
-      
     </main>
+
     <BaseFooter />
   </div>
 </template>
