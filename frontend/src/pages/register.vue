@@ -61,7 +61,7 @@ const handleRegister = async () => {
       )
 
       if (loginSuccess) {
-        router.push('/landing')
+        router.push('/landingpage')
       }
     } else {
       // Handle validation errors - Laravel returns errors at root level

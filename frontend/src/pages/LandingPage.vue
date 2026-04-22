@@ -129,5 +129,5 @@ const products = [
 <route lang="yaml">
 name: landing
 meta:
-  title: landing
+  title: landingpage
 </route>

@@ -87,7 +87,7 @@ const handleLogin = async () => {
       password: ''
     }
     // Redirect to landing page
-    router.push('/landing')
+    router.push('/landingpage')
   }
 }
 </script>
