@@ -86,8 +86,8 @@ const handleLogin = async () => {
       email: '',
       password: ''
     }
-    // Redirect to landing page
-    router.push('/landingpage')
+    // Redirect to index page
+    router.push('/')
   }
 }
 </script>

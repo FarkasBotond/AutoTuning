@@ -1,77 +1,133 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import BaseLayout from '@layouts/BaseLayout.vue'
-import { useBrandStore } from '@stores/brandStore'
-import { useAuthStore } from '@stores/authStore'
+import SearchBar from '@/components/ui/SearchBar.vue'
+import logo from '@/assets/logo.png'
+import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
+import SideMenu from '@components/layout/SideMenu.vue';
+import ProductCard from '@components/ProductCard.vue';
+import BaseFooter from '@components/BaseFooter.vue';
 
-const router = useRouter()
-const brandStore = useBrandStore()
-const authStore = useAuthStore()
-
-const brands = ref([])
-const isLoading = ref(false)
-const error = ref(null)
-
-onMounted(async () => {
-  if (!authStore.isAuthenticated) {
-    router.push('/login')
-    return
-  }
-
-  isLoading.value = true
-  try {
-    brands.value = await brandStore.fetchAllBrands()
-  } catch (err) {
-    error.value = 'Failed to load brands'
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-})
-
-const handleBrandClick = (brandId) => {
-  router.push(`/brand/${brandId}`)
-}
+const products = [
+    {
+        id: 1,
+        name: 'Állítható sportfutómű Audi A3',
+        brand: 'TA Technix',
+        image: '',
+        badge: 'Újdonság',
+        oldPrice: 126000,
+        price: 103790,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 2,
+        name: 'Sportülés fekete',
+        brand: 'Bride',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 94670,
+        price: 81630,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 3,
+        name: 'Garrett turbó',
+        brand: 'Garrett',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 250000,
+        price: 225000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 4,
+        name: 'Légszűrő',
+        brand: 'K&N',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 35000,
+        price: 28500,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 5,
+        name: 'Led fényszóró BMW E46',
+        brand: 'Osram',
+        image: '',
+        badge: 'Új',
+        oldPrice: 32000,
+        price: 30000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 6,
+        name: 'Kipufogóvég',
+        brand: 'RaceCarbon',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 15000,
+        price: 1000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 7,
+        name: 'Sportkesztyű',
+        brand: 'Racing',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 5000,
+        price: 4500,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 8,
+        name: '3 küllős kormány',
+        brand: 'Momo',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 95000,
+        price: 82000,
+        stockText: 'Raktáron'
+    },
+    {
+        id: 9,
+        name: 'Rendszámtáblatartó',
+        brand: 'HMN',
+        image: '',
+        badge: 'Akció',
+        oldPrice: 6900,
+        price: 6700,
+        stockText: 'Raktáron'
+    },
+]
 </script>
 
 <template>
-  <BaseLayout>
-    <div class="mx-auto max-w-4xl px-8 py-8">
-      <h1 class="mb-8 text-center text-4xl font-bold text-gray-900">Car Brands</h1>
+    <div class="landing-page">
 
-      <div v-if="isLoading" class="px-4 py-12 text-center text-lg">
-        <p>Loading brands...</p>
-      </div>
+            <BaseHeadLine/>
 
-      <div v-else-if="error" class="px-4 py-12 text-center text-lg text-red-600">
-        <p>{{ error }}</p>
-      </div>
 
-      <div v-else class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        <div
-          v-for="brand in brands"
-          :key="brand.id"
-          class="group cursor-pointer rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
-          @click="handleBrandClick(brand.id)"
-        >
-          <div class="flex flex-col gap-2">
-            <h2 class="text-xl font-semibold text-gray-900">{{ brand.name }}</h2>
-            <p v-if="brand.description" class="text-sm text-gray-600">{{ brand.description }}</p>
-            <p class="mt-4 text-sm font-medium text-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Click to view models →</p>
-          </div>
-        </div>
-      </div>
+        <main class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 lg:flex-row">
+            <aside class="w-full lg:w-[280px] xl:w-[300px] shrink-0">
+                <SideMenu />
+            </aside>
 
-      <div v-if="brands.length === 0 && !isLoading" class="px-4 py-12 text-center text-lg text-gray-600">
-        <p>No brands available</p>
-      </div>
+            <section class="flex-1">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <ProductCard
+                        v-for="product in products"
+                        :key="product.id"
+                        :product="product"
+                    />
+                </div>
+            </section>
+        </main>
+
+        <BaseFooter/>
     </div>
-  </BaseLayout>
 </template>
 
 <route lang="yaml">
-name: index
+name: landing
 meta:
-  title: Főoldal
+  title: landingpage
 </route>
