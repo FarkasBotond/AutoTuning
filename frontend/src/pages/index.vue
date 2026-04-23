@@ -103,26 +103,22 @@ const products = [
 <template>
     <div class="landing-page">
 
-            <BaseHeadLine/>
+        <BaseHeadLine />
 
 
-        <main class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 lg:flex-row">
-            <aside class="w-full lg:w-[280px] xl:w-[300px] shrink-0">
+        <main class="mx-auto flex max-w-[1450px] gap-6 px-4 py-4">
+            <aside class="w-[280px] shrink-0">
                 <SideMenu />
             </aside>
 
-            <section class="flex-1">
+            <section class="flex-1 rounded-2xl bg-zinc-100 p-4">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    <ProductCard
-                        v-for="product in products"
-                        :key="product.id"
-                        :product="product"
-                    />
+                    <ProductCard v-for="product in products" :key="product.id" :product="product" />
                 </div>
             </section>
         </main>
 
-        <BaseFooter/>
+        <BaseFooter />
     </div>
 </template>
 
