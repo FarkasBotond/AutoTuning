@@ -7,7 +7,9 @@ import logo from '@/assets/logo.png'
   <header class="w-full bg-white border-b border-gray-200">
     <div class="mx-auto flex w-full max-w-7xl items-center gap-4 px-4 py-3 md:px-6">
       <div class="shrink-0">
-        <img :src="logo" alt="Logo" class="h-40 w-auto object-contain" />
+        <RouterLink :to="{ name: 'landing' }">
+          <img :src="logo" alt="Logo" class="h-40 w-auto object-contain" />
+        </RouterLink>
       </div>
 
       <div class="min-w-0 flex-1">
@@ -15,15 +17,11 @@ import logo from '@/assets/logo.png'
       </div>
 
       <div class="flex shrink-0 items-right gap-6">
-        <button
-          type="button"
-          class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
+        <button type="button" class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
           Profile
         </button>
 
-        <button
-          type="button"
-          class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
+        <button type="button" class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
           Cart
         </button>
       </div>
