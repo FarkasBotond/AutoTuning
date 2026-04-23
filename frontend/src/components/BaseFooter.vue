@@ -9,7 +9,7 @@
             <div class="rounded-xl border border-zinc-700 bg-zinc-800 p-6">
                 <h2 class="mb-4 text-xl font-bold">Kapcsolat</h2>
 
-                <div class="space-y-2 text-sm text-zinc-300">
+                <div class="space-y-4 text-sm leading-relaxed text-zinc-300">
                     <p>
                         <span class="font-semibold text-white">Email:</span>
                         <a
