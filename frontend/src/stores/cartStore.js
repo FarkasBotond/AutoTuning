@@ -2,13 +2,38 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useCartStore= defineStore('cart', () => {
-  const items = ref([])
+  state: () => ({
+    items: []
+  }),
 
-  function increment(step = 1) {
-    counter.value += step
+  getters: {
+    totalItems: (state) =>{
+        return state.items.reduce((sum, item) =>sum + item.quantity, 0)      
+    },
+    totalPrice: (state) => {
+        return state.items.reduce((sum, item)=> sum + item.price * item.quantity, 0)
+    }
+  },
+
+  actions: {
+    addToCart(product){
+        const existingItem = this.items.find(item=>item.id === product.id)
+
+        if (existingItem){
+            existingItem.quantity += 1
+            return
+        }
+
+        this.items.push({
+            id: product.id,
+            name:product.name,
+            brand: product.brand,
+            image: product.image,
+            price: product.price,
+            quantity: 1
+        })
+    },
+
+    
   }
-
-  const counter10X = computed(() => counter.value * 10)
-
-  return { counter, increment, counter10X }
 })
