@@ -44,7 +44,7 @@ const handleAddToCart = () => {
   <div class="min-h-screen bg-zinc-200">
     <BaseHeadLine />
 
-    <main class="mx-auto flex max-w-[1450px] flex-col gap-6 px-4 py-4 lg:flex-row">
+    <main class="flex flex-col gap-6 px-8 py-4 lg:flex-row">
       <aside class="w-full shrink-0 lg:w-[280px]">
         <SideMenu />
       </aside>
