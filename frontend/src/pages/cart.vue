@@ -13,12 +13,12 @@ const formatPrice = (price) => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-zinc-200">
+    <div class="min-h-screen flex flex-col bg-zinc-200">
 
         <BaseHeadLine />
 
 
-        <main class="mx-auto max-w-[1450px] px-4 py-4">
+        <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4">
             <h1 class="mb-6 text-3xl font-bold text-zinc-900">
                 Kosár
             </h1>
