@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { useCartStore } from '@stores/cartStore'
 
 const props = defineProps({
@@ -8,11 +9,22 @@ const props = defineProps({
     }
 })
 
+const router = useRouter()
+
 const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
 }
 
 const cartStore = useCartStore()
+
+const goToDetails = () =>{
+    router.push({
+        name: 'detailed',
+        query: {
+            id: props.product.id
+        }
+    })
+}
 
 const handleAddToCart = () =>{
     cartStore.addToCart(props.product)
@@ -72,7 +84,7 @@ const handleAddToCart = () =>{
 
             <button
                 type="button"
-                class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]">
+                class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]" @click="goToDetails">
                 Megnézem
             </button>
             <button
