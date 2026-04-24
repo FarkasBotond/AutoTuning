@@ -34,6 +34,35 @@ export const useCartStore= defineStore('cart', () => {
         })
     },
 
-    
+    removeFromCart(productId){
+        this.items = this.items.filter(item=> item.id !== productId)
+    },
+
+    increaseQuantity(productId){
+        const item = this.items.find(item=> item.id === productId)
+
+        if (item){
+            item.quantity += 1
+        }
+    },
+
+    decreaseQuantity(productId){
+        const item = this.item.find(item=> item.id === productId)
+
+        if(!item){
+            return
+        }
+
+        if(item.quantity > 1){
+            item.quantity -= 1
+        }
+        else{
+            this.removeFromCart(productId)
+        }
+    },
+
+    clearCart() {
+        this.items = []
+    }
   }
 })
