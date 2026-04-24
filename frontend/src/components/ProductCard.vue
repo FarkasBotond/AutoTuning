@@ -1,4 +1,6 @@
 <script setup>
+import { useCartStore } from '@stores/cartStore'
+
 const props = defineProps({
     product: {
         type: Object,
@@ -8,6 +10,12 @@ const props = defineProps({
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
+}
+
+const cartStore = useCartStore()
+
+const handleAddToCart = () =>{
+    cartStore.addToCart(props.product)
 }
 </script>
 
@@ -66,6 +74,11 @@ const formatPrice = (price) => {
                 type="button"
                 class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]">
                 Megnézem
+            </button>
+            <button
+                type="button"
+                class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]" @click="handleAddToCart">
+                Kosárba
             </button>
         </div>
     </article>
