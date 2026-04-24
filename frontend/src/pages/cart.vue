@@ -6,7 +6,7 @@ import { useCartStore } from '@stores/cartStore';
 
 const cartStore = useCartStore()
 
-const formatPrce = (price) => {
+const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
 }
 
@@ -18,7 +18,7 @@ const formatPrce = (price) => {
         <BaseHeadLine />
 
 
-        <main class="mx-auto flex max-w-[1450px] px-4 py-4">
+        <main class="mx-auto max-w-[1450px] px-4 py-4">
             <h1 class="mb-6 text-3xl font-bold text-zinc-900">
                 Kosár
             </h1>
