@@ -1,24 +1,43 @@
 <script setup>
-import SearchBar from '@/components/ui/SearchBar.vue'
-import logo from '@/assets/logo.png'
-import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
-import SideMenu from '@components/layout/SideMenu.vue';
 import { computed } from 'vue'
-import { useRoute } from 'vue-router';
-import BaseFooter from '@components/BaseFooter.vue';
-import { products } from '@/lib/mockProducts';
+import { useRoute } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
+import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
+import SideMenu from '@/components/layout/SideMenu.vue'
+import BaseFooter from '@/components/BaseFooter.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import { products } from '@/lib/mockProducts'
 
 const route = useRoute()
+const cartStore = useCartStore()
+
+const productId = computed(() => Number(route.query.id))
 
 const product = computed(() => {
-  const id = Number(route.query.id)
-  return products.find(item => item.id === id)
+  return products.find(item => item.id === productId.value)
+})
+
+const relatedProducts = computed(() => {
+  if (!product.value) {
+    return []
+  }
+
+  return products
+    .filter(item => item.id !== product.value.id)
+    .slice(0, 3)
 })
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('hu-HU').format(price)
 }
 
+const handleAddToCart = () => {
+  if (!product.value) {
+    return
+  }
+
+  cartStore.addToCart(product.value)
+}
 </script>
 
 <template>
@@ -73,7 +92,7 @@ const formatPrice = (price) => {
                     </h2>
 
                     <p>
-                      {{ product.description || 'Minosegi termek, sportos es utcai felhasznalasra is alkalmas kivitelben.' }}
+                      {{ product.description || 'Minőségi termék, sportos es utcai felhasználásra is alkalmas kivitelben.' }}
                     </p>
                   </div>
                 </div>
