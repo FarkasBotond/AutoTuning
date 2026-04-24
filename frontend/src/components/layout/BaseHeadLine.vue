@@ -16,14 +16,15 @@ import logo from '@/assets/logo.png'
         <SearchBar />
       </div>
 
-      <div class="flex shrink-0 items-right gap-6">
+      <div class="flex shrink-0 items-center gap-6">
         <button type="button" class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
           Profile
         </button>
 
-        <button type="button" class="rounded-md bg-gray-100 px-4 py-2 text-xl font-medium hover:bg-gray-200">
+        <RouterLink to="/cart"
+          class="inline-flex items-center rounded-md bg-gray-100 px-4 py-2 text-xl font-medium text-black hover:bg-gray-200">
           Cart
-        </button>
+        </RouterLink>
       </div>
     </div>
   </header>
