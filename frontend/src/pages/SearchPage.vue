@@ -4,66 +4,73 @@ import SideMenu from '@/components/layout/SideMenu.vue'
 import BaseFooter from '@/components/BaseFooter.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
+import allithatofutomuImg from '@/assets/images/allithatofutomu.jpg'
+import ulesImg from '@/assets/images/ules.webp'
+import legszuroImg from '@/assets/images/legszuro.jpg'
+import ledizzoImg from '@/assets/images/ledizzo.webp'
+import kipuvegImg from '@/assets/images/kipuveg.webp'
+import turboImg from '@/assets/images/turbo.jpg'
+
 const products = [
   {
     id: 1,
-    name: 'Allithato sportfutomu Audi A3',
+    name: 'Állítható sportfutómű Audi A3',
     brand: 'TA Technix',
-    image: '',
-    badge: 'Ujdonsag',
+    image: allithatofutomuImg,
+    badge: 'Újdonság',
     oldPrice: 126000,
     price: 103790,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
   {
     id: 2,
-    name: 'Sportules fekete',
+    name: 'Sportülés fekete',
     brand: 'Bride',
-    image: '',
-    badge: 'Akcio',
+    image: ulesImg,
+    badge: 'Akció',
     oldPrice: 94670,
     price: 81630,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
   {
     id: 3,
-    name: 'Garrett turbo',
+    name: 'Garrett turbó',
     brand: 'Garrett',
-    image: '',
-    badge: 'Akcio',
+    image: turboImg,
+    badge: 'Akció',
     oldPrice: 250000,
     price: 225000,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
   {
     id: 4,
-    name: 'Legszuro',
+    name: 'Légszűrő',
     brand: 'K&N',
-    image: '',
-    badge: 'Akcio',
+    image: legszuroImg,
+    badge: 'Akció',
     oldPrice: 35000,
     price: 28500,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
   {
     id: 5,
-    name: 'Led fenyszoro BMW E46',
+    name: 'Led fényszóró BMW E46',
     brand: 'Osram',
-    image: '',
-    badge: 'Uj',
+    image: ledizzoImg,
+    badge: 'Új',
     oldPrice: 32000,
     price: 30000,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
   {
     id: 6,
-    name: 'Kipufogoveg',
+    name: 'Kipufogóvég',
     brand: 'RaceCarbon',
-    image: '',
-    badge: 'Akcio',
+    image: kipuvegImg,
+    badge: 'Akció',
     oldPrice: 15000,
     price: 1000,
-    stockText: 'Raktaron'
+    stockText: 'Raktáron'
   },
 ]
 </script>
