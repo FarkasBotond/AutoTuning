@@ -4,75 +4,44 @@ import SideMenu from '@/components/layout/SideMenu.vue'
 import BaseFooter from '@/components/BaseFooter.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
+
+
 import allithatofutomuImg from '@/assets/images/allithatofutomu.jpg'
 import ulesImg from '@/assets/images/ules.webp'
 import legszuroImg from '@/assets/images/legszuro.jpg'
 import ledizzoImg from '@/assets/images/ledizzo.webp'
 import kipuvegImg from '@/assets/images/kipuveg.webp'
 import turboImg from '@/assets/images/turbo.jpg'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { products } from '@/lib/mockProducts'
 
-const products = [
-  {
-    id: 1,
-    name: 'Állítható sportfutómű Audi A3',
-    brand: 'TA Technix',
-    image: allithatofutomuImg,
-    badge: 'Újdonság',
-    oldPrice: 126000,
-    price: 103790,
-    stockText: 'Raktáron'
-  },
-  {
-    id: 2,
-    name: 'Sportülés fekete',
-    brand: 'Bride',
-    image: ulesImg,
-    badge: 'Akció',
-    oldPrice: 94670,
-    price: 81630,
-    stockText: 'Raktáron'
-  },
-  {
-    id: 3,
-    name: 'Garrett turbó',
-    brand: 'Garrett',
-    image: turboImg,
-    badge: 'Akció',
-    oldPrice: 250000,
-    price: 225000,
-    stockText: 'Raktáron'
-  },
-  {
-    id: 4,
-    name: 'Légszűrő',
-    brand: 'K&N',
-    image: legszuroImg,
-    badge: 'Akció',
-    oldPrice: 35000,
-    price: 28500,
-    stockText: 'Raktáron'
-  },
-  {
-    id: 5,
-    name: 'Led fényszóró BMW E46',
-    brand: 'Osram',
-    image: ledizzoImg,
-    badge: 'Új',
-    oldPrice: 32000,
-    price: 30000,
-    stockText: 'Raktáron'
-  },
-  {
-    id: 6,
-    name: 'Kipufogóvég',
-    brand: 'RaceCarbon',
-    image: kipuvegImg,
-    badge: 'Akció',
-    oldPrice: 15000,
-    price: 1000,
-    stockText: 'Raktáron'
-  },
-]
+const route = useRoute()
+
+const normalizeText = (text) => {
+  return String(text)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
+
+const searchQuery = computed(() => {
+  return normalizeText(route.query.q || '')
+})
+
+const filteredProducts = computed(() => {
+  if (!searchQuery.value) {
+    return []
+  }
+
+  return products.filter(product => {
+    const searchableText = normalizeText(
+      `${product.name} ${product.brand} ${product.description || ''}`
+    )
+
+    return searchableText.includes(searchQuery.value)
+  })
+})
 </script>
 
 <template>
@@ -87,7 +56,9 @@ const products = [
       <section class="flex-1 rounded-2xl bg-zinc-100 p-4">
         <div class="mb-4 flex items-center justify-between rounded-xl bg-zinc-200 px-4 py-3">
           <h2 class="text-3xl font-bold text-zinc-900">Keresési eredmények</h2>
-
+          <p class="mt-1 text-sm text-zinc-600">
+            Keresés erre: "{{ route.query.q }}"
+          </p>
           <button type="button"
             class="inline-flex items-center gap-3 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-red-600 hover:shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -100,8 +71,17 @@ const products = [
           </button>
         </div>
 
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <ProductCard v-for="product in products" :key="product.id" :product="product" />
+        <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
+        </div>
+
+        <div v-else class="rounded-2xl bg-white p-10 text-center shadow-sm">
+          <h3 class="text-2xl font-bold text-zinc-900">
+            Nincs találat
+          </h3>
+          <p class="mt-2 text-zinc-600">
+            Nem találtunk terméket erre: "{{ route.query.q }}"
+          </p>
         </div>
       </section>
     </main>
