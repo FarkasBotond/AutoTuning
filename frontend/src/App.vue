@@ -1,9 +1,7 @@
 <script setup>
-import Navbar from '@/components/Navbar.vue'
 </script>
 
 <template>
-  <Navbar />
   <main class="main-content">
     <RouterView />
   </main>
