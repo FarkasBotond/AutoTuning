@@ -64,7 +64,7 @@ const onlyInStock = ref(false)
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-200">
+  <div class="min-h-screen bg-zinc-800">
     <BaseHeadLine />
 
     <Toast :show="toastVisible" :message="toastMessage" />
@@ -74,7 +74,7 @@ const onlyInStock = ref(false)
         <SideMenu />
       </aside>
 
-      <section class="flex-1 rounded-2xl bg-zinc-100 p-4">
+      <section class="flex-1 rounded-2xl bg-zinc-800 p-4">
         <div class="mb-4 flex items-center justify-between rounded-xl bg-zinc-200 px-4 py-3">
           <h2 class="text-3xl font-bold text-zinc-900">Keresési eredmények</h2>
           <p class="mt-1 text-sm text-zinc-600">

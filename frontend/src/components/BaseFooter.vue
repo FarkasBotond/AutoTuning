@@ -4,7 +4,7 @@
 
 <template>
 
-   <footer class="mt-16 bg-zinc-900 text-white text-center">
+   <footer class="mt-16 bg-zinc-800 text-white text-center">
         <div class="mx-auto w-full px-6 py-6">
             <div class="rounded-xl border border-zinc-700 bg-zinc-800 p-6">
                 <h2 class="mb-4 text-xl font-bold">Kapcsolat</h2>

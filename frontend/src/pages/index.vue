@@ -24,7 +24,7 @@ const showToast = (product) => {
 </script>
 
 <template>
-    <div class="landing-page min-h-screen bg-zinc-300">
+    <div class="landing-page min-h-screen bg-zinc-800!">
         <BaseHeadLine />
 
         

@@ -15,7 +15,7 @@ const handleLogout = () => {
 
 <template>
   <header class="w-full bg-zinc-300/80 px-4 py-4 backdrop-blur-sm">
-    <div class="w-full border border-zinc-300 bg-white/90 px-5 py-4 shadow-lg">
+    <div class="w-full border border-zinc-800 bg-white/90 px-5 py-4 shadow-lg">
       <div class="flex items-center gap-5">
         <div class="shrink-0">
           <RouterLink :to="{ name: 'landing' }"
