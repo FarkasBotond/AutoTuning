@@ -34,7 +34,7 @@ onMounted(async () => {
     brand.value = await brandStore.fetchSingleBrand(brandId)
     allModels.value = await modelStore.fetchAllModels()
   } catch (err) {
-    error.value = 'Failed to load brand details'
+    error.value = 'Betöltés nem sikerült!'
     console.error(err)
   } finally {
     isLoading.value = false
@@ -58,7 +58,7 @@ const handleModelClick = (modelId) => {
       </button>
 
       <div v-if="isLoading" class="px-4 py-12 text-center text-lg">
-        <p>Loading brand details...</p>
+        <p>Betöltés...</p>
       </div>
 
       <div v-else-if="error" class="rounded-lg border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
@@ -72,10 +72,10 @@ const handleModelClick = (modelId) => {
         </div>
 
         <div class="flex flex-col gap-6">
-          <h2 class="text-3xl font-semibold text-gray-900">Available Models</h2>
+          <h2 class="text-3xl font-semibold text-gray-900">Elérhető modellek:</h2>
 
           <div v-if="filteredModels.length === 0" class="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-8 text-center text-gray-600">
-            <p>No models available for this brand</p>
+            <p>Nincs elérhető modell ehez a gyártóhoz</p>
           </div>
 
           <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -87,10 +87,10 @@ const handleModelClick = (modelId) => {
             >
               <div class="flex flex-col gap-2">
                 <h3 class="text-xl font-semibold text-gray-900">{{ model.name }}</h3>
-                <p v-if="model.gen" class="text-sm text-gray-600">Generation: {{ model.gen }}</p>
-                <p v-if="model.mod" class="text-sm text-gray-600">Modification: {{ model.mod }}</p>
+                <p v-if="model.gen" class="text-sm text-gray-600">Generáció: {{ model.gen }}</p>
+                <p v-if="model.mod" class="text-sm text-gray-600">Modifikáció: {{ model.mod }}</p>
                 <p v-if="model.startyear" class="text-sm text-gray-600">{{ model.startyear }}<span v-if="model.endyear"> - {{ model.endyear }}</span></p>
-                <p class="mt-4 text-sm font-medium text-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">View details →</p>
+                <p class="mt-4 text-sm font-medium text-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Adatok →</p>
               </div>
             </div>
           </div>

@@ -25,23 +25,23 @@ onMounted(async () => {
       brandStore.fetchAllBrands()
     ])
   } catch (error) {
-    console.error('Failed to load data:', error)
+    console.error('Nem sikerült adatot betölteni:', error)
   }
 })
 
 const handleDelete = async (modelId) => {
-  if (confirm('Are you sure you want to delete this model?')) {
+  if (confirm('Biztosan szeretné törölni ezt a modellt?')) {
     try {
       await modelStore.destroy(modelId)
     } catch (error) {
-      console.error('Failed to delete model:', error)
+      console.error('A törlés nem sikerült:', error)
     }
   }
 }
 
 const getBrandName = (brandId) => {
   const brand = brandStore.brands.find(b => b.id === brandId)
-  return brand?.name || 'Unknown'
+  return brand?.name || 'Ismeretlen'
 }
 
 const goToCreate = () => {
@@ -70,21 +70,21 @@ const goToEdit = (modelId) => {
           >
             Brands
           </button>
-          <button class="admin-tab active">Models</button>
+          <button class="admin-tab active">Modellek</button>
         </div>
       </div>
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-4xl font-bold">Car Models Management</h1>
+        <h1 class="text-4xl font-bold">Modellek kezelése</h1>
         <button
           @click="goToCreate"
           class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
-          Add New Model
+          Új modell hozzáadása
         </button>
       </div>
 
       <div v-if="modelStore.isLoading || brandStore.isLoading" class="text-center py-8">
-        <p class="text-gray-500">Loading models...</p>
+        <p class="text-gray-500">Betöltés...</p>
       </div>
 
       <div v-else-if="modelStore.error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -92,7 +92,7 @@ const goToEdit = (modelId) => {
       </div>
 
       <div v-else-if="modelStore.models.length === 0" class="text-center py-8">
-        <p class="text-gray-500">No models found. Create one to get started!</p>
+        <p class="text-gray-500">Nincs egy modell sem! Hozzon létre egyet!</p>
       </div>
 
       <div v-else class="overflow-x-auto">
@@ -100,12 +100,12 @@ const goToEdit = (modelId) => {
           <thead class="bg-gray-200">
             <tr>
               <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Brand</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Gen</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Mod</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Years</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Actions</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">Gyártó</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">Név</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">Generáció</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">Modifikáció</th>
+              <th class="border border-gray-300 px-4 py-2 text-center">Gyártási év(ek)</th>
+              <th class="border border-gray-300 px-4 py-2 text-center">Kezelés</th>
             </tr>
           </thead>
           <tbody>

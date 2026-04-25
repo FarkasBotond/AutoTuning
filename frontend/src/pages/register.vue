@@ -25,12 +25,12 @@ const handleRegister = async () => {
     !formData.value.password ||
     !formData.value.password_confirmation
   ) {
-    error.value = 'Please fill in all fields'
+    error.value = 'Kérjük az összes mezőt töltse ki!'
     return
   }
 
   if (formData.value.password !== formData.value.password_confirmation) {
-    error.value = 'Passwords do not match'
+    error.value = 'A jelszavak nem egyeznek'
     return
   }
 
@@ -54,7 +54,7 @@ const handleRegister = async () => {
     const data = await response.json()
 
     if (response.ok) {
-      // Auto-login after registration
+
       const loginSuccess = await authStore.login(
         formData.value.email,
         formData.value.password
@@ -64,10 +64,8 @@ const handleRegister = async () => {
         router.push('/')
       }
     } else {
-      // Handle validation errors - Laravel returns errors at root level
-      error.value = data.message || data.data?.message || 'Registration failed'
+      error.value = data.message || data.data?.message || 'Nem sikerült a regisztráció!'
       
-      // If there are field-specific errors, show the first one
       if (data.errors) {
         const firstError = Object.values(data.errors)[0]
         if (Array.isArray(firstError) && firstError[0]) {
@@ -76,7 +74,7 @@ const handleRegister = async () => {
       }
     }
   } catch (err) {
-    error.value = 'An error occurred during registration'
+    error.value = 'Nem sikerült a regisztráció!'
   } finally {
     isLoading.value = false
   }
@@ -89,19 +87,17 @@ const handleRegister = async () => {
       <h1 class="mb-8 text-center text-3xl font-bold text-gray-900">Create Account</h1>
 
       <form @submit.prevent="handleRegister" class="flex flex-col gap-6">
-        <!-- Error Message -->
         <div v-if="error" class="rounded-lg border-l-4 border-red-500 bg-red-50 px-4 py-3 text-sm text-red-700">
           {{ error }}
         </div>
 
-        <!-- Name Field -->
         <div class="flex flex-col gap-2">
           <label for="name" class="text-sm font-semibold text-gray-700">Full Name</label>
           <input
             id="name"
             v-model="formData.name"
             type="text"
-            placeholder="Enter your full name"
+            placeholder="Teljes neve"
             required
             :disabled="isLoading"
             class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
@@ -115,42 +111,39 @@ const handleRegister = async () => {
             id="email"
             v-model="formData.email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="Email címe"
             required
             :disabled="isLoading"
             class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
-        <!-- Password Field -->
         <div class="flex flex-col gap-2">
-          <label for="password" class="text-sm font-semibold text-gray-700">Password</label>
+          <label for="password" class="text-sm font-semibold text-gray-700">Jelszó</label>
           <input
             id="password"
             v-model="formData.password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="Jelszava"
             required
             :disabled="isLoading"
             class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
-        <!-- Confirm Password Field -->
         <div class="flex flex-col gap-2">
-          <label for="password_confirmation" class="text-sm font-semibold text-gray-700">Confirm Password</label>
+          <label for="password_confirmation" class="text-sm font-semibold text-gray-700">Jelszó újra</label>
           <input
             id="password_confirmation"
             v-model="formData.password_confirmation"
             type="password"
-            placeholder="Confirm your password"
+            placeholder="Jelszava újra"
             required
             :disabled="isLoading"
             class="rounded-lg border-2 border-gray-300 px-4 py-3 text-gray-900 transition-colors placeholder-gray-400 focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100"
           />
         </div>
 
-        <!-- Submit Button -->
         <button 
           type="submit" 
           :disabled="isLoading" 
@@ -160,9 +153,8 @@ const handleRegister = async () => {
         </button>
       </form>
 
-      <!-- Login Link -->
       <div class="mt-6 text-center text-sm text-gray-600">
-        Already have an account? <router-link to="/login" class="font-semibold text-blue-600 transition-colors hover:text-blue-700">Login here</router-link>
+        Van már fiókja? <router-link to="/login" class="font-semibold text-blue-600 transition-colors hover:text-blue-700">Bejelentkezés itt</router-link>
       </div>
     </div>
   </div>
@@ -173,7 +165,3 @@ name: register
 meta:
   title: Register
 </route>
-
-<style scoped>
-/* All styles handled via Tailwind classes */
-</style>

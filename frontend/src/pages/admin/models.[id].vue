@@ -29,7 +29,7 @@ onMounted(async () => {
       await modelStore.fetchSingleModel(modelId.value)
     }
   } catch (error) {
-    console.error('Failed to load data:', error)
+    console.error('Nem sikerült adatot betölteni:', error)
     router.push('/admin/models')
   }
 })
@@ -43,7 +43,7 @@ const handleSubmit = async (data) => {
     }
     router.push('/admin/models')
   } catch (error) {
-    console.error('Failed to save model:', error)
+    console.error('Nem sikerült a mentés:', error)
   }
 }
 

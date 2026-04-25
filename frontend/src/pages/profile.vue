@@ -13,7 +13,7 @@ onMounted(async () => {
   try {
     await orderStore.fetchUserOrders()
   } catch (err) {
-    console.error('Failed to fetch orders:', err)
+    console.error('Rendelések betöltése sikertelen:', err)
   }
 })
 

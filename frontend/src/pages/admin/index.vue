@@ -22,8 +22,8 @@ const goToModels = () => {
 <template>
   <BaseLayout>
     <div class="flex min-h-screen flex-col items-center justify-center px-4 py-12">
-      <h1 class="text-4xl font-bold text-gray-900">Admin Panel</h1>
-      <p class="mt-2 text-center text-lg text-gray-600">Select what you want to manage</p>
+      <h1 class="text-4xl font-bold text-gray-900">Admin Felület</h1>
+      <p class="mt-2 text-center text-lg text-gray-600">Mit szeretne változtatni?</p>
 
       <div class="mt-12 grid w-full max-w-2xl grid-cols-1 gap-8 md:grid-cols-2">
         <div 
@@ -32,9 +32,9 @@ const goToModels = () => {
         >
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl">🏢</div>
-            <h2 class="text-2xl font-semibold text-gray-900">Manage Brands</h2>
+            <h2 class="text-2xl font-semibold text-gray-900">Gyártók változtatása</h2>
             <p class="text-gray-600">Add, edit, or delete car brands</p>
-            <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Go to Brands →</button>
+            <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Gyártókhoz →</button>
           </div>
         </div>
 
@@ -44,9 +44,9 @@ const goToModels = () => {
         >
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl">🚗</div>
-            <h2 class="text-2xl font-semibold text-gray-900">Manage Models</h2>
+            <h2 class="text-2xl font-semibold text-gray-900">Modellek változtatása</h2>
             <p class="text-gray-600">Add, edit, or delete car models</p>
-            <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Go to Models →</button>
+            <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Modellekhez →</button>
           </div>
         </div>
       </div>
