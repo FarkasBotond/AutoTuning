@@ -9,6 +9,8 @@ import company5Img from '@/assets/images/foliatec.jpg'
 import company6Img from '@/assets/images/ebc.jpg'
 import logo from '@/assets/logo.png'
 
+
+
 const companies = [
     {
         id: 1,
@@ -40,6 +42,16 @@ const companies = [
         name: 'EBC brakes',
         image: company6Img,
     },
+    {
+        id: 7,
+        name: 'valami',
+        image: company6Img,
+    },
+    {
+        id: 8,
+        name: 'VMEWÖGWJ',
+        image: company6Img,
+    },
 ]
 
 const slider = ref(null)
@@ -60,38 +72,29 @@ const scrollRight = () => {
 </script>
 
 <template>
-    <section class="rounded-2xl bg-gradient-to-b from-zinc-900 to-zinc-800 p-5 shadow-xl">
-        <h2 class="mb-4 text-4xl font-bold text-white">
-            Gyártók
-        </h2>
+    <section class="min-w-0 rounded-2xl bg-gradient-to-b from-zinc-900 to-zinc-800 p-5 shadow-xl">
+        <h2 class="mb-4 text-4xl font-bold text-white">Gyártók</h2>
 
-        <div class="relative">
+        <div class="relative min-w-0 overflow-hidden">
             <button type="button" @click="scrollLeft"
                 class="absolute left-0 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg transition hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                    stroke="currentColor" class="h-7 w-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
+                ‹
             </button>
 
             <button type="button" @click="scrollRight"
                 class="absolute right-0 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg transition hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                    stroke="currentColor" class="h-7 w-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
+                ›
             </button>
 
-            <div ref="slider" class="scrollbar-hide flex gap-4 overflow-x-auto px-12 py-2">
+            <div ref="slider" class="scrollbar-hide flex gap-4 overflow-x-auto px-12 py-2 scroll-smooth">
                 <div v-for="company in companies" :key="company.id"
-                    class="min-w-[190px] max-w-[190px] overflow-hidden rounded-xl bg-zinc-700/90 transition duration-300 hover:-translate-y-1 hover:bg-zinc-600 hover:shadow-xl">
-                    <div v-if="company.image" class="h-[190px] overflow-hidden">
-                        <img :src="company.image" :alt="company.name" class="h-full w-full object-cover">
-                    </div>
-
-                    <div v-else
-                        class="flex h-[190px] items-center justify-center bg-zinc-600 text-lg font-bold text-white">
-                        {{ company.name }}
+                    class="shrink-0 min-w-[180px] max-w-[180px] overflow-hidden rounded-xl bg-zinc-700/90">
+                    <div class="h-[180px] bg-zinc-600">
+                        <img v-if="company.image" :src="company.image" :alt="company.name"
+                            class="h-full w-full object-cover">
+                        <div v-else class="flex h-full items-center justify-center text-lg font-bold text-white">
+                            {{ company.name }}
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-center px-3 py-3">
@@ -105,7 +108,7 @@ const scrollRight = () => {
 
         <div class="mt-5 flex justify-center">
             <button type="button"
-                class="rounded-xl bg-zinc-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600 mt-4">
+                class="rounded-xl bg-zinc-700 px-8 py-4 text-lg font-bold text-white shadow-md transition hover:bg-red-600">
                 Mutass mindent
             </button>
         </div>
@@ -114,11 +117,11 @@ const scrollRight = () => {
 
 <style scoped>
 .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 </style>

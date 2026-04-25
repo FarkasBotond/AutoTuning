@@ -24,7 +24,7 @@ const showToast = (product) => {
 </script>
 
 <template>
-    <div class="landing-page min-h-screen bg-zinc-800!">
+    <div class="landing-page min-h-screen bg-zinc-800! overflow-x-hidden">
         <BaseHeadLine />
 
         
@@ -35,7 +35,7 @@ const showToast = (product) => {
                 <SideMenu />
             </aside>
 
-            <section class="flex-1 rounded-2xl p-4 mb-20!">
+            <section class="flex-1 min-w-0 rounded-2xl p-4 mb-20!">
                 <TuningCompaniesSection/>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                     
