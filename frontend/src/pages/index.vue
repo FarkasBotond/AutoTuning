@@ -6,6 +6,8 @@ import ProductCard from '@components/ProductCard.vue'
 import BaseFooter from '@components/BaseFooter.vue'
 import Toast from '@/components/ui/Toast.vue'
 import { products } from '@/lib/mockProducts'
+import TuningCompaniesSection from '@components/TuningCompaniesSection.vue'
+
 
 const toastVisible = ref(false)
 const toastMessage = ref('')
@@ -41,6 +43,7 @@ const showToast = (product) => {
                     />
                 </div>
             </section>
+            
         </main>
 
         <BaseFooter />
