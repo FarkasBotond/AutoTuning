@@ -32,12 +32,12 @@ const handleLogout = () => {
           
           <RouterLink to="/profile"
             class="inline-flex items-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium hover:bg-gray-200 transition">
-            Profile
+            Az én fiókom
           </RouterLink>
 
           <RouterLink to="/cart"
             class="inline-flex items-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium hover:bg-gray-200 transition">
-            Cart
+            Kosár
           </RouterLink>
 
           <RouterLink 
@@ -50,7 +50,7 @@ const handleLogout = () => {
           <button 
             @click="handleLogout" 
             class="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition">
-            Logout
+            Kijelentkezés
           </button>
         </template>
         <template v-else>
