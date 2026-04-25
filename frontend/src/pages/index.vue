@@ -9,6 +9,7 @@ import { products } from '@/lib/mockProducts'
 import TuningCompaniesSection from '@components/TuningCompaniesSection.vue'
 
 
+
 const toastVisible = ref(false)
 const toastMessage = ref('')
 
@@ -26,6 +27,7 @@ const showToast = (product) => {
     <div class="landing-page min-h-screen bg-zinc-300">
         <BaseHeadLine />
 
+        
         <Toast :show="toastVisible" :message="toastMessage" />
 
         <main class="flex gap-6 px-8 py-4">
@@ -33,8 +35,10 @@ const showToast = (product) => {
                 <SideMenu />
             </aside>
 
-            <section class="flex-1 rounded-2xl p-4 !mb-20">
+            <section class="flex-1 rounded-2xl p-4 mb-20!">
+                <TuningCompaniesSection/>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    
                     <ProductCard
                         v-for="product in products"
                         :key="product.id"
