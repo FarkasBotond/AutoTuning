@@ -3,7 +3,7 @@ import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@/components/layout/SideMenu.vue'
 import BaseFooter from '@/components/BaseFooter.vue'
 import ProductCard from '@/components/ProductCard.vue'
-
+import Toast from '@/components/ui/Toast.vue'
 
 
 import allithatofutomuImg from '@/assets/images/allithatofutomu.jpg'
@@ -12,7 +12,7 @@ import legszuroImg from '@/assets/images/legszuro.jpg'
 import ledizzoImg from '@/assets/images/ledizzo.webp'
 import kipuvegImg from '@/assets/images/kipuveg.webp'
 import turboImg from '@/assets/images/turbo.jpg'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { products } from '@/lib/mockProducts'
 
@@ -42,11 +42,25 @@ const filteredProducts = computed(() => {
     return searchableText.includes(searchQuery.value)
   })
 })
+
+const toastVisible = ref(false)
+const toastMessage = ref('')
+
+const showToast = (product) => {
+    toastMessage.value = `${product.name} hozzáadva a kosárhoz`
+    toastVisible.value = true
+
+    setTimeout(() => {
+        toastVisible.value = false
+    }, 2500)
+}
 </script>
 
 <template>
   <div class="min-h-screen bg-zinc-200">
     <BaseHeadLine />
+
+    <Toast :show="toastVisible" :message="toastMessage" />
 
     <main class="flex gap-6 px-8 py-4">
       <aside class="w-[280px] shrink-0">
@@ -72,7 +86,7 @@ const filteredProducts = computed(() => {
         </div>
 
         <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
+          <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" @added-to-cart="showToast"/>
         </div>
 
         <div v-else class="rounded-2xl bg-white p-10 text-center shadow-sm">

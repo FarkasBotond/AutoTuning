@@ -1,12 +1,14 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@/components/layout/SideMenu.vue'
 import BaseFooter from '@/components/BaseFooter.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import Toast from '@/components/ui/Toast.vue'
 import { products } from '@/lib/mockProducts'
+
 
 const route = useRoute()
 const cartStore = useCartStore()
@@ -37,12 +39,27 @@ const handleAddToCart = () => {
   }
 
   cartStore.addToCart(product.value)
+  showToast(product.value)
+}
+
+const toastVisible = ref(false)
+const toastMessage = ref('')
+
+const showToast = (product) => {
+    toastMessage.value = `${product.name} hozzáadva a kosárhoz`
+    toastVisible.value = true
+
+    setTimeout(() => {
+        toastVisible.value = false
+    }, 2500)
 }
 </script>
 
 <template>
   <div class="min-h-screen bg-zinc-200">
     <BaseHeadLine />
+
+    <Toast :show="toastVisible" :message="toastMessage" />
 
     <main class="flex flex-col gap-6 px-8 py-4 lg:flex-row">
       <aside class="w-full shrink-0 lg:w-[280px]">
@@ -120,7 +137,7 @@ const handleAddToCart = () => {
 
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <ProductCard v-for="relatedProduct in relatedProducts" :key="relatedProduct.id"
-                :product="relatedProduct" />
+                :product="relatedProduct" @added-to-cart="showToast"/>
             </div>
           </div>
         </div>
