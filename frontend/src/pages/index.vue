@@ -130,18 +130,18 @@ const products = [
 </script>
 
 <template>
-    <div class="landing-page">
+    <div class="landing-page min-h-screen bg-zinc-800">
 
         <BaseHeadLine />
 
 
-        <main class="flex gap-6 px-8 py-4">
+        <main class="flex gap-6 px-8 py-4 pb-4!">
             <aside class="w-[280px] shrink-0">
                 <SideMenu />
             </aside>
 
-            <section class="flex-1 rounded-2xl bg-zinc-100 p-4">
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <section class="flex-1 rounded-2xl bg-zinc-800 p-4 mb-24">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 mb-16">
                     <ProductCard v-for="product in products" :key="product.id" :product="product" />
                 </div>
             </section>
