@@ -27,6 +27,7 @@ const goToDetails = () =>{
 
 const handleAddToCart = () =>{
     cartStore.addToCart(props.product)
+    emit('added-to-cart', props.product)
 }
 
 const emit = defineEmits(['added-to-cart'])
