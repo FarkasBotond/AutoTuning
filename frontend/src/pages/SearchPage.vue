@@ -54,6 +54,13 @@ const showToast = (product) => {
         toastVisible.value = false
     }, 2500)
 }
+
+const filterOpen = ref(false)
+const selectedBrand = ref('')
+const minPrice = ref('')
+const maxPrice = ref('')
+const onlySale = ref(false)
+const onlyInStock = ref(false)
 </script>
 
 <template>
@@ -74,6 +81,7 @@ const showToast = (product) => {
             Keresés erre: "{{ route.query.q }}"
           </p>
           <button type="button"
+          @click="filerOpen =!filterOpen"
             class="inline-flex items-center gap-3 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-red-600 hover:shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
               stroke="currentColor" class="h-4 w-4">
@@ -84,6 +92,8 @@ const showToast = (product) => {
             Szűrő
           </button>
         </div>
+
+        <div v-if="filterOpen" class="mb-4 rounded-2xl border border-zinc-300 bg-white p-4 shadow-sm"></div>
 
         <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" @added-to-cart="showToast"/>
