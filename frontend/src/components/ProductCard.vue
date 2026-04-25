@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@stores/cartStore'
-
 const props = defineProps({
     product: {
         type: Object,
@@ -29,6 +28,8 @@ const goToDetails = () =>{
 const handleAddToCart = () =>{
     cartStore.addToCart(props.product)
 }
+
+const emit = defineEmits(['added-to-cart'])
 </script>
 
 <template>
