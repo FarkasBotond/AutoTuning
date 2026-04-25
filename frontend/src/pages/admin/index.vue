@@ -33,7 +33,7 @@ const goToModels = () => {
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl">🏢</div>
             <h2 class="text-2xl font-semibold text-gray-900">Gyártók változtatása</h2>
-            <p class="text-gray-600">Add, edit, or delete car brands</p>
+            <p class="text-gray-600">Gyártó hozzáadása, változtatása és törlése</p>
             <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Gyártókhoz →</button>
           </div>
         </div>
@@ -45,7 +45,7 @@ const goToModels = () => {
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl">🚗</div>
             <h2 class="text-2xl font-semibold text-gray-900">Modellek változtatása</h2>
-            <p class="text-gray-600">Add, edit, or delete car models</p>
+            <p class="text-gray-600">Modell hozzáadása, változtatása és törlése</p>
             <button class="mt-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95">Modellekhez →</button>
           </div>
         </div>
