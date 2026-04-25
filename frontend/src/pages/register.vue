@@ -84,7 +84,7 @@ const handleRegister = async () => {
 <template>
   <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-12">
     <div class="w-full max-w-md rounded-2xl bg-white px-8 py-10 shadow-lg">
-      <h1 class="mb-8 text-center text-3xl font-bold text-gray-900">Create Account</h1>
+      <h1 class="mb-8 text-center text-3xl font-bold text-gray-900">Fiók létrehozása</h1>
 
       <form @submit.prevent="handleRegister" class="flex flex-col gap-6">
         <div v-if="error" class="rounded-lg border-l-4 border-red-500 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -92,7 +92,7 @@ const handleRegister = async () => {
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="name" class="text-sm font-semibold text-gray-700">Full Name</label>
+          <label for="name" class="text-sm font-semibold text-gray-700">Teljes név</label>
           <input
             id="name"
             v-model="formData.name"
@@ -149,7 +149,7 @@ const handleRegister = async () => {
           :disabled="isLoading" 
           class="mt-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 font-semibold text-white transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {{ isLoading ? 'Creating Account...' : 'Register' }}
+          {{ isLoading ? 'Fiók létrehozása...' : 'Regisztráció' }}
         </button>
       </form>
 
@@ -163,5 +163,5 @@ const handleRegister = async () => {
 <route lang="yaml">
 name: register
 meta:
-  title: Register
+  title: Regisztráció
 </route>
