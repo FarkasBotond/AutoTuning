@@ -12,8 +12,8 @@ defineProps({
 </script>
 
 <template>
-    <transition enter-active-class="transition duration-300" enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-200" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
-        <div v-if="show" class="fixed right-6 top-6 z-50 rounded-2xl border border-green-400 bg-green-500 px-5 py-3 text-sm font-semibold text-white shadow-2xl">
+    <transition enter-active-class="transition duration-300" enter-from-class="opacity-0 scale-95" enter-to-class="opacity-100 scale-100" leave-active-class="transition duration-200" leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
+        <div v-if="show" class="fixed left-1/2 top-1/2 z-50 w-[min(90vw,650px)] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-green-300 bg-green-500 px-8 py-6 text-center text-xl font-bold text-white shadow-2xl">
             {{ message }}
         </div>
     </transition>
