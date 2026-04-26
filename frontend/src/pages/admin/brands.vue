@@ -45,134 +45,85 @@ const goToEdit = (brandId) => {
 
 <template>
   <BaseLayout>
-    <div class="container mx-auto p-6">
-      <div class="admin-nav mb-6">
+    <div class="mx-auto w-full max-w-[1300px] px-4 py-8 md:px-6">
+      <div class="mb-6 flex flex-wrap items-center gap-3">
         <button
           @click="() => router.push('/admin')"
-          class="nav-back-btn"
+          class="btn-muted px-4 py-2"
         >
           ← Admin Panel
         </button>
-        <div class="admin-tabs">
-          <button class="admin-tab active">Gyártók</button>
+        <div class="ml-auto flex items-center gap-2">
+          <button class="btn-primary px-4 py-2 text-xs">Gyártók</button>
           <button
             @click="() => router.push('/admin/models')"
-            class="admin-tab"
+            class="btn-muted px-4 py-2 text-xs"
           >
-            Models
+            Modellek
           </button>
         </div>
       </div>
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-4xl font-bold">Gyártók kezelései</h1>
-        <button
-          @click="goToCreate"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Add New Brand
-        </button>
-      </div>
 
-      <div v-if="brandStore.isLoading" class="text-center py-8">
-        <p class="text-gray-500">Betöltés...</p>
-      </div>
+      <div class="glass-panel p-6 md:p-8">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h1 class="text-3xl font-extrabold text-zinc-900">Gyártók kezelése</h1>
+          <button
+            @click="goToCreate"
+            class="btn-primary"
+          >
+            Új gyártó
+          </button>
+        </div>
 
-      <div v-else-if="brandStore.error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        {{ brandStore.error }}
-      </div>
+        <div v-if="brandStore.isLoading" class="text-center py-8">
+          <p class="text-zinc-500">Betöltés...</p>
+        </div>
 
-      <div v-else-if="brandStore.brands.length === 0" class="text-center py-8">
-        <p class="text-gray-500">Nincs egy gyártó sem! Hozzon létre egyet!</p>
-      </div>
+        <div v-else-if="brandStore.error" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {{ brandStore.error }}
+        </div>
 
-      <div v-else class="overflow-x-auto">
-        <table class="w-full border-collapse border border-gray-300">
-          <thead class="bg-gray-200">
-            <tr>
-              <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">Név</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Cselekvések</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="brand in brandStore.brands" :key="brand.id" class="hover:bg-gray-100">
-              <td class="border border-gray-300 px-4 py-2">{{ brand.id }}</td>
-              <td class="border border-gray-300 px-4 py-2">{{ brand.name }}</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">
-                <button
-                  @click="goToEdit(brand.id)"
-                  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  @click="handleDelete(brand.id)"
-                  class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded"
-                >
-                  Törlés
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div v-else-if="brandStore.brands.length === 0" class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
+          <p class="text-zinc-600">Nincs egy gyártó sem! Hozz létre egyet.</p>
+        </div>
+
+        <div v-else class="overflow-x-auto rounded-2xl border border-zinc-200">
+          <table class="w-full border-collapse bg-white">
+            <thead class="bg-zinc-50">
+              <tr>
+                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">ID</th>
+                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Név</th>
+                <th class="border-b border-zinc-200 px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">Műveletek</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="brand in brandStore.brands" :key="brand.id" class="hover:bg-zinc-50">
+                <td class="border-b border-zinc-100 px-4 py-3 font-medium text-zinc-700">{{ brand.id }}</td>
+                <td class="border-b border-zinc-100 px-4 py-3 font-semibold text-zinc-900">{{ brand.name }}</td>
+                <td class="border-b border-zinc-100 px-4 py-3 text-center">
+                  <div class="inline-flex gap-2">
+                    <button
+                      @click="goToEdit(brand.id)"
+                      class="btn-muted px-3 py-2 text-xs"
+                    >
+                      Szerkesztés
+                    </button>
+                    <button
+                      @click="handleDelete(brand.id)"
+                      class="btn-accent px-3 py-2 text-xs"
+                    >
+                      Törlés
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </BaseLayout>
 </template>
-
-<style scoped>
-.admin-nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e5e7eb;
-}
-
-.nav-back-btn {
-  padding: 0.5rem 1rem;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-weight: 600;
-  color: #1f2937;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nav-back-btn:hover {
-  background: #e5e7eb;
-  border-color: #9ca3af;
-}
-
-.admin-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-left: auto;
-}
-
-.admin-tab {
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: 2px solid #d1d5db;
-  border-radius: 6px;
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.admin-tab:hover {
-  border-color: #9ca3af;
-  color: #1f2937;
-}
-
-.admin-tab.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: white;
-}
-</style>
 
 <route lang="yaml">
 name: admin-brands

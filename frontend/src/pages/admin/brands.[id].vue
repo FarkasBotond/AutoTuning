@@ -51,8 +51,15 @@ const handleCancel = () => {
 
 <template>
   <BaseLayout>
-    <div class="container mx-auto p-6">
-      <h1 class="text-4xl font-bold mb-6">{{ pageTitle }}</h1>
+    <div class="mx-auto w-full max-w-[1300px] px-4 py-8 md:px-6">
+      <div class="mb-6 flex flex-wrap items-center gap-3">
+        <button @click="() => router.push('/admin/brands')" class="btn-muted px-4 py-2">← Vissza a gyártókhoz</button>
+      </div>
+
+      <div class="mb-5">
+        <h1 class="text-3xl font-extrabold text-zinc-900">{{ isEditMode ? 'Gyártó szerkesztése' : 'Új gyártó létrehozása' }}</h1>
+        <p class="mt-2 text-sm text-zinc-500">Töltsd ki az alábbi mezőt, majd mentsd a módosítást.</p>
+      </div>
 
       <BrandForm
         :brand="brandStore.currentBrand"
