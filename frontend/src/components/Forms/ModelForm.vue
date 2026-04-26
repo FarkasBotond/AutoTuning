@@ -18,11 +18,28 @@ const props = defineProps({
 
 const emit = defineEmits(['submit', 'cancel'])
 
+const parseLegacyModelLabel = (label = '') => {
+  const normalized = String(label || '').trim().replace(/\s+/g, ' ')
+
+  if (!normalized) {
+    return { name: '', gen: '', mod: '' }
+  }
+
+  const match = normalized.match(/^(.*?)\s+gen\s+(.+)$/i)
+  if (!match) {
+    return { name: normalized, gen: '', mod: '' }
+  }
+
+  return {
+    name: match[1].trim(),
+    gen: match[2].trim(),
+    mod: ''
+  }
+}
+
 const form = ref({
   brand_id: null,
   name: '',
-  gen: '',
-  mod: '',
   startyear: null,
   endyear: null
 })
@@ -32,12 +49,10 @@ const errors = ref({})
 watch(() => props.model, (newModel) => {
   if (newModel) {
     form.value = {
-      brand_id: newModel.brand_id,
-      name: newModel.name,
-      gen: newModel.gen,
-      mod: newModel.mod,
-      startyear: newModel.startyear,
-      endyear: newModel.endyear
+      brand_id: newModel.brand_id ?? newModel.brand?.id ?? null,
+      name: newModel.name || parseLegacyModelLabel(newModel.model).name,
+      startyear: newModel.startyear ?? newModel.start_year ?? null,
+      endyear: newModel.endyear ?? newModel.end_year ?? null
     }
   }
 }, { immediate: true })
@@ -53,18 +68,6 @@ const validate = () => {
     errors.value.name = 'Model name is required'
   } else if (form.value.name.length > 50) {
     errors.value.name = 'Model name must not exceed 50 characters'
-  }
-
-  if (!form.value.gen) {
-    errors.value.gen = 'Generation is required'
-  } else if (form.value.gen.length > 50) {
-    errors.value.gen = 'Generation must not exceed 50 characters'
-  }
-
-  if (!form.value.mod) {
-    errors.value.mod = 'Modification is required'
-  } else if (form.value.mod.length > 50) {
-    errors.value.mod = 'Modification must not exceed 50 characters'
   }
 
   if (!form.value.startyear) {
@@ -106,7 +109,7 @@ const handleSubmit = () => {
       <span v-if="errors.brand_id" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.brand_id }}</span>
     </div>
 
-    <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="mb-4">
       <div>
         <label for="name" class="mb-2 block text-sm font-semibold text-zinc-700">
           Modell név
@@ -121,36 +124,6 @@ const handleSubmit = () => {
       />
       <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
       </div>
-
-      <div>
-      <label for="gen" class="mb-2 block text-sm font-semibold text-zinc-700">
-        Generáció
-      </label>
-      <input
-        id="gen"
-        v-model="form.gen"
-        type="text"
-        maxlength="50"
-        class="brand-input"
-        placeholder="Pl. G80"
-      />
-      <span v-if="errors.gen" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.gen }}</span>
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <label for="mod" class="mb-2 block text-sm font-semibold text-zinc-700">
-        Modifikáció
-      </label>
-      <input
-        id="mod"
-        v-model="form.mod"
-        type="text"
-        maxlength="50"
-        class="brand-input"
-        placeholder="Pl. Competition"
-      />
-      <span v-if="errors.mod" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.mod }}</span>
     </div>
 
     <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
