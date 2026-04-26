@@ -1,10 +1,21 @@
 <script setup="">
 import BaseFooter from '@components/BaseFooter.vue';
-import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
+import { useRouter } from 'vue-router'
 import { useCartStore } from '@stores/cartStore';
 
 
+const router = useRouter()
+
 const cartStore = useCartStore()
+
+const goBack = () => {
+    if (window.history.length > 1) {
+        router.back()
+        return
+    }
+
+    router.push('/')
+}
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
@@ -15,10 +26,15 @@ const formatPrice = (price) => {
 <template>
     <div class="min-h-screen flex flex-col">
 
-        <BaseHeadLine />
-
-
         <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4 md:px-6">
+            <button
+                type="button"
+                class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+                @click="goBack"
+            >
+                ← Vissza
+            </button>
+
             <h1 class="mb-6 text-3xl font-extrabold text-zinc-900 md:text-4xl">
                 Kosár
             </h1>
