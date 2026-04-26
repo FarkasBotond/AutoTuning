@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModelStore } from '@stores/modelStore'
 import { useBrandStore } from '@stores/brandStore'
@@ -10,6 +10,10 @@ const router = useRouter()
 const modelStore = useModelStore()
 const brandStore = useBrandStore()
 const authStore = useAuthStore()
+const selectedBrandId = ref('')
+const selectedYearMin = ref(null)
+const selectedYearMax = ref(null)
+const currentYear = new Date().getFullYear()
 
 const isAdmin = computed(() => authStore.user?.role === 'admin')
 
@@ -43,6 +47,72 @@ const getBrandName = (brandId) => {
   const brand = brandStore.brands.find(b => b.id === brandId)
   return brand?.name || 'Ismeretlen'
 }
+
+const brandFilteredModels = computed(() => {
+  if (!selectedBrandId.value) {
+    return modelStore.models
+  }
+
+  const brandId = Number(selectedBrandId.value)
+  return modelStore.models.filter(model => model.brand_id === brandId)
+})
+
+const yearBounds = computed(() => {
+  if (modelStore.models.length === 0) {
+    return { min: 1900, max: currentYear }
+  }
+
+  const starts = modelStore.models
+    .map(model => Number(model.startyear))
+    .filter(Number.isFinite)
+
+  const ends = modelStore.models
+    .map(model => Number(model.endyear || model.startyear || currentYear))
+    .filter(Number.isFinite)
+
+  const min = starts.length ? Math.min(...starts) : 1900
+  const max = ends.length ? Math.max(...ends) : currentYear
+
+  return { min, max }
+})
+
+watch(yearBounds, (bounds) => {
+  if (selectedYearMin.value === null || selectedYearMin.value < bounds.min || selectedYearMin.value > bounds.max) {
+    selectedYearMin.value = bounds.min
+  }
+
+  if (selectedYearMax.value === null || selectedYearMax.value > bounds.max || selectedYearMax.value < bounds.min) {
+    selectedYearMax.value = bounds.max
+  }
+
+  if (selectedYearMin.value > selectedYearMax.value) {
+    selectedYearMin.value = selectedYearMax.value
+  }
+}, { immediate: true })
+
+const onMinYearInput = (event) => {
+  const value = Number(event.target.value)
+  selectedYearMin.value = Math.min(value, selectedYearMax.value ?? value)
+}
+
+const onMaxYearInput = (event) => {
+  const value = Number(event.target.value)
+  selectedYearMax.value = Math.max(value, selectedYearMin.value ?? value)
+}
+
+const filteredModels = computed(() => {
+  return brandFilteredModels.value.filter((model) => {
+    const start = Number(model.startyear)
+    const end = Number(model.endyear || currentYear)
+
+    if (!Number.isFinite(start)) {
+      return false
+    }
+
+    const safeEnd = Number.isFinite(end) ? end : start
+    return start >= selectedYearMin.value && safeEnd <= selectedYearMax.value
+  })
+})
 
 const goToCreate = () => {
   router.push('/admin/models/new')
@@ -93,12 +163,56 @@ const goToEdit = (modelId) => {
           {{ modelStore.error }}
         </div>
 
-        <div v-else-if="modelStore.models.length === 0" class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
-          <p class="text-zinc-600">Nincs egy modell sem! Hozzon létre egyet!</p>
-        </div>
+        <template v-else>
+          <div class="mb-6 flex flex-wrap items-end gap-6">
+            <div class="w-full max-w-xs">
+              <label for="brand-filter" class="mb-2 block text-sm font-semibold text-zinc-700">Szűrés márkára:</label>
+              <select
+                id="brand-filter"
+                v-model="selectedBrandId"
+                class="brand-input w-full"
+              >
+                <option value="">Összes márka</option>
+                <option v-for="brand in brandStore.brands" :key="brand.id" :value="String(brand.id)">
+                  {{ brand.name }}
+                </option>
+              </select>
+            </div>
 
-        <div v-else class="overflow-x-auto rounded-2xl border border-zinc-200">
-          <table class="w-full border-collapse bg-white">
+            <div class="w-full max-w-xl flex-1">
+              <label class="mb-2 block text-sm font-semibold text-zinc-700">Gyártási év szűrő (intervallum)</label>
+              <div class="relative h-10">
+                <div class="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-zinc-300"></div>
+                <input
+                  :min="yearBounds.min"
+                  :max="yearBounds.max"
+                  :value="selectedYearMin"
+                  type="range"
+                  class="pointer-events-none absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-teal-600"
+                  @input="onMinYearInput"
+                />
+                <input
+                  :min="yearBounds.min"
+                  :max="yearBounds.max"
+                  :value="selectedYearMax"
+                  type="range"
+                  class="pointer-events-none absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500"
+                  @input="onMaxYearInput"
+                />
+              </div>
+              <div class="mt-2 flex items-center justify-between text-sm font-semibold text-zinc-700">
+                <span>Min: {{ selectedYearMin }}</span>
+                <span>Max: {{ selectedYearMax }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="filteredModels.length === 0" class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
+            <p class="text-zinc-600">Nincs egy modell sem! Hozzon létre egyet!</p>
+          </div>
+
+          <div v-else class="overflow-x-auto rounded-2xl border border-zinc-200">
+            <table class="w-full border-collapse bg-white">
             <thead class="bg-zinc-50">
               <tr>
                 <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">ID</th>
@@ -109,7 +223,7 @@ const goToEdit = (modelId) => {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="model in modelStore.models" :key="model.id" class="hover:bg-zinc-50">
+              <tr v-for="model in filteredModels" :key="model.id" class="hover:bg-zinc-50">
                 <td class="border-b border-zinc-100 px-4 py-3 font-medium text-zinc-700">{{ model.id }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 font-semibold text-zinc-800">{{ getBrandName(model.brand_id) }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 text-zinc-800">{{ model.name }}</td>
@@ -132,8 +246,9 @@ const goToEdit = (modelId) => {
                 </td>
               </tr>
             </tbody>
-          </table>
-        </div>
+            </table>
+          </div>
+        </template>
       </div>
     </div>
   </BaseLayout>
