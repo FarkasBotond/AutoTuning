@@ -18,7 +18,7 @@ const handleLogout = () => {
     <div class="w-full border border-zinc-800 bg-white/90 px-5 py-4 shadow-lg">
       <div class="flex items-center gap-5">
         <div class="shrink-0">
-          <RouterLink :to="{ name: 'landing' }"
+          <RouterLink :to="{ name: '/' }"
             class="flex items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-100 p-2 transition hover:bg-zinc-200">
             <img :src="logo" alt="Logo" class="h-28 w-auto object-contain" />
           </RouterLink>
