@@ -125,7 +125,7 @@ const formatBrandName = (brand) => {
             </button>
         </div>
 
-        <div class="max-h-[720px] overflow-y-auto p-3">
+        <div class="p-3">
             <div v-if="activeTab === 'categories'" class="space-y-3">
                 <div
                     v-for="item in categories"
