@@ -15,8 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CarBrandSeeder::class,
-            CarModelSeeder::class
-        ]);
+            CarModelSeeder::class,
+            ServiceCategorySeeder::class,
+            TuningProductSeeder::class,
+]);
 
         User::factory()->create([
             'name' => 'Admin User',
