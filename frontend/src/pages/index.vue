@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@components/layout/SideMenu.vue'
 import ProductCard from '@components/ProductCard.vue'
@@ -12,6 +12,50 @@ const tuningProductStore = useTuningProductStore()
 
 const toastVisible = ref(false)
 const toastMessage = ref('')
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+const totalPages = computed(() => {
+    const total = Math.ceil(tuningProductStore.products.length / itemsPerPage)
+    return total > 0 ? total : 1
+})
+
+const paginatedProducts = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    return tuningProductStore.products.slice(start, start + itemsPerPage)
+})
+
+const canGoPrev = computed(() => currentPage.value > 1)
+const canGoNext = computed(() => currentPage.value < totalPages.value)
+
+const goPrevPage = () => {
+    if (!canGoPrev.value) {
+        return
+    }
+
+    currentPage.value -= 1
+}
+
+const goNextPage = () => {
+    if (!canGoNext.value) {
+        return
+    }
+
+    currentPage.value += 1
+}
+
+watch(
+    () => tuningProductStore.products.length,
+    () => {
+        currentPage.value = 1
+    }
+)
+
+watch(totalPages, (newTotalPages) => {
+    if (currentPage.value > newTotalPages) {
+        currentPage.value = newTotalPages
+    }
+})
 
 onMounted(async () => {
     try {
@@ -71,11 +115,38 @@ const showToast = (product) => {
                     class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
                 >
                     <ProductCard
-                        v-for="product in tuningProductStore.products"
+                        v-for="product in paginatedProducts"
                         :key="product.id"
                         :product="product"
                         @added-to-cart="showToast"
                     />
+                </div>
+
+                <div
+                    v-if="tuningProductStore.products.length > itemsPerPage"
+                    class="flex items-center justify-center gap-3 pt-2"
+                >
+                    <button
+                        type="button"
+                        class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
+                        :disabled="!canGoPrev"
+                        @click="goPrevPage"
+                    >
+                        Előző
+                    </button>
+
+                    <span class="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700">
+                        {{ currentPage }} / {{ totalPages }}
+                    </span>
+
+                    <button
+                        type="button"
+                        class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
+                        :disabled="!canGoNext"
+                        @click="goNextPage"
+                    >
+                        Következő
+                    </button>
                 </div>
             </section>
         </main>
