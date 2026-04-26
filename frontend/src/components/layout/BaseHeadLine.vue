@@ -40,7 +40,7 @@ const handleLogout = () => {
         <div class="order-2 flex shrink-0 items-center gap-2 md:gap-3 lg:order-3">
           <template v-if="authStore.isAuthenticated">
             <span class="hidden rounded-xl bg-zinc-100 px-3 py-2 text-xs font-semibold text-zinc-600 xl:inline">
-              {{ authStore.user?.email }}
+              {{ authStore.user?.name || authStore.user?.email }}
             </span>
 
             <RouterLink
