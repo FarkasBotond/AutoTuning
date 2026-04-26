@@ -56,28 +56,28 @@ const showToast = (product) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-200">
+  <div class="min-h-screen">
     <BaseHeadLine />
 
     <Toast :show="toastVisible" :message="toastMessage" />
 
-    <main class="flex flex-col gap-6 px-8 py-4 lg:flex-row">
-      <aside class="w-full shrink-0 lg:w-[280px]">
+    <main class="mx-auto flex w-full max-w-[1550px] flex-col gap-6 px-4 py-4 md:px-6 lg:flex-row lg:items-start">
+      <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[295px]">
         <SideMenu />
       </aside>
 
       <section class="flex-1">
         <div v-if="product" class="space-y-6">
-          <div class="rounded-3xl bg-zinc-100 p-5 shadow-sm">
+          <div class="glass-panel p-5 md:p-6">
             <div class="grid gap-6 lg:grid-cols-[480px_1fr]">
-              <div class="overflow-hidden rounded-2xl bg-white">
+              <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
                 <img :src="product.image" :alt="product.name" class="h-full w-full object-cover">
               </div>
 
               <div class="flex flex-col justify-between">
                 <div>
                   <p v-if="product.badge"
-                    class="mb-3 inline-block rounded-lg bg-red-600 px-3 py-1 text-sm font-bold uppercase text-white">
+                    class="mb-3 inline-block rounded-lg bg-orange-500 px-3 py-1 text-sm font-bold uppercase text-white">
                     {{ product.badge }}
                   </p>
 
@@ -94,16 +94,16 @@ const showToast = (product) => {
                       {{ formatPrice(product.oldPrice) }} Ft
                     </span>
 
-                    <span class="text-4xl font-extrabold text-red-600">
+                    <span class="text-4xl font-extrabold text-teal-700">
                       {{ formatPrice(product.price) }} Ft
                     </span>
                   </div>
 
-                  <p class="mt-4 text-base font-semibold text-green-600">
+                  <p class="mt-4 text-base font-semibold text-emerald-600">
                     {{ product.stockText }}
                   </p>
 
-                  <div class="mt-6 rounded-2xl bg-white p-4 text-zinc-700 shadow-sm">
+                  <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-700 shadow-sm">
                     <h2 class="mb-2 text-xl font-bold text-zinc-900">
                       Termékleírás
                     </h2>
@@ -116,12 +116,12 @@ const showToast = (product) => {
 
                 <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <button type="button"
-                    class="rounded-xl bg-zinc-900 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-zinc-800">
+                    class="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-200">
                     Megnézem
                   </button>
 
                   <button type="button"
-                    class="rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500"
+                    class="rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-800"
                     @click="handleAddToCart">
                     Kosárba
                   </button>
@@ -130,7 +130,7 @@ const showToast = (product) => {
             </div>
           </div>
 
-          <div class="rounded-3xl bg-zinc-100 p-5 shadow-sm">
+          <div class="glass-panel p-5 md:p-6">
             <h2 class="mb-5 text-2xl font-bold text-zinc-900">
               Hasonló termékek
             </h2>
@@ -142,7 +142,7 @@ const showToast = (product) => {
           </div>
         </div>
 
-        <div v-else class="rounded-3xl bg-zinc-100 p-10 text-center shadow-sm">
+        <div v-else class="glass-panel p-10 text-center">
           <h2 class="text-3xl font-bold text-zinc-900">
             A termék nem található
           </h2>

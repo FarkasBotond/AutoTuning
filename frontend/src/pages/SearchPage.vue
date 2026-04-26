@@ -64,25 +64,25 @@ const onlyInStock = ref(false)
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-800">
+  <div class="min-h-screen">
     <BaseHeadLine />
 
     <Toast :show="toastVisible" :message="toastMessage" />
 
-    <main class="flex gap-6 px-8 py-4">
-      <aside class="w-[280px] shrink-0">
+    <main class="mx-auto flex w-full max-w-[1550px] flex-col gap-6 px-4 py-4 md:px-6 lg:flex-row lg:items-start">
+      <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[295px]">
         <SideMenu />
       </aside>
 
-      <section class="flex-1 rounded-2xl bg-zinc-800 p-4">
-        <div class="mb-4 flex items-center justify-between rounded-xl bg-zinc-200 px-4 py-3">
-          <h2 class="text-3xl font-bold text-zinc-900">Keresési eredmények</h2>
-          <p class="mt-1 text-sm text-zinc-600">
-            Keresés erre: "{{ route.query.q }}"
-          </p>
+      <section class="flex-1 rounded-3xl bg-white/55 p-4 backdrop-blur-sm md:p-5">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-200 bg-white px-4 py-3">
+          <div>
+            <h2 class="text-2xl font-extrabold text-zinc-900 md:text-3xl">Keresési eredmények</h2>
+            <p class="mt-1 text-sm text-zinc-500">Keresés erre: "{{ route.query.q }}"</p>
+          </div>
           <button type="button"
-          @click="filerOpen =!filterOpen"
-            class="inline-flex items-center gap-3 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-red-600 hover:shadow-lg">
+          @click="filterOpen = !filterOpen"
+            class="btn-muted px-4 py-2.5">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
               stroke="currentColor" class="h-4 w-4">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -93,13 +93,15 @@ const onlyInStock = ref(false)
           </button>
         </div>
 
-        <div v-if="filterOpen" class="mb-4 rounded-2xl border border-zinc-300 bg-white p-4 shadow-sm"></div>
+        <div v-if="filterOpen" class="mb-4 rounded-2xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 shadow-sm">
+          Szűrők hamarosan érkeznek.
+        </div>
 
         <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" @added-to-cart="showToast"/>
         </div>
 
-        <div v-else class="rounded-2xl bg-white p-10 text-center shadow-sm">
+        <div v-else class="rounded-2xl border border-zinc-200 bg-white p-10 text-center shadow-sm">
           <h3 class="text-2xl font-bold text-zinc-900">
             Nincs találat
           </h3>

@@ -84,24 +84,23 @@ const getStatusLabel = (status) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-200">
+  <div class="min-h-screen">
     <BaseHeadLine />
 
-    <main class="flex gap-6 px-8 py-4">
-      <aside class="w-[280px] shrink-0">
+    <main class="mx-auto flex w-full max-w-[1550px] flex-col gap-6 px-4 py-4 md:px-6 lg:flex-row lg:items-start">
+      <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[295px]">
         <SideMenu />
       </aside>
 
       <section class="flex-1">
-        <!-- User Info Card -->
-        <div class="rounded-3xl bg-zinc-100 p-8 shadow-sm mb-6">
+        <div class="glass-panel mb-6 p-8">
           <div class="flex items-center justify-between mb-6">
             <div>
               <h1 class="text-4xl font-bold text-zinc-900">{{ userName }}</h1>
               <p class="mt-2 text-lg text-zinc-600">{{ userEmail }}</p>
             </div>
             <div class="text-right">
-              <div class="inline-block rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-4">
+              <div class="inline-block rounded-full bg-gradient-to-br from-teal-600 to-cyan-700 p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="h-12 w-12 text-white">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                 </svg>
@@ -110,27 +109,26 @@ const getStatusLabel = (status) => {
           </div>
 
           <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div class="rounded-xl bg-white p-4 shadow-sm">
+            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
               <p class="text-sm font-semibold text-zinc-600 mb-1">Fiók létrehozva</p>
               <p class="text-lg font-bold text-zinc-900">{{ createdAt }}</p>
             </div>
-            <div class="rounded-xl bg-white p-4 shadow-sm">
+            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
               <p class="text-sm font-semibold text-zinc-600 mb-1">Összes rendelés</p>
               <p class="text-lg font-bold text-zinc-900">{{ userOrders.length }} db</p>
             </div>
-            <div class="rounded-xl bg-white p-4 shadow-sm">
+            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
               <p class="text-sm font-semibold text-zinc-600 mb-1">Teljes költés</p>
-              <p class="text-lg font-bold text-red-600">{{ formatPrice(userOrders.reduce((sum, order) => sum + order.total, 0)) }} Ft</p>
+              <p class="text-lg font-bold text-teal-700">{{ formatPrice(userOrders.reduce((sum, order) => sum + order.total, 0)) }} Ft</p>
             </div>
           </div>
         </div>
 
-        <!-- Orders Section -->
-        <div class="rounded-3xl bg-zinc-100 p-8 shadow-sm">
+        <div class="glass-panel p-8">
           <h2 class="mb-6 text-2xl font-bold text-zinc-900">Rendelések</h2>
 
           <div v-if="userOrders.length > 0" class="space-y-4">
-            <div v-for="order in userOrders" :key="order.id" class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div v-for="order in userOrders" :key="order.id" class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
               <div class="flex items-start justify-between mb-4">
                 <div>
                   <p class="text-sm font-semibold text-zinc-500 mb-1">Rendelés szám</p>
@@ -154,7 +152,7 @@ const getStatusLabel = (status) => {
                 </div>
                 <div>
                   <p class="text-sm font-semibold text-zinc-600 mb-1">Összesen</p>
-                  <p class="text-lg font-bold text-red-600">{{ formatPrice(order.total) }} Ft</p>
+                  <p class="text-lg font-bold text-teal-700">{{ formatPrice(order.total) }} Ft</p>
                 </div>
               </div>
 
@@ -180,10 +178,7 @@ const getStatusLabel = (status) => {
             <p class="mt-2 text-zinc-600">
               Kezdj el vásárolni és követsd nyomon itt a rendeléseidet!
             </p>
-            <router-link 
-              to="/" 
-              class="mt-4 inline-block rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-500"
-            >
+            <router-link to="/" class="btn-primary mt-4 inline-flex">
               Vissza a termékekhez
             </router-link>
           </div>

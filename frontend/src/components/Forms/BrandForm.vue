@@ -48,37 +48,37 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-md">
-    <div class="mb-4">
-      <label for="name" class="block text-gray-700 font-bold mb-2">
-        Brand Name
+  <form @submit.prevent="handleSubmit" class="glass-panel max-w-xl p-6 md:p-8">
+    <div class="mb-5">
+      <label for="name" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Gyártó neve
       </label>
       <input
         id="name"
         v-model="form.name"
         type="text"
         maxlength="100"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter brand name"
+        class="brand-input"
+        placeholder="Pl. BMW"
       />
-      <span v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</span>
+      <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
     </div>
 
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
       <button
         type="submit"
         :disabled="loading"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+        class="btn-primary disabled:opacity-60"
       >
-        {{ loading ? 'Saving...' : 'Save' }}
+        {{ loading ? 'Mentés...' : 'Mentés' }}
       </button>
       <button
         type="button"
         @click="$emit('cancel')"
         :disabled="loading"
-        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+        class="btn-muted disabled:opacity-60"
       >
-        Cancel
+        Mégse
       </button>
     </div>
   </form>

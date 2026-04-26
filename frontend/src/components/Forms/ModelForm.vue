@@ -88,114 +88,118 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-md">
+  <form @submit.prevent="handleSubmit" class="glass-panel max-w-3xl p-6 md:p-8">
     <div class="mb-4">
-      <label for="brand_id" class="block text-gray-700 font-bold mb-2">
-        Brand
+      <label for="brand_id" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Gyártó
       </label>
       <select
         id="brand_id"
         v-model.number="form.brand_id"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="brand-input"
       >
-        <option value="">Select a brand</option>
+        <option value="">Válassz gyártót</option>
         <option v-for="brand in brands" :key="brand.id" :value="brand.id">
           {{ brand.name }}
         </option>
       </select>
-      <span v-if="errors.brand_id" class="text-red-500 text-sm">{{ errors.brand_id }}</span>
+      <span v-if="errors.brand_id" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.brand_id }}</span>
     </div>
 
-    <div class="mb-4">
-      <label for="name" class="block text-gray-700 font-bold mb-2">
-        Model Name
-      </label>
+    <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div>
+        <label for="name" class="mb-2 block text-sm font-semibold text-zinc-700">
+          Modell név
+        </label>
       <input
         id="name"
         v-model="form.name"
         type="text"
         maxlength="50"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter model name"
+        class="brand-input"
+        placeholder="Pl. M3"
       />
-      <span v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</span>
-    </div>
+      <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
+      </div>
 
-    <div class="mb-4">
-      <label for="gen" class="block text-gray-700 font-bold mb-2">
-        Generation
+      <div>
+      <label for="gen" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Generáció
       </label>
       <input
         id="gen"
         v-model="form.gen"
         type="text"
         maxlength="50"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter generation"
+        class="brand-input"
+        placeholder="Pl. G80"
       />
-      <span v-if="errors.gen" class="text-red-500 text-sm">{{ errors.gen }}</span>
+      <span v-if="errors.gen" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.gen }}</span>
+      </div>
     </div>
 
     <div class="mb-4">
-      <label for="mod" class="block text-gray-700 font-bold mb-2">
-        Modification
+      <label for="mod" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Modifikáció
       </label>
       <input
         id="mod"
         v-model="form.mod"
         type="text"
         maxlength="50"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter modification"
+        class="brand-input"
+        placeholder="Pl. Competition"
       />
-      <span v-if="errors.mod" class="text-red-500 text-sm">{{ errors.mod }}</span>
+      <span v-if="errors.mod" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.mod }}</span>
     </div>
 
-    <div class="mb-4">
-      <label for="startyear" class="block text-gray-700 font-bold mb-2">
-        Start Year
+    <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div>
+      <label for="startyear" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Kezdő év
       </label>
       <input
         id="startyear"
         v-model.number="form.startyear"
         type="number"
         min="1900"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter start year"
+        class="brand-input"
+        placeholder="Pl. 2022"
       />
-      <span v-if="errors.startyear" class="text-red-500 text-sm">{{ errors.startyear }}</span>
-    </div>
+      <span v-if="errors.startyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.startyear }}</span>
+      </div>
 
-    <div class="mb-4">
-      <label for="endyear" class="block text-gray-700 font-bold mb-2">
-        End Year (Optional)
+      <div>
+      <label for="endyear" class="mb-2 block text-sm font-semibold text-zinc-700">
+        Záró év (opcionális)
       </label>
       <input
         id="endyear"
         v-model.number="form.endyear"
         type="number"
         min="1900"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Enter end year (leave empty if ongoing)"
+        class="brand-input"
+        placeholder="Pl. 2025"
       />
-      <span v-if="errors.endyear" class="text-red-500 text-sm">{{ errors.endyear }}</span>
+      <span v-if="errors.endyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.endyear }}</span>
+      </div>
     </div>
 
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
       <button
         type="submit"
         :disabled="loading"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+        class="btn-primary disabled:opacity-60"
       >
-        {{ loading ? 'Saving...' : 'Save' }}
+        {{ loading ? 'Mentés...' : 'Mentés' }}
       </button>
       <button
         type="button"
         @click="$emit('cancel')"
         :disabled="loading"
-        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+        class="btn-muted disabled:opacity-60"
       >
-        Cancel
+        Mégse
       </button>
     </div>
   </form>

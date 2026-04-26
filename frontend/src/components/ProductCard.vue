@@ -35,10 +35,10 @@ const emit = defineEmits(['added-to-cart'])
 
 <template>
     <article
-        class="group overflow-hidden rounded-2xl border border-zinc-700 bg-gradient-to-b from-zinc-900 to-black text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:border-zinc-500 hover:shadow-2xl">
+        class="group overflow-hidden rounded-3xl border border-zinc-200 bg-white text-zinc-900 shadow-[0_18px_40px_-26px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_24px_50px_-22px_rgba(15,118,110,0.28)]">
         <div class="relative">
             <div
-                class="flex h-52 items-center justify-center overflow-hidden bg-zinc-800">
+                class="flex h-52 items-center justify-center overflow-hidden bg-zinc-100">
                 <img
                     v-if="product.image"
                     :src="product.image"
@@ -54,46 +54,48 @@ const emit = defineEmits(['added-to-cart'])
 
             <span
                 v-if="product.badge"
-                class="absolute left-3 top-3 rounded-lg bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
+                class="absolute left-3 top-3 rounded-lg bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
                 {{ product.badge }}
             </span>
         </div>
 
         <div class="space-y-3 p-4">
-            <h3 class="min-h-[56px] text-lg font-bold leading-snug text-white">
+            <h3 class="min-h-[56px] text-lg font-bold leading-snug text-zinc-900">
                 {{ product.name }}
             </h3>
 
-            <p class="text-sm font-medium text-zinc-400">
+            <p class="text-sm font-medium text-zinc-500">
                 {{ product.brand }}
             </p>
 
             <div class="flex items-end gap-2">
                 <span
                     v-if="product.oldPrice"
-                    class="text-sm text-zinc-500 line-through">
+                    class="text-sm text-zinc-400 line-through">
                     {{ formatPrice(product.oldPrice) }} Ft
                 </span>
 
-                <span class="text-2xl font-extrabold text-red-500">
+                <span class="text-2xl font-extrabold text-teal-700">
                     {{ formatPrice(product.price) }} Ft
                 </span>
             </div>
 
-            <p class="text-sm font-semibold text-green-400">
+            <p class="text-sm font-semibold text-emerald-600">
                 {{ product.stockText }}
             </p>
 
-            <button
-                type="button"
-                class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]" @click="goToDetails">
-                Megnézem
-            </button>
-            <button
-                type="button"
-                class="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red-500 active:scale-[0.98]" @click="handleAddToCart">
-                Kosárba
-            </button>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <button
+                    type="button"
+                    class="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-200 active:scale-[0.98]" @click="goToDetails">
+                    Megnézem
+                </button>
+                <button
+                    type="button"
+                    class="rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-800 active:scale-[0.98]" @click="handleAddToCart">
+                    Kosárba
+                </button>
+            </div>
         </div>
     </article>
 </template>

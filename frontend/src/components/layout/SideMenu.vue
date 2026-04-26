@@ -96,31 +96,31 @@ const formatBrandName = (brand) => {
 </script>
 
 <template>
-    <aside class="w-full overflow-hidden rounded-2xl border border-zinc-700 bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white shadow-xl">
-        <div class="grid grid-cols-2 border-b border-zinc-700 bg-white/[0.03]">
+    <aside class="glass-panel w-full overflow-hidden">
+        <div class="grid grid-cols-2 border-b border-zinc-200 bg-zinc-50/80">
             <button
                 @click="activeTab = 'categories'"
                 class="relative px-3 py-4 text-center text-base font-bold uppercase tracking-wide transition md:text-lg"
                 :class="activeTab === 'categories'
-                    ? 'text-white'
-                    : 'text-zinc-400 hover:text-white'">
+                    ? 'text-zinc-900'
+                    : 'text-zinc-500 hover:text-zinc-900'">
                 Kategóriák
                 <span
                     v-if="activeTab === 'categories'"
-                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-white"
+                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-teal-600"
                 ></span>
             </button>
 
             <button
                 @click="activeTab = 'brands'"
-                class="relative border-l border-zinc-700 px-3 py-4 text-center text-base font-bold uppercase tracking-wide transition md:text-lg"
+                class="relative border-l border-zinc-200 px-3 py-4 text-center text-base font-bold uppercase tracking-wide transition md:text-lg"
                 :class="activeTab === 'brands'
-                    ? 'text-white'
-                    : 'text-zinc-400 hover:text-white'">
+                    ? 'text-zinc-900'
+                    : 'text-zinc-500 hover:text-zinc-900'">
                 Gyártók
                 <span
                     v-if="activeTab === 'brands'"
-                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-white"
+                    class="absolute bottom-0 left-1/2 h-[3px] w-3/4 -translate-x-1/2 rounded-full bg-teal-600"
                 ></span>
             </button>
         </div>
@@ -130,17 +130,17 @@ const formatBrandName = (brand) => {
                 <div
                     v-for="item in categories"
                     :key="item.id"
-                    class="group relative flex h-[72px] cursor-pointer items-center overflow-hidden rounded-xl border border-zinc-700 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 px-4 transition duration-200 hover:border-zinc-500 hover:shadow-lg"
+                    class="group relative flex h-[72px] cursor-pointer items-center overflow-hidden rounded-xl border border-zinc-200 bg-white px-4 transition duration-200 hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50"
                     :style="item.image ? { backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}"
                 >
                     <div
-                        class="absolute inset-0 bg-black/45"
+                        class="absolute inset-0 bg-black/30"
                         :class="item.image ? '' : 'hidden'"
                     ></div>
 
-                    <div class="absolute inset-y-0 left-0 w-1 rounded-l-xl bg-red-500 opacity-0 transition group-hover:opacity-100"></div>
+                    <div class="absolute inset-y-0 left-0 w-1 rounded-l-xl bg-teal-600 opacity-0 transition group-hover:opacity-100"></div>
 
-                    <span class="relative z-10 pr-3 text-lg font-bold leading-tight text-white md:text-xl">
+                    <span class="relative z-10 pr-3 text-base font-bold leading-tight text-zinc-800 md:text-lg" :class="item.image ? 'text-white' : ''">
                         {{ item.title }}
                     </span>
                 </div>
@@ -151,7 +151,7 @@ const formatBrandName = (brand) => {
                     v-for="brand in brands"
                     :key="brand"
                     type="button"
-                    class="rounded-xl border border-zinc-700 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-zinc-200 transition hover:border-zinc-500 hover:bg-white/[0.08] hover:text-white"
+                    class="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-left text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-zinc-900"
                 >
                     {{ formatBrandName(brand) }}
                 </button>

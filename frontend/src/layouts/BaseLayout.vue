@@ -1,10 +1,10 @@
 <script setup>
-import BaseHeader from '@components/layout/BaseHeader.vue'
+import BaseHeadLine from '@components/layout/BaseHeadLine.vue'
 </script>
 
 <template>
-  <BaseHeader />
-  <main class="container mx-auto">
+  <BaseHeadLine />
+  <main class="pb-10">
     <slot />
   </main>
 </template>
