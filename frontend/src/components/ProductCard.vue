@@ -37,13 +37,12 @@ const emit = defineEmits(['added-to-cart'])
     <article
         class="group overflow-hidden rounded-3xl border border-zinc-200 bg-white text-zinc-900 shadow-[0_18px_40px_-26px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_24px_50px_-22px_rgba(15,118,110,0.28)]">
         <div class="relative">
-            <div
-                class="flex h-52 items-center justify-center overflow-hidden bg-zinc-100">
+            <div class="flex h-52 items-center justify-center overflow-hidden bg-white border-b border-dashed border-emerald-600">
                 <img
                     v-if="product.image"
                     :src="product.image"
                     :alt="product.name"
-                    class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                    class="h-full w-full object-contain object-center p-2 transition duration-300">
 
                 <div
                     v-else
