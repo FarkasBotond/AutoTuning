@@ -24,18 +24,18 @@ const showToast = (product) => {
 </script>
 
 <template>
-    <div class="landing-page min-h-screen bg-zinc-800! overflow-x-hidden">
+    <div class="landing-page min-h-screen overflow-x-hidden">
         <BaseHeadLine />
 
         
         <Toast :show="toastVisible" :message="toastMessage" />
 
-        <main class="flex gap-6 px-8 py-4">
-            <aside class="w-[280px] shrink-0">
+        <main class="mx-auto flex w-full max-w-[1550px] flex-col gap-6 px-4 py-4 md:px-6 lg:flex-row lg:items-start">
+            <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[295px]">
                 <SideMenu />
             </aside>
 
-            <section class="flex-1 min-w-0 rounded-2xl p-4 mb-20!">
+            <section class="flex-1 min-w-0 space-y-5 pb-14">
                 <TuningCompaniesSection/>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                     

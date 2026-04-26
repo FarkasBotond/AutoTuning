@@ -13,17 +13,17 @@ const formatPrice = (price) => {
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col bg-zinc-200">
+    <div class="min-h-screen flex flex-col">
 
         <BaseHeadLine />
 
 
-        <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4">
-            <h1 class="mb-6 text-3xl font-bold text-zinc-900">
+        <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4 md:px-6">
+            <h1 class="mb-6 text-3xl font-extrabold text-zinc-900 md:text-4xl">
                 Kosár
             </h1>
 
-            <div v-if="cartStore.items.length === 0" class="rounded-2xl bg-zinc-100 p-8 text-center shadow-sm">
+            <div v-if="cartStore.items.length === 0" class="glass-panel p-10 text-center">
                 <h2 class="text-2xl font-bold text-zinc-900">
                     A kosár üres
                 </h2>
@@ -32,10 +32,10 @@ const formatPrice = (price) => {
                 </p>
             </div>
 
-            <div v-else class="grid gap-6 lg:grid-cols-[1fr_320px]">
-                <section class="rounded-2xl bg-zinc-100 p-4 shadow-sm">
+            <div v-else class="grid gap-6 lg:grid-cols-[1fr_340px]">
+                <section class="glass-panel p-4 md:p-5">
                     <div v-for="item in cartStore.items" :key="item.id"
-                        class="mb-4 rounded-xl border border-zinc-300 bg-white p-4 last:mb-0">
+                        class="mb-4 rounded-2xl border border-zinc-200 bg-white p-4 last:mb-0">
                         <h2 class="text-xl font-bold text-zinc-900">
                             {{ item.name }}
                         </h2>
@@ -44,12 +44,12 @@ const formatPrice = (price) => {
                         </p>
 
                         <div class="mt-3 flex items-center justify-between">
-                            <p class="text-lg font-semibold text-red-600">
+                            <p class="text-lg font-bold text-teal-700">
                                 {{ formatPrice(item.price) }} Ft
                             </p>
 
                             <div class="flex items-center gap-3">
-                                <button type="button" class="rounded-lg bg-zinc-300 px-3 py-1 font-bold"
+                                <button type="button" class="rounded-lg border border-zinc-200 bg-zinc-100 px-3 py-1.5 font-bold text-zinc-700"
                                     @click="cartStore.decreaseQuantity(item.id)">
                                     -
                                 </button>
@@ -58,21 +58,21 @@ const formatPrice = (price) => {
                                     {{ item.quantity }}
                                 </span>
 
-                                <button type="button" class="rounded-lg bg-zinc-300 px-3 py-1 font-bold"
+                                <button type="button" class="rounded-lg border border-zinc-200 bg-zinc-100 px-3 py-1.5 font-bold text-zinc-700"
                                     @click="cartStore.increaseQuantity(item.id)">
                                     +
                                 </button>
                             </div>
                         </div>
 
-                        <button type="button" class="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-bold"
+                        <button type="button" class="mt-4 rounded-lg border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-700"
                             @click="cartStore.removeFromCart(item.id)">
                             Törlés
                         </button>
                     </div>
                 </section>
 
-                <aside class="rounded-2xl bg-zinc-100 p-4 shadow-sm">
+                <aside class="glass-panel h-fit p-5">
                     <h2 class="mb-4 text-xl font-bold text-zinc-900">Összesítő</h2>
 
                     <div class="space-y-3 text-zinc-700">
@@ -87,8 +87,7 @@ const formatPrice = (price) => {
                         </div>
                     </div>
 
-                    <button type="button"
-                        class="mt-6 w-full rounded-xl bg-zinc-900 px-4 py-3 font-bold text-white hover:bg-zinc-800">
+                    <button type="button" class="btn-primary mt-6 w-full">
                         Tovább a pénztárhoz
                     </button>
                 </aside>
