@@ -4,13 +4,11 @@ import { useRouter, useRoute } from 'vue-router'
 import BaseLayout from '@layouts/BaseLayout.vue'
 import { useModelStore } from '@stores/modelStore'
 import { useBrandStore } from '@stores/brandStore'
-import { useAuthStore } from '@stores/authStore'
 
 const router = useRouter()
 const route = useRoute()
 const modelStore = useModelStore()
 const brandStore = useBrandStore()
-const authStore = useAuthStore()
 
 const model = ref(null)
 const brand = ref(null)
@@ -18,11 +16,6 @@ const isLoading = ref(false)
 const error = ref(null)
 
 onMounted(async () => {
-  if (!authStore.isAuthenticated) {
-    router.push('/login')
-    return
-  }
-
   isLoading.value = true
   try {
     const modelId = route.params.id

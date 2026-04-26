@@ -4,13 +4,11 @@ import { useRouter, useRoute } from 'vue-router'
 import BaseLayout from '@layouts/BaseLayout.vue'
 import { useBrandStore } from '@stores/brandStore'
 import { useModelStore } from '@stores/modelStore'
-import { useAuthStore } from '@stores/authStore'
 
 const router = useRouter()
 const route = useRoute()
 const brandStore = useBrandStore()
 const modelStore = useModelStore()
-const authStore = useAuthStore()
 
 const brand = ref(null)
 const allModels = ref([])
@@ -23,11 +21,6 @@ const filteredModels = computed(() => {
 })
 
 onMounted(async () => {
-  if (!authStore.isAuthenticated) {
-    router.push('/login')
-    return
-  }
-
   isLoading.value = true
   try {
     const brandId = route.params.id

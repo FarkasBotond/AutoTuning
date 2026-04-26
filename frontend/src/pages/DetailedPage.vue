@@ -1,7 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
+import { useAuthStore } from '@/stores/authStore'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@/components/layout/SideMenu.vue'
 import BaseFooter from '@/components/BaseFooter.vue'
@@ -11,7 +12,9 @@ import { products } from '@/lib/mockProducts'
 
 
 const route = useRoute()
+const router = useRouter()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
 
 const productId = computed(() => Number(route.query.id))
 
@@ -35,6 +38,16 @@ const formatPrice = (price) => {
 
 const handleAddToCart = () => {
   if (!product.value) {
+    return
+  }
+
+  if (!authStore.isAuthenticated) {
+    router.push({
+      path: '/login',
+      query: {
+        redirect: route.fullPath
+      }
+    })
     return
   }
 

@@ -1,6 +1,7 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useCartStore } from '@stores/cartStore'
+import { useAuthStore } from '@stores/authStore'
 const props = defineProps({
     product: {
         type: Object,
@@ -9,6 +10,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const route = useRoute()
+const authStore = useAuthStore()
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
@@ -26,6 +29,16 @@ const goToDetails = () =>{
 }
 
 const handleAddToCart = () =>{
+    if (!authStore.isAuthenticated) {
+        router.push({
+            path: '/login',
+            query: {
+                redirect: route.fullPath
+            }
+        })
+        return
+    }
+
     cartStore.addToCart(props.product)
     emit('added-to-cart', props.product)
 }
