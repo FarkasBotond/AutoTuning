@@ -128,3 +128,34 @@ export const updateModel = async (id, data, token) => {
 export const deleteModel = async (id, token) => {
   return fetchWithToken(`/car-models/${id}`, { method: 'DELETE' }, token)
 }
+
+// Tunings API
+export const fetchTuningProducts = async (filters = {}) => {
+  const params = new URLSearchParams()
+
+  if (filters.car_model_id) {
+    params.append('car_model_id', filters.car_model_id)
+  }
+
+  if (filters.service_category_id) {
+    params.append('service_category_id', filters.service_category_id)
+  }
+
+  const query = params.toString()
+  const endpoint = query ? `/tuning-products?${query}` : '/tuning-products'
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    credentials: 'include'
+  })
+
+  if (!response.ok) {
+    throw await buildApiError(response, 'Failed to fetch tuning products')
+  }
+
+  return response.json()
+}
