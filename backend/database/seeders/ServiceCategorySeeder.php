@@ -11,21 +11,16 @@ class ServiceCategorySeeder extends Seeder
     {
 
         DB::table('service_categories')->insert([
-            ['name' => 'ecu tuning'],
-            ['name' => 'kipufogo'],
-            ['name' => 'futomu'],
-            ['name' => 'fek'],
-            ['name' => 'kerek'],
-            ['name' => 'aerodinamika'],
-            ['name' => 'body kit'],
-            ['name' => 'interior'],
-            ['name' => 'vilagitas'],
-            ['name' => 'wrap folia'],
-            ['name' => 'detail'],
-            ['name' => 'turbo upgrade'],
-            ['name' => 'cooler'],
-            ['name' => 'szivo oldal'],
-            ['name' => 'motorerzes']
+            ['name' => 'Motor és teljesítménynövelés'],
+            ['name' => 'Kipufogó és szívórendszer'],
+            ['name' => 'Futómű és kormányzás'],
+            ['name' => 'Fékek'],
+            ['name' => 'Felnik, gumik, nyomtávszélesítők'],
+            ['name' => 'Külső kiegészítők'],
+            ['name' => 'Belső tér'],
+            ['name' => 'Világítás és elektronika'],
+            ['name' => 'Szerviz és karbantartás'],
+            ['name' => 'Univerzális kiegészítők'],
         ]);
     }
 }
