@@ -15,6 +15,13 @@
       </aside>
 
       <section class="p-6 sm:p-8 lg:p-10">
+        <button
+          type="button"
+          class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+          @click="goBack"
+        >
+          ← Vissza
+        </button>
         <h1 class="text-3xl font-extrabold tracking-tight text-zinc-900">Bejelentkezés</h1>
         <p class="mt-2 text-sm text-zinc-500">Lépj be a fiókodba néhány másodperc alatt.</p>
         
@@ -81,6 +88,15 @@ const formData = ref({
   email: '',
   password: ''
 })
+
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+
+  router.push('/')
+}
 
 const handleLogin = async () => {
   const { email, password } = formData.value
