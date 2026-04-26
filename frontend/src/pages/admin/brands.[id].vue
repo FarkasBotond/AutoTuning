@@ -74,7 +74,7 @@ const handleCancel = () => {
 <route lang="yaml">
 name: admin-brands-detail
 meta:
-  title: Brand Detail
+  title: Gyártók oldal
   requiresAuth: true
   role: admin
 </route>

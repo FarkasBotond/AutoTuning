@@ -96,5 +96,5 @@ const handleModelClick = (modelId) => {
 <route lang="yaml">
 name: brand-detail
 meta:
-  title: Brand Details
+  title: Gyártók oldal
 </route>

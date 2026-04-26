@@ -78,7 +78,7 @@ const handleCancel = () => {
 <route lang="yaml">
 name: admin-models-detail
 meta:
-  title: Model Detail
+  title: Modellek oldal
   requiresAuth: true
   role: admin
 </route>

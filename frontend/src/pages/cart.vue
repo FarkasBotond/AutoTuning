@@ -102,5 +102,5 @@ const formatPrice = (price) => {
 <route lang="yaml">
 name: cart
 meta:
-  title: cart
+  title: Kosár
 </route>

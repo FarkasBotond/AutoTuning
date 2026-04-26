@@ -9,5 +9,5 @@ import LoginPage from '@/components/LoginPage.vue'
 <route lang="yaml">
 name: login
 meta:
-  title: Login
+  title: Bejelentkezés
 </route>

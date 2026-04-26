@@ -257,7 +257,7 @@ const goToEdit = (modelId) => {
 <route lang="yaml">
 name: admin-models
 meta:
-  title: Model Management
+  title: Modellek oldal
   requiresAuth: true
   role: admin
 </route>

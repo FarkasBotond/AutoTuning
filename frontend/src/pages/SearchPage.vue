@@ -119,5 +119,5 @@ const onlyInStock = ref(false)
 <route lang="yaml">
 name: search
 meta:
-  title: search
+  title: Keresés
 </route>

@@ -175,5 +175,5 @@ const showToast = (product) => {
 <route lang="yaml">
 name: detailed
 meta:
-  title: detailed
+  title: RaceDistrict
 </route>

@@ -145,5 +145,5 @@ const goToBrands = () => {
 <route lang="yaml">
 name: model-detail
 meta:
-  title: Model Details
+  title: Modell oldal
 </route>

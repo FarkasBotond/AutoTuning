@@ -128,7 +128,7 @@ const goToEdit = (brandId) => {
 <route lang="yaml">
 name: admin-brands
 meta:
-  title: Brand Management
+  title: Gyártók oldal
   requiresAuth: true
   role: admin
 </route>

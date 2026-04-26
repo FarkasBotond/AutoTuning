@@ -340,6 +340,6 @@ const handlePasswordUpdate = async () => {
 <route lang="yaml">
 name: profile
 meta:
-  title: profile
+  title: Profil
   requiresAuth: true
 </route>
