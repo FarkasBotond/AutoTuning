@@ -72,24 +72,27 @@ const scrollRight = () => {
 </script>
 
 <template>
-    <section class="min-w-0 rounded-2xl bg-gradient-to-b from-zinc-900 to-zinc-800 p-5 shadow-xl">
-        <h2 class="mb-4 text-4xl font-bold text-white">Gyártók</h2>
+    <section class="glass-panel min-w-0 p-5 md:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+            <h2 class="section-title">Kiemelt márkák</h2>
+            <button type="button" class="btn-muted px-4 py-2 text-xs md:text-sm">Mutass mindent</button>
+        </div>
 
         <div class="relative min-w-0 overflow-hidden">
             <button type="button" @click="scrollLeft"
-                class="absolute left-0 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg transition hover:scale-105">
+                class="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 shadow-md transition hover:scale-105 hover:text-zinc-900">
                 ‹
             </button>
 
             <button type="button" @click="scrollRight"
-                class="absolute right-0 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg transition hover:scale-105">
+                class="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 shadow-md transition hover:scale-105 hover:text-zinc-900">
                 ›
             </button>
 
             <div ref="slider" class="scrollbar-hide flex gap-4 overflow-x-auto px-12 py-2 scroll-smooth">
                 <div v-for="company in companies" :key="company.id"
-                    class="shrink-0 min-w-[180px] max-w-[180px] overflow-hidden rounded-xl bg-zinc-700/90">
-                    <div class="h-[180px] bg-zinc-600">
+                    class="shrink-0 min-w-[180px] max-w-[180px] overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+                    <div class="h-[170px] bg-zinc-100">
                         <img v-if="company.image" :src="company.image" :alt="company.name"
                             class="h-full w-full object-cover">
                         <div v-else class="flex h-full items-center justify-center text-lg font-bold text-white">
@@ -98,19 +101,12 @@ const scrollRight = () => {
                     </div>
 
                     <div class="flex items-center justify-center px-3 py-3">
-                        <h3 class="text-center text-xl font-bold text-zinc-200">
+                        <h3 class="text-center text-lg font-bold text-zinc-800">
                             {{ company.name }}
                         </h3>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="mt-5 flex justify-center">
-            <button type="button"
-                class="rounded-xl bg-zinc-700 px-8 py-4 text-lg font-bold text-white shadow-md transition hover:bg-red-600">
-                Mutass mindent
-            </button>
         </div>
     </section>
 </template>
