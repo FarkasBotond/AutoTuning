@@ -103,9 +103,7 @@ const goToEdit = (modelId) => {
               <tr>
                 <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">ID</th>
                 <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Gyártó</th>
-                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Név</th>
-                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Generáció</th>
-                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Modifikáció</th>
+                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Modell</th>
                 <th class="border-b border-zinc-200 px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">Gyártási év</th>
                 <th class="border-b border-zinc-200 px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">Műveletek</th>
               </tr>
@@ -115,8 +113,6 @@ const goToEdit = (modelId) => {
                 <td class="border-b border-zinc-100 px-4 py-3 font-medium text-zinc-700">{{ model.id }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 font-semibold text-zinc-800">{{ getBrandName(model.brand_id) }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 text-zinc-800">{{ model.name }}</td>
-                <td class="border-b border-zinc-100 px-4 py-3 text-zinc-700">{{ model.gen }}</td>
-                <td class="border-b border-zinc-100 px-4 py-3 text-zinc-700">{{ model.mod }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 text-center text-zinc-700">{{ model.startyear }}-{{ model.endyear || 'Jelenleg' }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 text-center">
                   <div class="inline-flex gap-2">
