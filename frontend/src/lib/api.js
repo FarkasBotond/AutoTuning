@@ -1,5 +1,26 @@
 const API_BASE_URL = 'http://localhost/api'
 
+const buildApiError = async (response, fallbackMessage) => {
+  let payload = null
+
+  try {
+    payload = await response.json()
+  } catch {
+    payload = null
+  }
+
+  const error = new Error(
+    payload?.message ||
+      payload?.data?.message ||
+      fallbackMessage ||
+      `HTTP error! status: ${response.status}`
+  )
+
+  error.status = response.status
+  error.data = payload
+  return error
+}
+
 export const login = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/login`, {
     method: 'POST',
@@ -15,7 +36,7 @@ export const login = async (email, password) => {
   })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+    throw await buildApiError(response, 'Sikertelen bejelentkezés')
   }
 
   return response.json()
@@ -33,7 +54,7 @@ export const logout = async (token) => {
   })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+    throw await buildApiError(response, 'Sikertelen kijelentkezés')
   }
 
   return response.json()
@@ -52,7 +73,7 @@ export const fetchWithToken = async (endpoint, options = {}, token) => {
   })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+    throw await buildApiError(response)
   }
 
   return response.json()

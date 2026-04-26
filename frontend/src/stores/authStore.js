@@ -20,15 +20,24 @@ export const useAuthStore = defineStore(
 
       try {
         const response = await apiLogin(email, password)
-        
-        if (response.data && response.data.token) {
-          token.value = response.data.token
-          user.value = response.data.user || { email }
+
+        const tokenFromResponse = response?.data?.token || response?.token
+        const userFromResponse = response?.data?.user || response?.user || { email }
+
+        if (tokenFromResponse) {
+          token.value = tokenFromResponse
+          user.value = userFromResponse
           return true
         }
+
+        error.value = 'Sikertelen bejelentkezés: hiányzó token a válaszból.'
         return false
       } catch (err) {
-        error.value = err.response?.data?.data?.message || 'Login failed'
+        if (err?.status === 401) {
+          error.value = err?.message || 'Hibás email vagy jelszó.'
+        } else {
+          error.value = err?.message || err?.data?.message || 'Sikertelen bejelentkezés.'
+        }
         return false
       } finally {
         isLoading.value = false
