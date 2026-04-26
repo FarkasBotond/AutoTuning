@@ -1,20 +1,42 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
-import { useOrderStore } from '@/stores/orderStore'
-import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
-import SideMenu from '@/components/layout/SideMenu.vue'
+import { updateProfileEmail, updateProfilePassword } from '@/lib/api'
 import BaseFooter from '@/components/BaseFooter.vue'
 
 const authStore = useAuthStore()
-const orderStore = useOrderStore()
+const router = useRouter()
+
+const emailForm = ref({
+  email: '',
+  current_password: ''
+})
+
+const passwordForm = ref({
+  current_password: '',
+  password: '',
+  password_confirmation: ''
+})
+
+const isUpdatingEmail = ref(false)
+const isUpdatingPassword = ref(false)
+const emailSuccess = ref('')
+const emailError = ref('')
+const passwordSuccess = ref('')
+const passwordError = ref('')
+
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+    return
+  }
+
+  router.push('/')
+}
 
 onMounted(async () => {
-  try {
-    await orderStore.fetchUserOrders()
-  } catch (err) {
-    console.error('Rendelések betöltése sikertelen:', err)
-  }
+  emailForm.value.email = authStore.user?.email || ''
 })
 
 const userName = computed(() => {
@@ -36,9 +58,7 @@ const createdAt = computed(() => {
   return '2026. április 1.'
 })
 
-const userOrders = computed(() => {
-  return orderStore.orders
-})
+const userOrders = ref([])
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('hu-HU').format(price)
@@ -81,18 +101,86 @@ const getStatusLabel = (status) => {
       return status
   }
 }
+
+const handleEmailUpdate = async () => {
+  emailSuccess.value = ''
+  emailError.value = ''
+
+  if (!emailForm.value.email || !emailForm.value.current_password) {
+    emailError.value = 'Add meg az új email címet és a jelenlegi jelszót.'
+    return
+  }
+
+  isUpdatingEmail.value = true
+
+  try {
+    const response = await updateProfileEmail(emailForm.value, authStore.token)
+    const updatedUser = response?.data?.user
+
+    if (updatedUser) {
+      authStore.user = {
+        ...authStore.user,
+        ...updatedUser
+      }
+    }
+
+    emailForm.value.current_password = ''
+    emailSuccess.value = response?.data?.message || 'Email cím sikeresen frissítve.'
+  } catch (err) {
+    emailError.value = err?.message || 'Nem sikerült az email cím módosítása.'
+  } finally {
+    isUpdatingEmail.value = false
+  }
+}
+
+const handlePasswordUpdate = async () => {
+  passwordSuccess.value = ''
+  passwordError.value = ''
+
+  if (
+    !passwordForm.value.current_password ||
+    !passwordForm.value.password ||
+    !passwordForm.value.password_confirmation
+  ) {
+    passwordError.value = 'Tölts ki minden jelszó mezőt.'
+    return
+  }
+
+  if (passwordForm.value.password !== passwordForm.value.password_confirmation) {
+    passwordError.value = 'Az új jelszavak nem egyeznek.'
+    return
+  }
+
+  isUpdatingPassword.value = true
+
+  try {
+    const response = await updateProfilePassword(passwordForm.value, authStore.token)
+    passwordForm.value = {
+      current_password: '',
+      password: '',
+      password_confirmation: ''
+    }
+    passwordSuccess.value = response?.data?.message || 'Jelszó sikeresen frissítve.'
+  } catch (err) {
+    passwordError.value = err?.message || 'Nem sikerült a jelszó módosítása.'
+  } finally {
+    isUpdatingPassword.value = false
+  }
+}
 </script>
 
 <template>
   <div class="min-h-screen">
-    <BaseHeadLine />
+    <main class="mx-auto w-full max-w-[1100px] px-4 py-4 md:px-6">
+      <button
+        type="button"
+        class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+        @click="goBack"
+      >
+        ← Vissza
+      </button>
 
-    <main class="mx-auto flex w-full max-w-[1550px] flex-col gap-6 px-4 py-4 md:px-6 lg:flex-row lg:items-start">
-      <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:w-[295px]">
-        <SideMenu />
-      </aside>
-
-      <section class="flex-1">
+      <section>
         <div class="glass-panel mb-6 p-8">
           <div class="flex items-center justify-between mb-6">
             <div>
@@ -120,6 +208,65 @@ const getStatusLabel = (status) => {
             <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
               <p class="text-sm font-semibold text-zinc-600 mb-1">Teljes költés</p>
               <p class="text-lg font-bold text-teal-700">{{ formatPrice(userOrders.reduce((sum, order) => sum + order.total, 0)) }} Ft</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel mb-6 p-8">
+          <h2 class="mb-6 text-2xl font-bold text-zinc-900">Profil beállítások</h2>
+
+          <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6">
+              <h3 class="text-xl font-bold text-zinc-900">Email cím módosítása</h3>
+              <p class="mt-1 text-sm text-zinc-600">Az email cím módosításához add meg a jelenlegi jelszavad.</p>
+
+              <form class="mt-5 space-y-4" @submit.prevent="handleEmailUpdate">
+                <div class="space-y-2">
+                  <label class="text-sm font-semibold text-zinc-700" for="new-email">Új email cím</label>
+                  <input id="new-email" v-model="emailForm.email" type="email" class="brand-input" :disabled="isUpdatingEmail" required />
+                </div>
+
+                <div class="space-y-2">
+                  <label class="text-sm font-semibold text-zinc-700" for="email-current-password">Jelenlegi jelszó</label>
+                  <input id="email-current-password" v-model="emailForm.current_password" type="password" class="brand-input" :disabled="isUpdatingEmail" required />
+                </div>
+
+                <p v-if="emailError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ emailError }}</p>
+                <p v-if="emailSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ emailSuccess }}</p>
+
+                <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingEmail">
+                  {{ isUpdatingEmail ? 'Mentés...' : 'Email frissítése' }}
+                </button>
+              </form>
+            </div>
+
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6">
+              <h3 class="text-xl font-bold text-zinc-900">Jelszó módosítása</h3>
+              <p class="mt-1 text-sm text-zinc-600">Adj meg egy legalább 8 karakteres új jelszót.</p>
+
+              <form class="mt-5 space-y-4" @submit.prevent="handlePasswordUpdate">
+                <div class="space-y-2">
+                  <label class="text-sm font-semibold text-zinc-700" for="current-password">Jelenlegi jelszó</label>
+                  <input id="current-password" v-model="passwordForm.current_password" type="password" class="brand-input" :disabled="isUpdatingPassword" required />
+                </div>
+
+                <div class="space-y-2">
+                  <label class="text-sm font-semibold text-zinc-700" for="new-password">Új jelszó</label>
+                  <input id="new-password" v-model="passwordForm.password" type="password" class="brand-input" :disabled="isUpdatingPassword" required minlength="8" />
+                </div>
+
+                <div class="space-y-2">
+                  <label class="text-sm font-semibold text-zinc-700" for="new-password-confirm">Új jelszó újra</label>
+                  <input id="new-password-confirm" v-model="passwordForm.password_confirmation" type="password" class="brand-input" :disabled="isUpdatingPassword" required minlength="8" />
+                </div>
+
+                <p v-if="passwordError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ passwordError }}</p>
+                <p v-if="passwordSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ passwordSuccess }}</p>
+
+                <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingPassword">
+                  {{ isUpdatingPassword ? 'Mentés...' : 'Jelszó frissítése' }}
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -194,4 +341,5 @@ const getStatusLabel = (status) => {
 name: profile
 meta:
   title: profile
+  requiresAuth: true
 </route>

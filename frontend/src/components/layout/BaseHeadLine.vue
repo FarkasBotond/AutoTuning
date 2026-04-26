@@ -4,6 +4,13 @@ import { useAuthStore } from '@/stores/authStore'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import logo from '@/assets/logo.png'
 
+defineProps({
+  showSearch: {
+    type: Boolean,
+    default: true
+  }
+})
+
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -26,7 +33,7 @@ const handleLogout = () => {
           </RouterLink>
         </div>
 
-        <div class="order-3 min-w-0 w-full flex-1 lg:order-2 lg:w-auto">
+        <div v-if="showSearch" class="order-3 min-w-0 w-full flex-1 lg:order-2 lg:w-auto">
           <SearchBar />
         </div>
 

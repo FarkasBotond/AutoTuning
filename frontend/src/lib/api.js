@@ -60,6 +60,14 @@ export const logout = async (token) => {
   return response.json()
 }
 
+export const updateProfileEmail = async (data, token) => {
+  return fetchWithToken('/profile/email', { method: 'PUT', body: JSON.stringify(data) }, token)
+}
+
+export const updateProfilePassword = async (data, token) => {
+  return fetchWithToken('/profile/password', { method: 'PUT', body: JSON.stringify(data) }, token)
+}
+
 export const fetchWithToken = async (endpoint, options = {}, token) => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,

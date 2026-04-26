@@ -23,6 +23,8 @@ Route::get('/car-models/{carModel}', [CarModelController::class, 'show'])->name(
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::put('/profile/email', [UserController::class, 'updateEmail'])->name('profile.email.update');
+    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password.update');
 });
 
 // Admin routes
