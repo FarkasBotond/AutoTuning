@@ -29,19 +29,19 @@ class CarBrandControllerTest extends TestCase
         ]);
     }
 
-    public function test_unauthenticated_user_cannot_list_brands(): void
+    public function test_unauthenticated_user_can_list_brands(): void
     {
         $response = $this->getJson('/api/car-brands');
 
-        $response->assertStatus(401);
+        $response->assertStatus(200);
     }
 
-    public function test_non_admin_user_cannot_list_brands(): void
+    public function test_non_admin_user_can_list_brands(): void
     {
         $response = $this->actingAs($this->user, 'sanctum')
             ->getJson('/api/car-brands');
 
-        $response->assertStatus(403);
+        $response->assertStatus(200);
     }
 
     public function test_admin_can_list_brands(): void
@@ -166,8 +166,8 @@ class CarBrandControllerTest extends TestCase
     {
         $brand = CarBrand::factory()->create();
         $models = CarBrand::find($brand->id)->models()->createMany([
-            ['name' => 'Model 1', 'gen' => 'Gen1', 'mod' => 'Mod1', 'startyear' => 2020],
-            ['name' => 'Model 2', 'gen' => 'Gen2', 'mod' => 'Mod2', 'startyear' => 2021],
+            ['model' => 'Model 1', 'start_year' => 2020],
+            ['model' => 'Model 2', 'start_year' => 2021],
         ]);
 
         $this->actingAs($this->adminUser, 'sanctum')

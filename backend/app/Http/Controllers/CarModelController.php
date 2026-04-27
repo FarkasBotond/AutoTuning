@@ -9,6 +9,16 @@ use App\Models\CarModel;
 
 class CarModelController extends Controller
 {
+    private function mapPayloadToColumns(array $data): array
+    {
+        return [
+            'brand_id' => $data['brand_id'],
+            'model' => $data['name'],
+            'start_year' => $data['startyear'],
+            'end_year' => $data['endyear'] ?? null,
+        ];
+    }
+
     public function index()
     {
         return CarModelResource::collection(CarModel::with('brand')->get());
@@ -17,7 +27,7 @@ class CarModelController extends Controller
     public function store(StoreCarModelRequest $request)
     {
         return new CarModelResource(
-            CarModel::create($request->validated())->load('brand')
+            CarModel::create($this->mapPayloadToColumns($request->validated()))->load('brand')
         );
     }
 
@@ -28,7 +38,7 @@ class CarModelController extends Controller
 
     public function update(UpdateCarModelRequest $request, CarModel $carModel)
     {
-        $carModel->update($request->validated());
+        $carModel->update($this->mapPayloadToColumns($request->validated()));
         return new CarModelResource($carModel->load('brand'));
     }
 

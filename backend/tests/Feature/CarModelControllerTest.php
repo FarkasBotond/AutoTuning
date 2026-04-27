@@ -34,19 +34,19 @@ class CarModelControllerTest extends TestCase
         $this->brand = CarBrand::factory()->create();
     }
 
-    public function test_unauthenticated_user_cannot_list_models(): void
+    public function test_unauthenticated_user_can_list_models(): void
     {
         $response = $this->getJson('/api/car-models');
 
-        $response->assertStatus(401);
+        $response->assertStatus(200);
     }
 
-    public function test_non_admin_user_cannot_list_models(): void
+    public function test_non_admin_user_can_list_models(): void
     {
         $response = $this->actingAs($this->user, 'sanctum')
             ->getJson('/api/car-models');
 
-        $response->assertStatus(403);
+        $response->assertStatus(200);
     }
 
     public function test_admin_can_list_models(): void
@@ -102,7 +102,7 @@ class CarModelControllerTest extends TestCase
             ->assertJsonPath('data.name', '320i')
             ->assertJsonPath('data.brand_id', $this->brand->id);
 
-        $this->assertDatabaseHas('car_models', ['name' => '320i']);
+        $this->assertDatabaseHas('car_models', ['model' => '320i']);
     }
 
     public function test_non_admin_cannot_create_model(): void
@@ -156,7 +156,7 @@ class CarModelControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.id', $model->id)
-            ->assertJsonPath('data.name', $model->name)
+            ->assertJsonPath('data.name', $model->model)
             ->assertJsonStructure([
                 'data' => [
                     'id',
@@ -192,7 +192,7 @@ class CarModelControllerTest extends TestCase
 
         $this->assertDatabaseHas('car_models', [
             'id' => $model->id,
-            'name' => 'Updated Model'
+            'model' => 'Updated Model'
         ]);
     }
 

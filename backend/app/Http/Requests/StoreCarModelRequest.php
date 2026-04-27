@@ -28,7 +28,7 @@ class StoreCarModelRequest extends FormRequest
             'gen' => 'required|string|max:50',
             'mod' => 'required|string|max:50',
             'startyear' => 'required|integer|min:1900',
-            'endyear' => 'nullable|integer|min:1900'
+            'endyear' => 'nullable|integer|min:1900|gte:startyear'
         ];
     }
 }
