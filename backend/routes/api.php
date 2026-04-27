@@ -8,6 +8,7 @@ use App\Http\Controllers\CarModelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TuningProductController;
+use App\Http\Controllers\TuningCompanyController;
 
 Route::post('/registration', [RegistrationController::class, 'registration'])->name('registration');
 
@@ -23,6 +24,9 @@ Route::get('/car-models/{carModel}', [CarModelController::class, 'show'])->name(
 
 Route::get('/tuning-products', [TuningProductController::class, 'index'])->name('tuning-products.index');
 Route::get('/tuning-products/{tuningProduct}', [TuningProductController::class, 'show'])->name('tuning-products.show')->whereNumber('tuningProduct');
+
+Route::get('/tuning-companies', [TuningCompanyController::class, 'index'])->name('tuning-companies.index');
+Route::get('/tuning-companies/{tuningCompany}', [TuningCompanyController::class, 'show'])->name('tuning-companies.show')->whereNumber('tuningCompany');
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
