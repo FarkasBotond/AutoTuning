@@ -15,7 +15,8 @@ export const useTuningCompanyStore = defineStore('tuningCompany', () => {
       id: rawCompany.id,
       name: rawCompany.name,
       description: rawCompany.description,
-      websiteUrl: rawCompany.website_url
+      websiteUrl: rawCompany.website_url,
+      imageUrl: rawCompany.image_url
     }
   }
 

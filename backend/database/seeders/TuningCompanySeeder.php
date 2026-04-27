@@ -139,12 +139,6 @@ class TuningCompanySeeder extends Seeder
                 'image_url' => '/images/companies/rieger.png',
             ],
             [
-                'name' => 'Kahn Design',
-                'description' => 'Land Rover- és prémium SUV-design tuning.',
-                'website_url' => 'https://www.kahndesign.com',
-                'image_url' => '/images/companies/kahn.png',
-            ],
-            [
                 'name' => 'Lumma Design',
                 'description' => 'Karosszériakitek és widebody csomagok.',
                 'website_url' => 'https://lummadesign.com',

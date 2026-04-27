@@ -68,7 +68,10 @@ onMounted(async () => {
                             class="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                             <RouterLink :to="`/company/${company.id}`" class="block">
                                 <div class="flex h-44 items-center justify-center bg-zinc-100 p-4">
-                                    <div
+                                    <img v-if="company.imageUrl" :src="company.imageUrl" :alt="company.name"
+                                        class="h-full w-full rounded-xl object-cover transition duration-300 group-hover:scale-105">
+
+                                    <div v-else
                                         class="flex h-full w-full items-center justify-center rounded-xl bg-zinc-200 px-4 text-center text-2xl font-black text-zinc-600">
                                         {{ company.name }}
                                     </div>
