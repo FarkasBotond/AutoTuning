@@ -117,6 +117,8 @@ const updateQuery = (newValues = {}) => {
         ...newValues,
     }
 
+    delete nextQuery.id
+
     Object.keys(nextQuery).forEach((key) => {
         if (
             nextQuery[key] === null ||
@@ -128,7 +130,7 @@ const updateQuery = (newValues = {}) => {
     })
 
     router.push({
-        path: route.path,
+        path: '/',
         query: nextQuery,
     })
 }
