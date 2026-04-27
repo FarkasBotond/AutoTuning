@@ -11,7 +11,9 @@ class TuningCompanyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'description' => $this->description,
+            'website_url' => $this->website_url,
         ];
     }
 }
