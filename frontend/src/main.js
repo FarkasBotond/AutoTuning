@@ -8,6 +8,10 @@ import App from '@/App.vue'
 
 import '@assets/main.css'
 
+if (localStorage.getItem('darkMode') === 'true') {
+  document.documentElement.classList.add('dark')
+}
+
 createApp(App)
   .use(createPinia().use(piniaPluginPersistedstate))
   .use(router)
