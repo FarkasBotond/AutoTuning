@@ -58,6 +58,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
+    Route::get('/orders', [OrderController::class, 'index'])
+        ->name('orders.index');
+
     Route::put('/profile/email', [UserController::class, 'updateEmail'])
         ->name('profile.email.update');
 
