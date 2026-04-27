@@ -58,14 +58,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
-    Route::get('/orders', [OrderController::class, 'index'])
-        ->name('orders.index');
-
     Route::put('/profile/email', [UserController::class, 'updateEmail'])
         ->name('profile.email.update');
 
     Route::put('/profile/password', [UserController::class, 'updatePassword'])
         ->name('profile.password.update');
+
+    Route::get('/orders/my', [OrderController::class, 'myOrders'])
+        ->name('orders.my');
 });
 
 // Admin routes
