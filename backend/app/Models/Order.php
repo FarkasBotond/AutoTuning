@@ -10,7 +10,8 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
-        'full_name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
         'delivery_method',
@@ -19,6 +20,11 @@ class Order extends Model
         'postal_code',
         'street_name',
         'house_number',
+        'billing_country',
+        'billing_city',
+        'billing_postal_code',
+        'billing_street_name',
+        'billing_house_number',
         'note',
         'payment_method',
         'payment_fee',
