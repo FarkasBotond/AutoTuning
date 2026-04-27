@@ -159,3 +159,37 @@ export const fetchTuningProducts = async (filters = {}) => {
 
   return response.json()
 }
+
+export const fetchTuningCompanies = async () => {
+  const response = await fetch(`${API_BASE_URL}/tuning-companies`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    credentials: 'include'
+  })
+
+  if (!response.ok) {
+    throw await buildApiError(response, 'Nem sikerült betölteni a tuning cégeket')
+  }
+
+  return response.json()
+}
+
+export const fetchTuningCompany = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/tuning-companies/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    credentials: 'include'
+  })
+
+  if (!response.ok) {
+    throw await buildApiError(response, 'Nem sikerült betölteni a tuning céget')
+  }
+
+  return response.json()
+}

@@ -1,61 +1,23 @@
 <script setup>
+import { onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@components/layout/SideMenu.vue'
 import BaseFooter from '@components/BaseFooter.vue'
+import { useTuningCompanyStore } from '@stores/tuningCompanyStore'
 
-import company1Img from '@/assets/images/sparco.png'
-import company2Img from '@/assets/images/races.jpg'
-import company3Img from '@/assets/images/kn.jpg'
-import company4Img from '@/assets/images/omp.jpg'
-import company5Img from '@/assets/images/foliatec.jpg'
-import company6Img from '@/assets/images/ebc.jpg'
+const tuningCompanyStore = useTuningCompanyStore()
 
-const companies = [
-    {
-        id: 1,
-        name: 'Sparco',
-        image: company1Img,
-        description: 'Versenyfelszerelések, ülések, kormányok és sportos kiegészítők.',
-        website: 'https://www.sparco-official.com'
-    },
-    {
-        id: 2,
-        name: 'Races',
-        image: company2Img,
-        description: 'Tuning alkatrészek és teljesítménynövelő kiegészítők.',
-        website: 'https://race-shop.hu'
-    },
-    {
-        id: 3,
-        name: 'K&N',
-        image: company3Img,
-        description: 'Sportlégszűrők, szívórendszerek és teljesítményorientált megoldások.',
-        website: 'https://www.knfilters.com'
-    },
-    {
-        id: 4,
-        name: 'OMP',
-        image: company4Img,
-        description: 'Versenyülések, biztonsági felszerelések és motorsport kiegészítők.',
-        website: 'https://www.ompracing.com'
-    },
-    {
-        id: 5,
-        name: 'Foliatec',
-        image: company5Img,
-        description: 'Fóliák, féknyeregfestékek és külső-belső autós kiegészítők.',
-        website: 'https://www.foliatec.com'
-    },
-    {
-        id: 6,
-        name: 'EBC Brakes',
-        image: company6Img,
-        description: 'Féktárcsák, fékbetétek és nagy teljesítményű fékrendszer alkatrészek.',
-        website: 'https://www.ebcbrakes.com'
-    }
-]
+const companies = computed(() => tuningCompanyStore.companies)
+
+const getCompanyWebsite = (company) => {
+    return company.website_url ?? company.website ?? company.url ?? null
+}
+
+onMounted(async () => {
+    await tuningCompanyStore.fetchAllCompanies()
+})
 </script>
 
 <template>
@@ -86,13 +48,30 @@ const companies = [
                         </RouterLink>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    <div v-if="tuningCompanyStore.isLoading"
+                        class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm">
+                        Betöltés...
+                    </div>
+
+                    <div v-else-if="tuningCompanyStore.error"
+                        class="rounded-2xl bg-red-50 p-8 text-center font-semibold text-red-700 shadow-sm">
+                        {{ tuningCompanyStore.error }}
+                    </div>
+
+                    <div v-else-if="companies.length === 0"
+                        class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm">
+                        Nincs megjeleníthető tuning cég.
+                    </div>
+
+                    <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                         <article v-for="company in companies" :key="company.id"
                             class="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                             <RouterLink :to="`/brand/${company.id}`" class="block">
                                 <div class="flex h-44 items-center justify-center bg-zinc-100 p-4">
-                                    <img :src="company.image" :alt="company.name"
-                                        class="h-full w-full object-contain transition duration-300 group-hover:scale-105">
+                                    <div
+                                        class="flex h-full w-full items-center justify-center rounded-xl bg-zinc-200 px-4 text-center text-2xl font-black text-zinc-600">
+                                        {{ company.name }}
+                                    </div>
                                 </div>
 
                                 <div class="space-y-2 p-4">
@@ -100,7 +79,8 @@ const companies = [
                                         {{ company.name }}
                                     </h2>
 
-                                    <p class="line-clamp-2 text-center text-sm font-medium text-zinc-500">
+                                    <p v-if="company.description"
+                                        class="line-clamp-2 text-center text-sm font-medium text-zinc-500">
                                         {{ company.description }}
                                     </p>
                                 </div>
@@ -112,7 +92,8 @@ const companies = [
                                     Adatlap
                                 </RouterLink>
 
-                                <a :href="company.website" target="_blank" rel="noopener noreferrer"
+                                <a v-if="getCompanyWebsite(company)" :href="getCompanyWebsite(company)" target="_blank"
+                                    rel="noopener noreferrer"
                                     class="flex-1 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-center text-sm font-bold text-zinc-800 transition hover:bg-zinc-50">
                                     Weboldal
                                 </a>
