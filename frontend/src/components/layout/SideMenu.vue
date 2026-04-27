@@ -136,24 +136,22 @@ const updateQuery = (newValues = {}) => {
 }
 
 const handleCategoryClick = (category) => {
-    const isAlreadySelected = selectedCategoryId.value === category.id
-
-    emit('select-category', isAlreadySelected ? null : category)
+    const isSelected = selectedCategoryId.value === category.id
+    emit('select-category', isSelected ? null : category)
 
     updateQuery({
-        service_category_id: isAlreadySelected ? null : category.id,
+        service_category_id: isSelected ? null : category.id,
     })
 }
 
 const handleBrandClick = (brand) => {
-    const isAlreadyOpen = openedBrandId.value === brand.id
+    const isSelected = selectedBrandId.value === brand.id || openedBrandId.value === brand.id
+    openedBrandId.value = isSelected ? null : brand.id
 
-    openedBrandId.value = isAlreadyOpen ? null : brand.id
-
-    emit('select-brand', isAlreadyOpen ? null : brand)
+    emit('select-brand', isSelected ? null : brand)
 
     updateQuery({
-        brand_id: isAlreadyOpen ? null : brand.id,
+        brand_id: isSelected ? null : brand.id,
         car_model_id: null,
     })
 }
@@ -234,7 +232,7 @@ const handleModelClick = (model) => {
                     <div v-for="brand in brands" :key="brand.id" class="space-y-2">
                         <button type="button"
                             class="flex w-full items-center justify-between rounded-xl border bg-white px-4 py-3 text-left text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-zinc-900"
-                            :class="selectedBrandId === brand.id
+                            :class="selectedBrandId === brand.id && openedBrandId === brand.id
                                 ? 'border-teal-300 bg-teal-50 text-zinc-900'
                                 : 'border-zinc-200'" @click="handleBrandClick(brand)">
                             <span>{{ brand.name }}</span>
