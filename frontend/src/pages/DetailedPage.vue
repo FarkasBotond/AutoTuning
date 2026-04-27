@@ -2,7 +2,6 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
-import { useAuthStore } from '@/stores/authStore'
 import { useTuningProductStore } from '@stores/tuningProductStore'
 import BaseHeadLine from '@/components/layout/BaseHeadLine.vue'
 import SideMenu from '@/components/layout/SideMenu.vue'
@@ -13,7 +12,6 @@ import Toast from '@/components/ui/Toast.vue'
 const route = useRoute()
 const router = useRouter()
 const cartStore = useCartStore()
-const authStore = useAuthStore()
 const tuningProductStore = useTuningProductStore()
 
 const toastVisible = ref(false)
@@ -84,17 +82,13 @@ const handleAddToCart = () => {
     return
   }
 
-  if (!authStore.isAuthenticated) {
-    router.push({
-      path: '/login',
-      query: {
-        redirect: route.fullPath
-      }
-    })
+  const result = cartStore.addToCart(product.value)
+
+  if (!result?.success) {
+    alert(result?.message || 'Nem sikerült kosárba rakni a terméket.')
     return
   }
 
-  cartStore.addToCart(product.value)
   showToast(product.value)
 }
 
