@@ -26,11 +26,8 @@ const goCheckout = () => {
 <template>
     <div class="min-h-screen flex flex-col">
         <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4 md:px-6">
-            <button
-                type="button"
-                class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
-                @click="goBack"
-            >
+            <button type="button" class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+                @click="goBack">
                 ← Vissza
             </button>
 
@@ -38,10 +35,7 @@ const goCheckout = () => {
                 Kosár
             </h1>
 
-            <div
-                v-if="cartStore.items.length === 0"
-                class="glass-panel p-10 text-center"
-            >
+            <div v-if="cartStore.items.length === 0" class="glass-panel p-10 text-center">
                 <h2 class="text-2xl font-extrabold text-zinc-900">
                     A kosár üres
                 </h2>
@@ -51,24 +45,14 @@ const goCheckout = () => {
                 </p>
             </div>
 
-            <div
-                v-else
-                class="grid gap-6 lg:grid-cols-[1fr_360px]"
-            >
+            <div v-else class="grid gap-6 lg:grid-cols-[1fr_360px]">
                 <section class="glass-panel space-y-4 p-5 md:p-6">
-                    <article
-                        v-for="item in cartStore.items"
-                        :key="item.id"
-                        class="rounded-2xl border border-zinc-200 bg-white p-4"
-                    >
+                    <article v-for="item in cartStore.items" :key="item.id"
+                        class="rounded-2xl border border-zinc-200 bg-white p-4">
                         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                             <div class="flex gap-4">
-                                <img
-                                    v-if="item.image"
-                                    :src="item.image"
-                                    :alt="item.name"
-                                    class="h-24 w-24 rounded-xl border border-zinc-200 object-contain p-2"
-                                >
+                                <img v-if="item.image" :src="item.image" :alt="item.name"
+                                    class="h-24 w-24 rounded-xl border border-zinc-200 object-contain p-2">
 
                                 <div>
                                     <h2 class="text-xl font-bold text-zinc-900">
@@ -83,22 +67,18 @@ const goCheckout = () => {
                                         {{ formatPrice(item.price) }} Ft
                                     </p>
 
-                                    <button
-                                        type="button"
+                                    <button type="button"
                                         class="mt-4 rounded-xl border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-700 transition hover:bg-orange-100"
-                                        @click="cartStore.removeFromCart(item.id)"
-                                    >
+                                        @click="cartStore.removeFromCart(item.id)">
                                         Törlés
                                     </button>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-3">
-                                <button
-                                    type="button"
+                                <button type="button"
                                     class="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-lg font-bold text-zinc-700 transition hover:bg-zinc-200"
-                                    @click="cartStore.decreaseQuantity(item.id)"
-                                >
+                                    @click="cartStore.decreaseQuantity(item.id)">
                                     -
                                 </button>
 
@@ -106,11 +86,9 @@ const goCheckout = () => {
                                     {{ item.quantity }}
                                 </span>
 
-                                <button
-                                    type="button"
+                                <button type="button"
                                     class="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-lg font-bold text-zinc-700 transition hover:bg-zinc-200"
-                                    @click="cartStore.increaseQuantity(item.id)"
-                                >
+                                    @click="cartStore.increaseQuantity(item.id)">
                                     +
                                 </button>
                             </div>
@@ -134,11 +112,7 @@ const goCheckout = () => {
                             <span>{{ formatPrice(cartStore.totalPrice) }} Ft</span>
                         </div>
 
-                        <button
-                            type="button"
-                            class="btn-primary w-full"
-                            @click="goCheckout"
-                        >
+                        <button type="button" class="btn-primary w-full" @click="goCheckout">
                             Tovább a pénztárhoz
                         </button>
                     </div>

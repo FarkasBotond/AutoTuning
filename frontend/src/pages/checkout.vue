@@ -178,16 +178,14 @@ onMounted(() => {
 <template>
     <div class="min-h-screen flex flex-col">
         <main class="mx-auto w-full max-w-[1450px] flex-1 px-4 py-4 md:px-6">
-            <button
-                type="button"
-                class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
-                @click="goBack"
-            >
+            <button type="button" class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+                @click="goBack">
                 ← Vissza a kosárhoz
             </button>
 
             <div v-if="successOrder" class="glass-panel mx-auto max-w-3xl p-8 text-center">
-                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
+                <div
+                    class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
                     ✓
                 </div>
 
@@ -229,32 +227,20 @@ onMounted(() => {
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Teljes név</label>
-                                    <input
-                                        v-model="form.full_name"
-                                        type="text"
-                                        class="brand-input"
-                                        placeholder="Vezetéknév Keresztnév"
-                                    >
+                                    <input v-model="form.full_name" type="text" class="brand-input"
+                                        placeholder="Vezetéknév Keresztnév">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Email</label>
-                                    <input
-                                        v-model="form.email"
-                                        type="email"
-                                        class="brand-input"
-                                        placeholder="emailcím@gmail.com"
-                                    >
+                                    <input v-model="form.email" type="email" class="brand-input"
+                                        placeholder="emailcím@gmail.com">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Telefonszám</label>
-                                    <input
-                                        v-model="form.phone"
-                                        type="tel"
-                                        class="brand-input"
-                                        placeholder="+36 30 123 4567"
-                                    >
+                                    <input v-model="form.phone" type="tel" class="brand-input"
+                                        placeholder="+36 30 123 4567">
                                 </div>
 
                                 <div>
@@ -276,20 +262,21 @@ onMounted(() => {
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <label
                                     class="cursor-pointer rounded-2xl border bg-white p-4 transition hover:border-teal-300 hover:bg-teal-50"
-                                    :class="form.delivery_method === 'capital_store' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'"
-                                >
-                                    <input v-model="form.delivery_method" type="radio" value="capital_store" class="sr-only">
+                                    :class="form.delivery_method === 'capital_store' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'">
+                                    <input v-model="form.delivery_method" type="radio" value="capital_store"
+                                        class="sr-only">
                                     <span class="block text-lg font-bold text-zinc-900">Fővárosi üzleti átvétel</span>
                                     <span class="mt-2 block text-sm text-zinc-600">
-                                        Európán belül minden ország fővárosában van partnerüzlet, ahol átvehető a rendelés.
+                                        Európán belül minden ország fővárosában van partnerüzlet, ahol átvehető a
+                                        rendelés.
                                     </span>
                                 </label>
 
                                 <label
                                     class="cursor-pointer rounded-2xl border bg-white p-4 transition hover:border-teal-300 hover:bg-teal-50"
-                                    :class="form.delivery_method === 'home_delivery' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'"
-                                >
-                                    <input v-model="form.delivery_method" type="radio" value="home_delivery" class="sr-only">
+                                    :class="form.delivery_method === 'home_delivery' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'">
+                                    <input v-model="form.delivery_method" type="radio" value="home_delivery"
+                                        class="sr-only">
                                     <span class="block text-lg font-bold text-zinc-900">Házhozszállítás</span>
                                     <span class="mt-2 block text-sm text-zinc-600">
                                         A megadott európai címre szállítjuk ki a rendelést.
@@ -306,22 +293,26 @@ onMounted(() => {
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Város</label>
-                                    <input v-model="form.city" type="text" class="brand-input" placeholder="Pl. Budapest">
+                                    <input v-model="form.city" type="text" class="brand-input"
+                                        placeholder="Pl. Budapest">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Irányítószám</label>
-                                    <input v-model="form.postal_code" type="text" class="brand-input" placeholder="Pl. 1111">
+                                    <input v-model="form.postal_code" type="text" class="brand-input"
+                                        placeholder="Pl. 1111">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Utca név</label>
-                                    <input v-model="form.street_name" type="text" class="brand-input" placeholder="Pl. Példa utca">
+                                    <input v-model="form.street_name" type="text" class="brand-input"
+                                        placeholder="Pl. Példa utca">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Házszám</label>
-                                    <input v-model="form.house_number" type="text" class="brand-input" placeholder="Pl. 12/A">
+                                    <input v-model="form.house_number" type="text" class="brand-input"
+                                        placeholder="Pl. 12/A">
                                 </div>
                             </div>
                         </section>
@@ -334,9 +325,9 @@ onMounted(() => {
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <label
                                     class="cursor-pointer rounded-2xl border bg-white p-4 transition hover:border-teal-300 hover:bg-teal-50"
-                                    :class="form.payment_method === 'mobile_pay' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'"
-                                >
-                                    <input v-model="form.payment_method" type="radio" value="mobile_pay" class="sr-only">
+                                    :class="form.payment_method === 'mobile_pay' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'">
+                                    <input v-model="form.payment_method" type="radio" value="mobile_pay"
+                                        class="sr-only">
                                     <span class="block text-lg font-bold text-zinc-900">Mobilfizetés</span>
                                     <span class="mt-2 block text-sm text-zinc-600">
                                         Apple Pay vagy Google Pay jellegű fizetés. Demo módban nincs valódi tranzakció.
@@ -345,9 +336,9 @@ onMounted(() => {
 
                                 <label
                                     class="cursor-pointer rounded-2xl border bg-white p-4 transition hover:border-teal-300 hover:bg-teal-50"
-                                    :class="form.payment_method === 'cash_on_delivery' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'"
-                                >
-                                    <input v-model="form.payment_method" type="radio" value="cash_on_delivery" class="sr-only">
+                                    :class="form.payment_method === 'cash_on_delivery' ? 'border-teal-400 bg-teal-50' : 'border-zinc-200'">
+                                    <input v-model="form.payment_method" type="radio" value="cash_on_delivery"
+                                        class="sr-only">
                                     <span class="block text-lg font-bold text-zinc-900">Utánvét</span>
                                     <span class="mt-2 block text-sm text-zinc-600">
                                         Fizetés átvételkor. Kezelési díj: +1 000 Ft.
@@ -358,14 +349,12 @@ onMounted(() => {
 
                         <section>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">Megjegyzés</label>
-                            <textarea
-                                v-model="form.note"
-                                class="brand-input min-h-[110px] resize-y"
-                                placeholder="Pl. pontosítás a rendeléshez vagy átvételhez"
-                            ></textarea>
+                            <textarea v-model="form.note" class="brand-input min-h-[110px] resize-y"
+                                placeholder="Pl. pontosítás a rendeléshez vagy átvételhez"></textarea>
                         </section>
 
-                        <div v-if="errorMessage" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                        <div v-if="errorMessage"
+                            class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
                             {{ errorMessage }}
                         </div>
 
@@ -378,7 +367,8 @@ onMounted(() => {
                         <h2 class="mb-4 text-xl font-bold text-zinc-900">Rendelés összesítő</h2>
 
                         <div class="space-y-4">
-                            <div v-for="item in cartStore.items" :key="item.id" class="rounded-xl border border-zinc-200 bg-white p-3">
+                            <div v-for="item in cartStore.items" :key="item.id"
+                                class="rounded-xl border border-zinc-200 bg-white p-3">
                                 <div class="flex justify-between gap-3">
                                     <div>
                                         <p class="font-bold text-zinc-900">{{ item.name }}</p>

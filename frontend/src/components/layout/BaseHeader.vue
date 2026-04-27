@@ -27,18 +27,8 @@ const links = [
       <Sheet>
         <SheetTrigger asChild>
           <button variant="outline" size="icon" class="lg:hidden">
-            <svg
-              class="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" x2="20" y1="12" y2="12" />
               <line x1="4" x2="20" y1="6" y2="6" />
               <line x1="4" x2="20" y1="18" y2="18" />
@@ -51,12 +41,8 @@ const links = [
             <span class="sr-only">{{ title }}</span>
           </RouterLink>
           <div class="grid gap-2 py-6">
-            <RouterLink
-              v-for="link of links"
-              :key="link.to"
-              :to="link.to"
-              class="flex w-full items-center py-2 text-lg font-semibold"
-            >
+            <RouterLink v-for="link of links" :key="link.to" :to="link.to"
+              class="flex w-full items-center py-2 text-lg font-semibold">
               {{ link.label }}
             </RouterLink>
           </div>
@@ -66,12 +52,7 @@ const links = [
         <NavigationMenuList>
           <NavigationMenuItem v-for="link of links" :key="link.to">
             <RouterLink v-slot="{ isActive, href, navigate }" :to="link.to" custom>
-              <NavigationMenuLink
-                :active="isActive"
-                :href
-                :class="navigationMenuTriggerStyle()"
-                @click="navigate"
-              >
+              <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
                 {{ link.label }}
               </NavigationMenuLink>
             </RouterLink>

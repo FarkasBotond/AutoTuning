@@ -20,7 +20,7 @@ onMounted(async () => {
   try {
     const modelId = route.params.id
     model.value = await modelStore.fetchSingleModel(modelId)
-    
+
     // Fetch the brand for this model
     if (model.value?.brand_id) {
       brand.value = await brandStore.fetchSingleBrand(model.value.brand_id)
@@ -51,7 +51,8 @@ const goToBrands = () => {
   <BaseLayout>
     <div class="mx-auto max-w-5xl px-4 py-8 md:px-6">
       <div class="mb-6 flex items-center gap-2 text-sm text-zinc-600">
-        <button class="font-medium text-teal-700 transition-colors hover:text-teal-800 hover:underline" @click="goToBrands">Brands</button>
+        <button class="font-medium text-teal-700 transition-colors hover:text-teal-800 hover:underline"
+          @click="goToBrands">Brands</button>
         <span class="text-zinc-400">/</span>
         <button class="font-medium text-teal-700 transition-colors hover:text-teal-800 hover:underline" @click="goBack">
           {{ brand?.name || 'Brand' }}
@@ -68,7 +69,8 @@ const goToBrands = () => {
         <p>Loading model details...</p>
       </div>
 
-      <div v-else-if="error" class="rounded-xl border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
+      <div v-else-if="error"
+        class="rounded-xl border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
         <p>{{ error }}</p>
       </div>
 
@@ -91,7 +93,8 @@ const goToBrands = () => {
               <span class="text-xs font-semibold uppercase tracking-wide text-zinc-600">Modification:</span>
               <span class="text-xl font-bold text-zinc-900">{{ model.mod }}</span>
             </div>
-            <div v-if="model.startyear" class="flex flex-col gap-1 rounded-lg border-l-4 border-teal-600 bg-zinc-50 p-4">
+            <div v-if="model.startyear"
+              class="flex flex-col gap-1 rounded-lg border-l-4 border-teal-600 bg-zinc-50 p-4">
               <span class="text-xs font-semibold uppercase tracking-wide text-zinc-600">Production Start:</span>
               <span class="text-xl font-bold text-zinc-900">{{ model.startyear }}</span>
             </div>
@@ -99,7 +102,8 @@ const goToBrands = () => {
               <span class="text-xs font-semibold uppercase tracking-wide text-zinc-600">Production End:</span>
               <span class="text-xl font-bold text-zinc-900">{{ model.endyear }}</span>
             </div>
-            <div v-if="!model.endyear && model.startyear" class="flex flex-col gap-1 rounded-lg border-l-4 border-teal-600 bg-zinc-50 p-4">
+            <div v-if="!model.endyear && model.startyear"
+              class="flex flex-col gap-1 rounded-lg border-l-4 border-teal-600 bg-zinc-50 p-4">
               <span class="text-xs font-semibold uppercase tracking-wide text-zinc-600">Status:</span>
               <span class="text-xl font-bold text-zinc-900">Current Production</span>
             </div>
@@ -125,15 +129,20 @@ const goToBrands = () => {
                 desc: 'Optimize fuel efficiency and emissions',
                 features: ['Reduced Consumption', 'Eco Friendly', 'Extended Range']
               }
-            ]" :key="idx" class="flex flex-col gap-4 rounded-lg border border-zinc-200 p-6 transition-all hover:border-teal-300 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
+            ]" :key="idx"
+              class="flex flex-col gap-4 rounded-lg border border-zinc-200 p-6 transition-all hover:border-teal-300 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
               <div class="flex flex-col gap-3 sm:flex-1">
                 <h3 class="text-lg font-semibold text-zinc-900">{{ tuning.title }}</h3>
                 <p class="text-zinc-600">{{ tuning.desc }}</p>
                 <div class="flex flex-wrap gap-2">
-                  <span v-for="feature in tuning.features" :key="feature" class="inline-block rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">{{ feature }}</span>
+                  <span v-for="feature in tuning.features" :key="feature"
+                    class="inline-block rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">{{ feature
+                    }}</span>
                 </div>
               </div>
-              <button class="mt-4 whitespace-nowrap rounded-lg bg-teal-700 px-6 py-3 font-semibold text-white transition-all hover:bg-teal-800 hover:shadow-lg active:scale-95 sm:mt-0 sm:ml-6">View Details</button>
+              <button
+                class="mt-4 whitespace-nowrap rounded-lg bg-teal-700 px-6 py-3 font-semibold text-white transition-all hover:bg-teal-800 hover:shadow-lg active:scale-95 sm:mt-0 sm:ml-6">View
+                Details</button>
             </div>
           </div>
         </div>

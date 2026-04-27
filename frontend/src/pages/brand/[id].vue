@@ -54,7 +54,8 @@ const handleModelClick = (modelId) => {
         <p>Betöltés...</p>
       </div>
 
-      <div v-else-if="error" class="rounded-xl border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
+      <div v-else-if="error"
+        class="rounded-xl border border-red-300 bg-red-50 px-6 py-4 text-center text-lg text-red-700">
         <p>{{ error }}</p>
       </div>
 
@@ -67,23 +68,24 @@ const handleModelClick = (modelId) => {
         <div class="flex flex-col gap-6">
           <h2 class="text-3xl font-semibold text-zinc-900">Elérhető modellek:</h2>
 
-          <div v-if="filteredModels.length === 0" class="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 px-6 py-8 text-center text-zinc-600">
+          <div v-if="filteredModels.length === 0"
+            class="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 px-6 py-8 text-center text-zinc-600">
             <p>Nincs elérhető modell ehez a gyártóhoz</p>
           </div>
 
           <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            <div
-              v-for="model in filteredModels"
-              :key="model.id"
+            <div v-for="model in filteredModels" :key="model.id"
               class="group cursor-pointer rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
-              @click="handleModelClick(model.id)"
-            >
+              @click="handleModelClick(model.id)">
               <div class="flex flex-col gap-2">
                 <h3 class="text-xl font-semibold text-zinc-900">{{ model.name }}</h3>
                 <p v-if="model.gen" class="text-sm text-zinc-600">Generáció: {{ model.gen }}</p>
                 <p v-if="model.mod" class="text-sm text-zinc-600">Modifikáció: {{ model.mod }}</p>
-                <p v-if="model.startyear" class="text-sm text-zinc-600">{{ model.startyear }}<span v-if="model.endyear"> - {{ model.endyear }}</span></p>
-                <p class="mt-4 text-sm font-medium text-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Adatok →</p>
+                <p v-if="model.startyear" class="text-sm text-zinc-600">{{ model.startyear }}<span v-if="model.endyear">
+                    - {{ model.endyear }}</span></p>
+                <p
+                  class="mt-4 text-sm font-medium text-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  Adatok →</p>
               </div>
             </div>
           </div>

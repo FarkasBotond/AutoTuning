@@ -74,7 +74,7 @@ const handleRegister = async () => {
       }
     } else {
       error.value = data.message || data.data?.message || 'Nem sikerült a regisztráció!'
-      
+
       if (data.errors) {
         const firstError = Object.values(data.errors)[0]
         if (Array.isArray(firstError) && firstError[0]) {
@@ -93,7 +93,8 @@ const handleRegister = async () => {
 <template>
   <div class="flex min-h-screen items-center justify-center px-4 py-10 md:px-6">
     <div class="glass-panel grid w-full max-w-5xl overflow-hidden lg:grid-cols-[1.1fr_1fr]">
-      <aside class="hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-teal-900 p-10 text-white lg:flex lg:flex-col lg:justify-between">
+      <aside
+        class="hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-teal-900 p-10 text-white lg:flex lg:flex-col lg:justify-between">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.24em] text-teal-100">RaceDistrict</p>
           <h2 class="mt-5 text-4xl font-extrabold leading-tight">Készíts fiókot és
@@ -107,87 +108,55 @@ const handleRegister = async () => {
       </aside>
 
       <section class="p-6 sm:p-8 lg:p-10">
-        <button
-          type="button"
-          class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
-          @click="goBack"
-        >
+        <button type="button" class="mb-4 text-sm font-semibold text-zinc-600 transition-colors hover:text-zinc-900"
+          @click="goBack">
           ← Vissza
         </button>
         <h1 class="text-3xl font-extrabold tracking-tight text-zinc-900">Fiók létrehozása</h1>
         <p class="mt-2 text-sm text-zinc-500">Töltsd ki az adatokat, és már használhatod is a felületet.</p>
 
         <form @submit.prevent="handleRegister" class="mt-8 flex flex-col gap-5">
-          <div v-if="error" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          <div v-if="error"
+            class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
             {{ error }}
           </div>
 
           <div class="flex flex-col gap-2">
             <label for="name" class="text-sm font-semibold text-zinc-700">Teljes név</label>
-            <input
-              id="name"
-              v-model="formData.name"
-              type="text"
-              placeholder="Teljes neved"
-              required
-              :disabled="isLoading"
-              class="brand-input"
-            />
+            <input id="name" v-model="formData.name" type="text" placeholder="Teljes neved" required
+              :disabled="isLoading" class="brand-input" />
           </div>
 
           <div class="flex flex-col gap-2">
             <label for="email" class="text-sm font-semibold text-zinc-700">Email</label>
-            <input
-              id="email"
-              v-model="formData.email"
-              type="email"
-              placeholder="pelda@email.com"
-              required
-              :disabled="isLoading"
-              class="brand-input"
-            />
+            <input id="email" v-model="formData.email" type="email" placeholder="pelda@email.com" required
+              :disabled="isLoading" class="brand-input" />
           </div>
 
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div class="flex flex-col gap-2">
               <label for="password" class="text-sm font-semibold text-zinc-700">Jelszó</label>
-              <input
-                id="password"
-                v-model="formData.password"
-                type="password"
-                placeholder="••••••••"
-                required
-                :disabled="isLoading"
-                class="brand-input"
-              />
+              <input id="password" v-model="formData.password" type="password" placeholder="••••••••" required
+                :disabled="isLoading" class="brand-input" />
             </div>
 
             <div class="flex flex-col gap-2">
               <label for="password_confirmation" class="text-sm font-semibold text-zinc-700">Jelszó újra</label>
-              <input
-                id="password_confirmation"
-                v-model="formData.password_confirmation"
-                type="password"
-                placeholder="••••••••"
-                required
-                :disabled="isLoading"
-                class="brand-input"
-              />
+              <input id="password_confirmation" v-model="formData.password_confirmation" type="password"
+                placeholder="••••••••" required :disabled="isLoading" class="brand-input" />
             </div>
           </div>
 
-          <button 
-            type="submit" 
-            :disabled="isLoading" 
-            class="btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-70"
-          >
+          <button type="submit" :disabled="isLoading"
+            class="btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-70">
             {{ isLoading ? 'Fiók létrehozása...' : 'Regisztráció' }}
           </button>
         </form>
 
         <div class="mt-6 text-center text-sm text-zinc-600">
           Van már fiókod?
-          <router-link to="/login" class="font-semibold text-teal-700 transition-colors hover:text-teal-800">Bejelentkezés itt</router-link>
+          <router-link to="/login"
+            class="font-semibold text-teal-700 transition-colors hover:text-teal-800">Bejelentkezés itt</router-link>
         </div>
       </section>
     </div>

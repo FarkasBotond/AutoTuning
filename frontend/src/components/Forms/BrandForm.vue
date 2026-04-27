@@ -53,31 +53,15 @@ const handleSubmit = () => {
       <label for="name" class="mb-2 block text-sm font-semibold text-zinc-700">
         Gyártó neve
       </label>
-      <input
-        id="name"
-        v-model="form.name"
-        type="text"
-        maxlength="100"
-        class="brand-input"
-        placeholder="Pl. BMW"
-      />
+      <input id="name" v-model="form.name" type="text" maxlength="100" class="brand-input" placeholder="Pl. BMW" />
       <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
     </div>
 
     <div class="flex flex-wrap gap-2">
-      <button
-        type="submit"
-        :disabled="loading"
-        class="btn-primary disabled:opacity-60"
-      >
+      <button type="submit" :disabled="loading" class="btn-primary disabled:opacity-60">
         {{ loading ? 'Mentés...' : 'Mentés' }}
       </button>
-      <button
-        type="button"
-        @click="$emit('cancel')"
-        :disabled="loading"
-        class="btn-muted disabled:opacity-60"
-      >
+      <button type="button" @click="$emit('cancel')" :disabled="loading" class="btn-muted disabled:opacity-60">
         Mégse
       </button>
     </div>

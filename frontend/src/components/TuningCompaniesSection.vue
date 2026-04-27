@@ -75,7 +75,8 @@ const scrollRight = () => {
     <section class="glass-panel min-w-0 p-5 md:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
             <h2 class="section-title">Kiemelt márkák</h2>
-            <RouterLink :to="{ name: 'companies' }" class="btn-muted px-4 py-2 text-xs md:text-sm">Mutass mindent</RouterLink>
+            <RouterLink :to="{ name: 'companies' }" class="btn-muted px-4 py-2 text-xs md:text-sm">Mutass mindent
+            </RouterLink>
         </div>
 
         <div class="relative min-w-0 overflow-hidden">

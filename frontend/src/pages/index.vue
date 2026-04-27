@@ -177,10 +177,7 @@ const showToast = (product) => {
             <section class="flex-1 min-w-0 space-y-5 pb-14">
                 <TuningCompaniesSection />
 
-                <form
-                    class="glass-panel p-4 md:p-5"
-                    @submit.prevent="applyFilters"
-                >
+                <form class="glass-panel p-4 md:p-5" @submit.prevent="applyFilters">
                     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                         <div>
                             <h2 class="text-2xl font-extrabold text-zinc-900">
@@ -190,63 +187,42 @@ const showToast = (product) => {
                                 Szűrés név, ár, készlet és akció alapján.
                             </p>
                         </div>
-                    
-                        <button
-                            type="button"
-                            class="btn-muted px-4 py-2"
-                            @click="resetFilters"
-                        >
+
+                        <button type="button" class="btn-muted px-4 py-2" @click="resetFilters">
                             Szűrők törlése
                         </button>
                     </div>
-                
+
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">
                                 Keresés
                             </label>
-                            <input
-                                v-model="filterForm.search"
-                                type="text"
-                                class="brand-input"
-                                placeholder="Pl. turbó, Brembo, Audi"
-                            >
+                            <input v-model="filterForm.search" type="text" class="brand-input"
+                                placeholder="Pl. turbó, Brembo, Audi">
                         </div>
-                    
+
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">
                                 Minimum ár
                             </label>
-                            <input
-                                v-model.number="filterForm.min_price"
-                                type="number"
-                                min="0"
-                                class="brand-input"
-                                placeholder="Pl. 50000"
-                            >
+                            <input v-model.number="filterForm.min_price" type="number" min="0" class="brand-input"
+                                placeholder="Pl. 50000">
                         </div>
-                    
+
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">
                                 Maximum ár
                             </label>
-                            <input
-                                v-model.number="filterForm.max_price"
-                                type="number"
-                                min="0"
-                                class="brand-input"
-                                placeholder="Pl. 300000"
-                            >
+                            <input v-model.number="filterForm.max_price" type="number" min="0" class="brand-input"
+                                placeholder="Pl. 300000">
                         </div>
-                    
+
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">
                                 Rendezés
                             </label>
-                            <select
-                                v-model="filterForm.sort"
-                                class="brand-input"
-                            >
+                            <select v-model="filterForm.sort" class="brand-input">
                                 <option value="">Alapértelmezett</option>
                                 <option value="price_asc">Ár szerint növekvő</option>
                                 <option value="price_desc">Ár szerint csökkenő</option>
@@ -255,32 +231,24 @@ const showToast = (product) => {
                             </select>
                         </div>
                     </div>
-                
+
                     <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
                         <div class="flex flex-wrap gap-3">
-                            <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
-                                <input
-                                    v-model="filterForm.is_in_stock"
-                                    type="checkbox"
-                                    class="h-4 w-4 accent-teal-700"
-                                >
+                            <label
+                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
+                                <input v-model="filterForm.is_in_stock" type="checkbox" class="h-4 w-4 accent-teal-700">
                                 Csak raktáron
                             </label>
-                        
-                            <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
-                                <input
-                                    v-model="filterForm.only_discounted"
-                                    type="checkbox"
-                                    class="h-4 w-4 accent-orange-600"
-                                >
+
+                            <label
+                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
+                                <input v-model="filterForm.only_discounted" type="checkbox"
+                                    class="h-4 w-4 accent-orange-600">
                                 Csak akciós
                             </label>
                         </div>
-                    
-                        <button
-                            type="submit"
-                            class="btn-primary px-6 py-3"
-                        >
+
+                        <button type="submit" class="btn-primary px-6 py-3">
                             Szűrés
                         </button>
                     </div>

@@ -28,10 +28,8 @@ const goToModels = () => {
       </div>
 
       <div class="mt-6 grid w-full grid-cols-1 gap-6 md:grid-cols-2">
-        <div 
-          class="glass-panel group cursor-pointer p-10 text-center transition-all duration-300 hover:-translate-y-1" 
-          @click="goToBrands"
-        >
+        <div class="glass-panel group cursor-pointer p-10 text-center transition-all duration-300 hover:-translate-y-1"
+          @click="goToBrands">
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl"></div>
             <h2 class="text-2xl font-semibold text-zinc-900">Gyártók kezelése</h2>
@@ -40,10 +38,8 @@ const goToModels = () => {
           </div>
         </div>
 
-        <div 
-          class="glass-panel group cursor-pointer p-8 text-center transition-all duration-300 hover:-translate-y-1" 
-          @click="goToModels"
-        >
+        <div class="glass-panel group cursor-pointer p-8 text-center transition-all duration-300 hover:-translate-y-1"
+          @click="goToModels">
           <div class="flex flex-col items-center gap-4">
             <div class="text-5xl"></div>
             <h2 class="text-2xl font-semibold text-zinc-900">Modellek kezelése</h2>

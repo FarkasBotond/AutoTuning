@@ -47,18 +47,12 @@ const goToEdit = (brandId) => {
   <BaseLayout>
     <div class="mx-auto w-full max-w-[1300px] px-4 py-8 md:px-6">
       <div class="mb-6 flex flex-wrap items-center gap-3">
-        <button
-          @click="() => router.push('/admin')"
-          class="btn-muted px-4 py-2"
-        >
+        <button @click="() => router.push('/admin')" class="btn-muted px-4 py-2">
           ← Admin Panel
         </button>
         <div class="ml-auto flex items-center gap-2">
           <button class="btn-primary px-4 py-2 text-xs">Gyártók</button>
-          <button
-            @click="() => router.push('/admin/models')"
-            class="btn-muted px-4 py-2 text-xs"
-          >
+          <button @click="() => router.push('/admin/models')" class="btn-muted px-4 py-2 text-xs">
             Modellek
           </button>
         </div>
@@ -67,10 +61,7 @@ const goToEdit = (brandId) => {
       <div class="glass-panel p-6 md:p-8">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
           <h1 class="text-3xl font-extrabold text-zinc-900">Gyártók kezelése</h1>
-          <button
-            @click="goToCreate"
-            class="btn-primary"
-          >
+          <button @click="goToCreate" class="btn-primary">
             Új gyártó
           </button>
         </div>
@@ -79,11 +70,13 @@ const goToEdit = (brandId) => {
           <p class="text-zinc-500">Betöltés...</p>
         </div>
 
-        <div v-else-if="brandStore.error" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+        <div v-else-if="brandStore.error"
+          class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
           {{ brandStore.error }}
         </div>
 
-        <div v-else-if="brandStore.brands.length === 0" class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
+        <div v-else-if="brandStore.brands.length === 0"
+          class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
           <p class="text-zinc-600">Nincs egy gyártó sem! Hozz létre egyet.</p>
         </div>
 
@@ -91,9 +84,15 @@ const goToEdit = (brandId) => {
           <table class="w-full border-collapse bg-white">
             <thead class="bg-zinc-50">
               <tr>
-                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">ID</th>
-                <th class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">Név</th>
-                <th class="border-b border-zinc-200 px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">Műveletek</th>
+                <th
+                  class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  ID</th>
+                <th
+                  class="border-b border-zinc-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  Név</th>
+                <th
+                  class="border-b border-zinc-200 px-4 py-3 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  Műveletek</th>
               </tr>
             </thead>
             <tbody>
@@ -102,16 +101,10 @@ const goToEdit = (brandId) => {
                 <td class="border-b border-zinc-100 px-4 py-3 font-semibold text-zinc-900">{{ brand.name }}</td>
                 <td class="border-b border-zinc-100 px-4 py-3 text-center">
                   <div class="inline-flex gap-2">
-                    <button
-                      @click="goToEdit(brand.id)"
-                      class="btn-muted px-3 py-2 text-xs"
-                    >
+                    <button @click="goToEdit(brand.id)" class="btn-muted px-3 py-2 text-xs">
                       Szerkesztés
                     </button>
-                    <button
-                      @click="handleDelete(brand.id)"
-                      class="btn-accent px-3 py-2 text-xs"
-                    >
+                    <button @click="handleDelete(brand.id)" class="btn-accent px-3 py-2 text-xs">
                       Törlés
                     </button>
                   </div>

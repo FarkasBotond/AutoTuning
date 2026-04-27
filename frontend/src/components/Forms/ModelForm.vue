@@ -96,17 +96,14 @@ const handleSubmit = () => {
       <label for="brand_id" class="mb-2 block text-sm font-semibold text-zinc-700">
         Gyártó
       </label>
-      <select
-        id="brand_id"
-        v-model.number="form.brand_id"
-        class="brand-input"
-      >
+      <select id="brand_id" v-model.number="form.brand_id" class="brand-input">
         <option value="">Válassz gyártót</option>
         <option v-for="brand in brands" :key="brand.id" :value="brand.id">
           {{ brand.name }}
         </option>
       </select>
-      <span v-if="errors.brand_id" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.brand_id }}</span>
+      <span v-if="errors.brand_id" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.brand_id
+        }}</span>
     </div>
 
     <div class="mb-4">
@@ -114,64 +111,38 @@ const handleSubmit = () => {
         <label for="name" class="mb-2 block text-sm font-semibold text-zinc-700">
           Modell név
         </label>
-      <input
-        id="name"
-        v-model="form.name"
-        type="text"
-        maxlength="50"
-        class="brand-input"
-        placeholder="Pl. M3"
-      />
-      <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
+        <input id="name" v-model="form.name" type="text" maxlength="50" class="brand-input" placeholder="Pl. M3" />
+        <span v-if="errors.name" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.name }}</span>
       </div>
     </div>
 
     <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
       <div>
-      <label for="startyear" class="mb-2 block text-sm font-semibold text-zinc-700">
-        Kezdő év
-      </label>
-      <input
-        id="startyear"
-        v-model.number="form.startyear"
-        type="number"
-        min="1900"
-        class="brand-input"
-        placeholder="Pl. 2022"
-      />
-      <span v-if="errors.startyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.startyear }}</span>
+        <label for="startyear" class="mb-2 block text-sm font-semibold text-zinc-700">
+          Kezdő év
+        </label>
+        <input id="startyear" v-model.number="form.startyear" type="number" min="1900" class="brand-input"
+          placeholder="Pl. 2022" />
+        <span v-if="errors.startyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.startyear
+          }}</span>
       </div>
 
       <div>
-      <label for="endyear" class="mb-2 block text-sm font-semibold text-zinc-700">
-        Záró év (opcionális)
-      </label>
-      <input
-        id="endyear"
-        v-model.number="form.endyear"
-        type="number"
-        min="1900"
-        class="brand-input"
-        placeholder="Pl. 2025"
-      />
-      <span v-if="errors.endyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.endyear }}</span>
+        <label for="endyear" class="mb-2 block text-sm font-semibold text-zinc-700">
+          Záró év (opcionális)
+        </label>
+        <input id="endyear" v-model.number="form.endyear" type="number" min="1900" class="brand-input"
+          placeholder="Pl. 2025" />
+        <span v-if="errors.endyear" class="mt-1 inline-block text-sm font-medium text-red-600">{{ errors.endyear
+          }}</span>
       </div>
     </div>
 
     <div class="flex flex-wrap gap-2">
-      <button
-        type="submit"
-        :disabled="loading"
-        class="btn-primary disabled:opacity-60"
-      >
+      <button type="submit" :disabled="loading" class="btn-primary disabled:opacity-60">
         {{ loading ? 'Mentés...' : 'Mentés' }}
       </button>
-      <button
-        type="button"
-        @click="$emit('cancel')"
-        :disabled="loading"
-        class="btn-muted disabled:opacity-60"
-      >
+      <button type="button" @click="$emit('cancel')" :disabled="loading" class="btn-muted disabled:opacity-60">
         Mégse
       </button>
     </div>

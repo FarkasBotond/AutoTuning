@@ -3,7 +3,7 @@
 </script>
 
 <template>
-   <footer class="mt-14 px-4 pb-8 md:px-6 md:pb-10">
+    <footer class="mt-14 px-4 pb-8 md:px-6 md:pb-10">
         <div class="glass-panel mx-auto w-full max-w-[1500px] p-6 md:p-8">
             <div class="grid gap-8 lg:grid-cols-[1.3fr_1fr_1fr]">
                 <div>
@@ -18,7 +18,8 @@
                     <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-500">Kapcsolat</h3>
                     <p>
                         <span class="font-semibold text-zinc-900">Email:</span>
-                        <a href="mailto:racedistrict@gmail.com" class="ml-2 text-teal-700 hover:text-teal-800">racedistrict@gmail.com</a>
+                        <a href="mailto:racedistrict@gmail.com"
+                            class="ml-2 text-teal-700 hover:text-teal-800">racedistrict@gmail.com</a>
                     </p>
                     <p>
                         <span class="font-semibold text-zinc-900">Telefon:</span>
@@ -30,9 +31,7 @@
                     <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-500">Elérhetőség</h3>
                     <p>
                         <span class="font-semibold text-zinc-900">Instagram:</span>
-                        <a
-                            href="https://instagram.com/racedistrict"
-                            target="_blank"
+                        <a href="https://instagram.com/racedistrict" target="_blank"
                             class="ml-2 text-teal-700 hover:text-teal-800">
                             @racedistrict
                         </a>
