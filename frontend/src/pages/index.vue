@@ -235,15 +235,17 @@ const showToast = (product) => {
                     <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
                         <div class="flex flex-wrap gap-3">
                             <label
-                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
-                                <input v-model="filterForm.is_in_stock" type="checkbox" class="h-4 w-4 accent-teal-700">
+                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition"
+                                :class="filterForm.is_in_stock ? 'border-emerald-400 bg-emerald-50 text-emerald-800' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50'">
+                                <input v-model="filterForm.is_in_stock" type="checkbox" class="h-4 w-4 accent-emerald-600">
                                 Csak raktáron
                             </label>
 
                             <label
-                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50">
+                                class="inline-flex cursor-pointer items-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition"
+                                :class="filterForm.only_discounted ? 'border-emerald-400 bg-emerald-50 text-emerald-800' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50'">
                                 <input v-model="filterForm.only_discounted" type="checkbox"
-                                    class="h-4 w-4 accent-orange-600">
+                                    class="h-4 w-4 accent-emerald-600">
                                 Csak akciós
                             </label>
                         </div>
