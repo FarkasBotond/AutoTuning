@@ -87,7 +87,7 @@ onMounted(async () => {
                             </RouterLink>
 
                             <div class="flex gap-2 border-t border-zinc-100 p-4">
-                                <RouterLink :to="`/brand/${company.id}`"
+                                <RouterLink :to="`/company/${company.id}`"
                                     class="flex-1 rounded-xl bg-zinc-950 px-4 py-2 text-center text-sm font-bold text-white transition hover:bg-zinc-800">
                                     Adatlap
                                 </RouterLink>
