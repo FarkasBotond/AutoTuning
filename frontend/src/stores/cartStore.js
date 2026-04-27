@@ -1,63 +1,53 @@
 import { defineStore } from 'pinia'
 
-const CART_STORAGE_KEY = 'race_district_cart'
-
-const loadCartItems = () => {
-    try {
-        const savedCart = localStorage.getItem(CART_STORAGE_KEY)
-
-        if (!savedCart) {
-            return []
-        }
-
-        const parsedCart = JSON.parse(savedCart)
-
-        if (!Array.isArray(parsedCart)) {
-            return []
-        }
-
-        return parsedCart
-    } catch (error) {
-        console.error('Failed to load cart from localStorage:', error)
-        return []
-    }
-}
-
-const saveCartItems = (items) => {
-    try {
-        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
-    } catch (error) {
-        console.error('Failed to save cart to localStorage:', error)
-    }
-}
+const MAX_PER_PRODUCT = 5
+const MAX_TOTAL_ITEMS = 10
 
 export const useCartStore = defineStore('cart', {
     state: () => ({
-        items: loadCartItems()
+        items: [],
+        lastError: ''
     }),
-
     getters: {
         totalItems: (state) => {
             return state.items.reduce((sum, item) => sum + item.quantity, 0)
         },
-
         totalPrice: (state) => {
             return state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
         }
     },
 
     actions: {
-        saveCart() {
-            saveCartItems(this.items)
+        setError(message) {
+            this.lastError = message
+            return {
+                success: false,
+                message
+            }
+        },
+
+        clearError() {
+            this.lastError = ''
         },
 
         addToCart(product) {
+            this.clearError()
             const existingItem = this.items.find(item => item.id === product.id)
 
+            if (this.totalItems >= MAX_TOTAL_ITEMS) {
+                return this.setError('A kosárban összesen legfeljebb 10 termék lehet.')
+            }
+
             if (existingItem) {
+                if (existingItem.quantity >= MAX_PER_PRODUCT) {
+                    return this.setError('Egy termékből legfeljebb 5 darab lehet a kosárban.')
+                }
+
                 existingItem.quantity += 1
-                this.saveCart()
-                return
+                return {
+                    success: true,
+                    message: `${product.name} hozzáadva a kosárhoz`
+                }
             }
 
             this.items.push({
@@ -69,26 +59,40 @@ export const useCartStore = defineStore('cart', {
                 quantity: 1
             })
 
-            this.saveCart()
+            return {
+                success: true,
+                message: `${product.name} hozzáadva a kosárhoz`
+            }
         },
 
         removeFromCart(productId) {
+            this.clearError()
             this.items = this.items.filter(item => item.id !== productId)
-            this.saveCart()
         },
 
         increaseQuantity(productId) {
+            this.clearError()
             const item = this.items.find(item => item.id === productId)
 
             if (!item) {
                 return
             }
 
+            if (item.quantity >= MAX_PER_PRODUCT) {
+                this.setError('Egy termékből legfeljebb 5 darab lehet a kosárban.')
+                return
+            }
+
+            if (this.totalItems >= MAX_TOTAL_ITEMS) {
+                this.setError('A kosárban összesen legfeljebb 10 termék lehet.')
+                return
+            }
+
             item.quantity += 1
-            this.saveCart()
         },
 
         decreaseQuantity(productId) {
+            this.clearError()
             const item = this.items.find(item => item.id === productId)
 
             if (!item) {
@@ -98,15 +102,13 @@ export const useCartStore = defineStore('cart', {
             if (item.quantity > 1) {
                 item.quantity -= 1
             } else {
-                this.items = this.items.filter(item => item.id !== productId)
+                this.removeFromCart(productId)
             }
-
-            this.saveCart()
         },
 
         clearCart() {
             this.items = []
-            this.saveCart()
+            this.clearError()
         }
     }
 })
