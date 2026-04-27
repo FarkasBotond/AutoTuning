@@ -6,32 +6,51 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\TuningProduct;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    public function index(Request $request)
+    {
+        return OrderResource::collection(
+            $request->user()
+                ->orders()
+                ->with('items')
+                ->latest()
+                ->get()
+        );
+    }
+
     public function store(StoreOrderRequest $request)
     {
         $data = $request->validated();
+        $user = Auth::guard('sanctum')->user();
 
-        $order = DB::transaction(function () use ($data, $request) {
+        if ($user) {
+            $data['email'] = $user->email;
+        }
+
+        $order = DB::transaction(function () use ($data, $user) {
             $productIds = collect($data['items'])->pluck('id')->all();
             $products = TuningProduct::whereIn('id', $productIds)->get()->keyBy('id');
             $productsTotal = 0;
             $paymentFee = $data['payment_method'] === 'cash_on_delivery' ? 1000 : 0;
+            $isHomeDelivery = $data['delivery_method'] === 'home_delivery';
 
             $order = Order::create([
-                'user_id' => optional($request->user())->id,
+                'user_id' => $user?->id,
                 'full_name' => $data['full_name'],
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'delivery_method' => $data['delivery_method'],
                 'country' => $data['country'],
-                'city' => $data['city'] ?? null,
-                'postal_code' => $data['postal_code'] ?? null,
-                'street_name' => $data['street_name'] ?? null,
-                'house_number' => $data['house_number'] ?? null,
-                'note' => $data['note'] ?? null,
+                'city' => $isHomeDelivery ? $data['city'] : 'Fővárosi üzleti átvétel',
+                'postal_code' => $isHomeDelivery ? $data['postal_code'] : 'Nincs megadva',
+                'street_name' => $isHomeDelivery ? $data['street_name'] : 'Partnerüzlet',
+                'house_number' => $isHomeDelivery ? $data['house_number'] : 'Nincs megadva',
+                'note' => $data['note'] ?? '',
                 'payment_method' => $data['payment_method'],
                 'payment_fee' => $paymentFee,
                 'products_total' => 0,
