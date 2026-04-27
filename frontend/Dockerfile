@@ -6,7 +6,7 @@ COPY ./package.json /app/package.json
 
 RUN corepack enable pnpm
 
-RUN apk add fish
+RUN apk add --no-cache fish chromium
 
 RUN mkdir -p /root/.config/fish/functions/ &&  printf 'function fish_prompt  \n\
   set -l last_status $status  \n\

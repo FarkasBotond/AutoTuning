@@ -20,7 +20,12 @@ export default ({ mode }) => {
     ],
     server: {
       host: true,
-      allowedHosts: [process.env.VITE_FRONTEND_URL ?? 'localhost']
+      allowedHosts: [
+        process.env.VITE_FRONTEND_URL ?? 'localhost',
+        'localhost',
+        '127.0.0.1',
+        'frontend'
+      ]
     },
     resolve: {
       alias: {
