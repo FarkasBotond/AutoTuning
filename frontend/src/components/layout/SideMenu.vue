@@ -1,98 +1,33 @@
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const activeTab = ref('categories')
+const route = useRoute()
+const router = useRouter()
 
-const categories = [
-    {
-        id: 1,
-        title: 'Motor és teljesítménynövelés',
-        image: '',
-    },
-    {
-        id: 2,
-        title: 'Kipufogó és szívórendszer',
-        image:'',
-    },
-    {
-        id: 3,
-        title: 'Futómű és kormányzás',
-        image:'',
-    },
-    {
-        id: 4,
-        title: 'Fékek',
-        image:'',
-    },
-    {
-        id: 5,
-        title: 'Felnik, gumik, nyomtávszélesítők',
-        image:'',
-    },
-    {
-        id: 6,
-        title: 'Külső kiegészítők',
-        image:'',
-    },
-    {
-        id: 7,
-        title: 'Belső tér',
-        image:'',
-    },
-    {
-        id: 8,
-        title: 'Világítás és elektronika',
-        image:'',
-    },
-    {
-        id: 9,
-        title: 'Szerviz és karbantartás',
-        image:'',
-    },
-    {
-        id: 10,
-        title: 'Univerzális kiegészítők',
-        image:'',
-    },
-]
+const selectedCategoryId = computed(() => {
+    return Number(route.query.service_category_id ?? 0)
+})
 
-const brands = [
-    'alfa-romeo',
-    'audi',
-    'bmw',
-    'citroen',
-    'cupra',
-    'fiat',
-    'ford',
-    'honda',
-    'hyundai',
-    'kia',
-    'mazda',
-    'mercedes-benz',
-    'mini',
-    'mitsubishi',
-    'nissan',
-    'opel',
-    'peugeot',
-    'porsche',
-    'renault',
-    'seat',
-    'skoda',
-    'subaru',
-    'suzuki',
-    'tesla',
-    'toyota',
-    'volkswagen',
-    'volvo'
-]
-
-const formatBrandName = (brand) => {
-    return brand
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
+const selectCategory = (categoryId) => {
+    router.push({
+        path: '/',
+        query: {
+            ...route.query,
+            service_category_id: categoryId
+        }
+    })
 }
 
+const clearCategory = () => {
+    const query = { ...route.query }
+    delete query.service_category_id
+
+    router.push({
+        path: '/',
+        query
+    })
+}
 </script>
 
 <template>

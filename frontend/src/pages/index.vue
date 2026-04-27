@@ -7,8 +7,10 @@ import BaseFooter from '@components/BaseFooter.vue'
 import Toast from '@/components/ui/Toast.vue'
 import TuningCompaniesSection from '@components/TuningCompaniesSection.vue'
 import { useTuningProductStore } from '@stores/tuningProductStore'
+import { useRoute } from 'vue-router'
 
 const tuningProductStore = useTuningProductStore()
+const route = useRoute()
 
 const toastVisible = ref(false)
 const toastMessage = ref('')
@@ -58,11 +60,7 @@ watch(totalPages, (newTotalPages) => {
 })
 
 onMounted(async () => {
-    try {
-        await tuningProductStore.fetchAllProducts()
-    } catch (error) {
-        console.error('Nem sikerült betölteni a termékeket:', error)
-    }
+    await loadProducts()
 })
 
 const showToast = (product) => {
@@ -73,6 +71,35 @@ const showToast = (product) => {
         toastVisible.value = false
     }, 2500)
 }
+
+const getProductFilters = () => {
+    const filters = {}
+
+    if (route.query.service_category_id) {
+        filters.service_category_id = route.query.service_category_id
+    }
+
+    if (route.query.car_model_id) {
+        filters.car_model_id = route.query.car_model_id
+    }
+
+    return filters
+}
+
+const loadProducts = async () => {
+    try {
+        await tuningProductStore.fetchAllProducts(getProductFilters())
+        currentPage.value = 1
+    } catch (error) {
+        console.error('Nem sikerült betölteni a termékeket:', error)
+    }
+}
+watch(
+    () => [route.query.service_category_id, route.query.car_model_id],
+    async () => {
+        await loadProducts()
+    }
+)
 </script>
 
 <template>
@@ -89,62 +116,40 @@ const showToast = (product) => {
             <section class="flex-1 min-w-0 space-y-5 pb-14">
                 <TuningCompaniesSection />
 
-                <div
-                    v-if="tuningProductStore.isLoading"
-                    class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm"
-                >
+                <div v-if="tuningProductStore.isLoading"
+                    class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm">
                     Betöltés...
                 </div>
 
-                <div
-                    v-else-if="tuningProductStore.error"
-                    class="rounded-2xl bg-red-50 p-8 text-center font-semibold text-red-700 shadow-sm"
-                >
+                <div v-else-if="tuningProductStore.error"
+                    class="rounded-2xl bg-red-50 p-8 text-center font-semibold text-red-700 shadow-sm">
                     {{ tuningProductStore.error }}
                 </div>
 
-                <div
-                    v-else-if="tuningProductStore.products.length === 0"
-                    class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm"
-                >
+                <div v-else-if="tuningProductStore.products.length === 0"
+                    class="rounded-2xl bg-white p-8 text-center font-semibold text-zinc-600 shadow-sm">
                     Nincs megjeleníthető termék.
                 </div>
 
-                <div
-                    v-else
-                    class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
-                >
-                    <ProductCard
-                        v-for="product in paginatedProducts"
-                        :key="product.id"
-                        :product="product"
-                        @added-to-cart="showToast"
-                    />
+                <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <ProductCard v-for="product in paginatedProducts" :key="product.id" :product="product"
+                        @added-to-cart="showToast" />
                 </div>
 
-                <div
-                    v-if="tuningProductStore.products.length > itemsPerPage"
-                    class="flex items-center justify-center gap-3 pt-2"
-                >
-                    <button
-                        type="button"
-                        class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
-                        :disabled="!canGoPrev"
-                        @click="goPrevPage"
-                    >
+                <div v-if="tuningProductStore.products.length > itemsPerPage"
+                    class="flex items-center justify-center gap-3 pt-2">
+                    <button type="button" class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
+                        :disabled="!canGoPrev" @click="goPrevPage">
                         Előző
                     </button>
 
-                    <span class="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700">
+                    <span
+                        class="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700">
                         {{ currentPage }} / {{ totalPages }}
                     </span>
 
-                    <button
-                        type="button"
-                        class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
-                        :disabled="!canGoNext"
-                        @click="goNextPage"
-                    >
+                    <button type="button" class="btn-muted px-4 py-2 disabled:cursor-not-allowed disabled:opacity-60"
+                        :disabled="!canGoNext" @click="goNextPage">
                         Következő
                     </button>
                 </div>
