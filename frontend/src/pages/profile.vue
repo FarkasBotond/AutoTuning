@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
-import { updateProfileEmail, updateProfilePassword } from '@/lib/api'
+import { fetchMyOrders, updateProfileEmail, updateProfilePassword } from '@/lib/api'
 import BaseFooter from '@/components/BaseFooter.vue'
 
 const authStore = useAuthStore()
@@ -19,6 +19,9 @@ const passwordForm = ref({
   password_confirmation: ''
 })
 
+const userOrders = ref([])
+const isLoadingOrders = ref(false)
+const orderError = ref('')
 const isUpdatingEmail = ref(false)
 const isUpdatingPassword = ref(false)
 const emailSuccess = ref('')
@@ -27,17 +30,8 @@ const passwordSuccess = ref('')
 const passwordError = ref('')
 
 const goBack = () => {
-  if (window.history.length > 1) {
-    router.back()
-    return
-  }
-
   router.push('/')
 }
-
-onMounted(async () => {
-  emailForm.value.email = authStore.user?.email || ''
-})
 
 const userName = computed(() => {
   return authStore.user?.name || authStore.user?.email?.split('@')[0] || 'Felhasználó'
@@ -47,24 +41,15 @@ const userEmail = computed(() => {
   return authStore.user?.email || 'email@example.com'
 })
 
-const createdAt = computed(() => {
-  if (authStore.user?.created_at) {
-    return new Date(authStore.user.created_at).toLocaleDateString('hu-HU', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
-  return '2026. április 1.'
-})
-
-const userOrders = ref([])
-
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('hu-HU').format(price)
+  return new Intl.NumberFormat('hu-HU').format(price || 0)
 }
 
 const formatDate = (dateString) => {
+  if (!dateString) {
+    return '-'
+  }
+
   return new Date(dateString).toLocaleDateString('hu-HU', {
     year: 'numeric',
     month: 'long',
@@ -78,6 +63,8 @@ const getStatusColor = (status) => {
       return 'bg-green-100 text-green-800'
     case 'processing':
       return 'bg-blue-100 text-blue-800'
+    case 'new':
+      return 'bg-teal-100 text-teal-800'
     case 'pending':
       return 'bg-yellow-100 text-yellow-800'
     case 'cancelled':
@@ -93,12 +80,28 @@ const getStatusLabel = (status) => {
       return 'Kiszállítva'
     case 'processing':
       return 'Feldolgozás alatt'
+    case 'new':
+      return 'Új rendelés'
     case 'pending':
       return 'Függőben'
     case 'cancelled':
       return 'Törölve'
     default:
-      return status
+      return status || 'Ismeretlen'
+  }
+}
+
+const loadOrders = async () => {
+  isLoadingOrders.value = true
+  orderError.value = ''
+
+  try {
+    const response = await fetchMyOrders(authStore.token)
+    userOrders.value = response.data || []
+  } catch (error) {
+    orderError.value = error.message || 'Nem sikerült betölteni a rendeléseket.'
+  } finally {
+    isLoadingOrders.value = false
   }
 }
 
@@ -167,6 +170,11 @@ const handlePasswordUpdate = async () => {
     isUpdatingPassword.value = false
   }
 }
+
+onMounted(async () => {
+  emailForm.value.email = authStore.user?.email || ''
+  await loadOrders()
+})
 </script>
 
 <template>
@@ -180,138 +188,129 @@ const handlePasswordUpdate = async () => {
         ← Vissza
       </button>
 
-      <section>
-        <div class="glass-panel mb-6 p-8">
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <h1 class="text-4xl font-bold text-zinc-900">{{ userName }}</h1>
-              <p class="mt-2 text-lg text-zinc-600">{{ userEmail }}</p>
-            </div>
-            <div class="text-right">
-              <div class="inline-block rounded-full bg-gradient-to-br from-teal-600 to-cyan-700 p-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="h-12 w-12 text-white">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+      <section class="space-y-6">
+        <div class="glass-panel p-8">
+          <h1 class="text-3xl font-extrabold text-zinc-900 md:text-4xl">
+            Az én fiókom
+          </h1>
+          <p class="mt-2 text-zinc-600">
+            Üdv, {{ userName }}! Itt kezelheted a profilodat és a rendeléseidet.
+          </p>
 
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-              <p class="text-sm font-semibold text-zinc-600 mb-1">Fiók létrehozva</p>
-              <p class="text-lg font-bold text-zinc-900">{{ createdAt }}</p>
-            </div>
-            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-              <p class="text-sm font-semibold text-zinc-600 mb-1">Összes rendelés</p>
-              <p class="text-lg font-bold text-zinc-900">{{ userOrders.length }} db</p>
-            </div>
-            <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-              <p class="text-sm font-semibold text-zinc-600 mb-1">Teljes költés</p>
-              <p class="text-lg font-bold text-teal-700">{{ formatPrice(userOrders.reduce((sum, order) => sum + order.total, 0)) }} Ft</p>
-            </div>
+          <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-5">
+            <p class="text-sm font-semibold text-zinc-500">Email cím</p>
+            <p class="mt-1 text-lg font-bold text-zinc-900">{{ userEmail }}</p>
           </div>
         </div>
 
-        <div class="glass-panel mb-6 p-8">
-          <h2 class="mb-6 text-2xl font-bold text-zinc-900">Profil beállítások</h2>
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="rounded-2xl border border-zinc-200 bg-white p-6">
+            <h2 class="text-xl font-bold text-zinc-900">Email módosítása</h2>
+            <p class="mt-1 text-sm text-zinc-600">A módosításhoz add meg a jelenlegi jelszavadat.</p>
 
-          <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-6">
-              <h3 class="text-xl font-bold text-zinc-900">Email cím módosítása</h3>
-              <p class="mt-1 text-sm text-zinc-600">Az email cím módosításához add meg a jelenlegi jelszavad.</p>
+            <form class="mt-5 space-y-4" @submit.prevent="handleEmailUpdate">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-zinc-700">Új email cím</label>
+                <input v-model="emailForm.email" type="email" class="brand-input" required>
+              </div>
 
-              <form class="mt-5 space-y-4" @submit.prevent="handleEmailUpdate">
-                <div class="space-y-2">
-                  <label class="text-sm font-semibold text-zinc-700" for="new-email">Új email cím</label>
-                  <input id="new-email" v-model="emailForm.email" type="email" class="brand-input" :disabled="isUpdatingEmail" required />
-                </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-zinc-700">Jelenlegi jelszó</label>
+                <input v-model="emailForm.current_password" type="password" class="brand-input" required>
+              </div>
 
-                <div class="space-y-2">
-                  <label class="text-sm font-semibold text-zinc-700" for="email-current-password">Jelenlegi jelszó</label>
-                  <input id="email-current-password" v-model="emailForm.current_password" type="password" class="brand-input" :disabled="isUpdatingEmail" required />
-                </div>
+              <p v-if="emailError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ emailError }}</p>
+              <p v-if="emailSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ emailSuccess }}</p>
 
-                <p v-if="emailError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ emailError }}</p>
-                <p v-if="emailSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ emailSuccess }}</p>
+              <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingEmail">
+                {{ isUpdatingEmail ? 'Mentés...' : 'Email frissítése' }}
+              </button>
+            </form>
+          </div>
 
-                <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingEmail">
-                  {{ isUpdatingEmail ? 'Mentés...' : 'Email frissítése' }}
-                </button>
-              </form>
-            </div>
+          <div class="rounded-2xl border border-zinc-200 bg-white p-6">
+            <h2 class="text-xl font-bold text-zinc-900">Jelszó módosítása</h2>
+            <p class="mt-1 text-sm text-zinc-600">Adj meg egy legalább 8 karakteres új jelszót.</p>
 
-            <div class="rounded-2xl border border-zinc-200 bg-white p-6">
-              <h3 class="text-xl font-bold text-zinc-900">Jelszó módosítása</h3>
-              <p class="mt-1 text-sm text-zinc-600">Adj meg egy legalább 8 karakteres új jelszót.</p>
+            <form class="mt-5 space-y-4" @submit.prevent="handlePasswordUpdate">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-zinc-700">Jelenlegi jelszó</label>
+                <input v-model="passwordForm.current_password" type="password" class="brand-input" required>
+              </div>
 
-              <form class="mt-5 space-y-4" @submit.prevent="handlePasswordUpdate">
-                <div class="space-y-2">
-                  <label class="text-sm font-semibold text-zinc-700" for="current-password">Jelenlegi jelszó</label>
-                  <input id="current-password" v-model="passwordForm.current_password" type="password" class="brand-input" :disabled="isUpdatingPassword" required />
-                </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-zinc-700">Új jelszó</label>
+                <input v-model="passwordForm.password" type="password" class="brand-input" required minlength="8">
+              </div>
 
-                <div class="space-y-2">
-                  <label class="text-sm font-semibold text-zinc-700" for="new-password">Új jelszó</label>
-                  <input id="new-password" v-model="passwordForm.password" type="password" class="brand-input" :disabled="isUpdatingPassword" required minlength="8" />
-                </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-zinc-700">Új jelszó újra</label>
+                <input v-model="passwordForm.password_confirmation" type="password" class="brand-input" required minlength="8">
+              </div>
 
-                <div class="space-y-2">
-                  <label class="text-sm font-semibold text-zinc-700" for="new-password-confirm">Új jelszó újra</label>
-                  <input id="new-password-confirm" v-model="passwordForm.password_confirmation" type="password" class="brand-input" :disabled="isUpdatingPassword" required minlength="8" />
-                </div>
+              <p v-if="passwordError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ passwordError }}</p>
+              <p v-if="passwordSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ passwordSuccess }}</p>
 
-                <p v-if="passwordError" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{{ passwordError }}</p>
-                <p v-if="passwordSuccess" class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-700">{{ passwordSuccess }}</p>
-
-                <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingPassword">
-                  {{ isUpdatingPassword ? 'Mentés...' : 'Jelszó frissítése' }}
-                </button>
-              </form>
-            </div>
+              <button class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70" type="submit" :disabled="isUpdatingPassword">
+                {{ isUpdatingPassword ? 'Mentés...' : 'Jelszó frissítése' }}
+              </button>
+            </form>
           </div>
         </div>
 
         <div class="glass-panel p-8">
-          <h2 class="mb-6 text-2xl font-bold text-zinc-900">Rendelések</h2>
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-2xl font-bold text-zinc-900">Rendelések</h2>
+              <p class="mt-1 text-sm text-zinc-600">Itt jelennek meg a bejelentkezett fiókkal leadott rendelések.</p>
+            </div>
+            <button type="button" class="btn-muted px-4 py-2" @click="loadOrders">Frissítés</button>
+          </div>
 
-          <div v-if="userOrders.length > 0" class="space-y-4">
+          <div v-if="isLoadingOrders" class="rounded-2xl bg-white p-10 text-center font-semibold text-zinc-600">
+            Rendelések betöltése...
+          </div>
+
+          <div v-else-if="orderError" class="rounded-2xl border border-red-200 bg-red-50 p-5 text-sm font-semibold text-red-700">
+            {{ orderError }}
+          </div>
+
+          <div v-else-if="userOrders.length > 0" class="space-y-4">
             <div v-for="order in userOrders" :key="order.id" class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-              <div class="flex items-start justify-between mb-4">
+              <div class="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <p class="text-sm font-semibold text-zinc-500 mb-1">Rendelés szám</p>
-                  <h3 class="text-2xl font-bold text-zinc-900">{{ order.order_number }}</h3>
+                  <p class="mb-1 text-sm font-semibold text-zinc-500">Rendelési azonosító</p>
+                  <h3 class="text-2xl font-bold text-zinc-900">#{{ order.id }}</h3>
                 </div>
-                <div class="text-right">
-                  <span :class="['px-4 py-2 rounded-lg font-semibold text-sm', getStatusColor(order.status)]">
-                    {{ getStatusLabel(order.status) }}
-                  </span>
-                </div>
+                <span :class="['rounded-lg px-4 py-2 text-sm font-semibold', getStatusColor(order.status)]">
+                  {{ getStatusLabel(order.status) }}
+                </span>
               </div>
 
               <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div>
-                  <p class="text-sm font-semibold text-zinc-600 mb-1">Dátum</p>
+                  <p class="mb-1 text-sm font-semibold text-zinc-600">Dátum</p>
                   <p class="text-lg font-bold text-zinc-900">{{ formatDate(order.created_at) }}</p>
                 </div>
                 <div>
-                  <p class="text-sm font-semibold text-zinc-600 mb-1">Tételek száma</p>
+                  <p class="mb-1 text-sm font-semibold text-zinc-600">Tételek száma</p>
                   <p class="text-lg font-bold text-zinc-900">{{ order.items?.length || 0 }} db</p>
                 </div>
                 <div>
-                  <p class="text-sm font-semibold text-zinc-600 mb-1">Összesen</p>
-                  <p class="text-lg font-bold text-teal-700">{{ formatPrice(order.total) }} Ft</p>
+                  <p class="mb-1 text-sm font-semibold text-zinc-600">Összesen</p>
+                  <p class="text-lg font-bold text-teal-700">{{ formatPrice(order.total_price) }} Ft</p>
                 </div>
               </div>
 
               <div class="border-t border-zinc-200 pt-4">
-                <p class="text-sm font-semibold text-zinc-600 mb-3">Tételek</p>
+                <p class="mb-3 text-sm font-semibold text-zinc-600">Tételek</p>
                 <div class="space-y-2">
                   <div v-for="item in order.items" :key="item.id" class="flex items-center justify-between rounded-lg bg-zinc-50 p-3">
                     <div>
                       <p class="font-semibold text-zinc-900">{{ item.product_name }}</p>
-                      <p class="text-sm text-zinc-600">{{ item.product_brand }} - {{ item.quantity }} x {{ formatPrice(item.product_price) }} Ft</p>
+                      <p class="text-sm text-zinc-600">{{ item.tuning_company }} - {{ item.quantity }} x {{ formatPrice(item.unit_price) }} Ft</p>
                     </div>
-                    <p class="font-bold text-zinc-900">{{ formatPrice(item.product_price * item.quantity) }} Ft</p>
+                    <p class="font-bold text-zinc-900">{{ formatPrice(item.subtotal) }} Ft</p>
                   </div>
                 </div>
               </div>
@@ -323,7 +322,7 @@ const handlePasswordUpdate = async () => {
               Még nincs rendelésed
             </h3>
             <p class="mt-2 text-zinc-600">
-              Kezdj el vásárolni és követsd nyomon itt a rendeléseidet!
+              Bejelentkezett fiókkal leadott rendelések itt fognak megjelenni.
             </p>
             <router-link to="/" class="btn-primary mt-4 inline-flex">
               Vissza a termékekhez
