@@ -18,7 +18,7 @@ export const useTuningProductStore = defineStore('tuningProduct', () => {
       badge: rawProduct.badge,
       oldPrice: rawProduct.old_price,
       price: rawProduct.price,
-      stockText: rawProduct.is_in_stock ? 'Raktaron' : 'Rendelheto',
+      stockText: rawProduct.is_in_stock ? 'Raktáron' : 'Rendelhető',
       isInStock: rawProduct.is_in_stock,
       carModelId: rawProduct.car_model_id,
       serviceCategoryId: rawProduct.service_category_id,

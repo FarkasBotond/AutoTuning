@@ -42,16 +42,6 @@ const companies = [
         name: 'EBC brakes',
         image: company6Img,
     },
-    {
-        id: 7,
-        name: 'valami',
-        image: company6Img,
-    },
-    {
-        id: 8,
-        name: 'VMEWÖGWJ',
-        image: company6Img,
-    },
 ]
 
 const slider = ref(null)
