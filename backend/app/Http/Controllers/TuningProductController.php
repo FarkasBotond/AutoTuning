@@ -31,12 +31,15 @@ class TuningProductController extends Controller
         }
 
         if ($request->filled('search')) {
-            $search = $request->search;
+            $search = trim($request->search);
 
             $query->where(function ($searchQuery) use ($search) {
                 $searchQuery
                     ->where('name', 'like', "%{$search}%")
                     ->orWhere('tuning_company', 'like', "%{$search}%")
+                    ->orWhereHas('serviceCategory', function ($categoryQuery) use ($search) {
+                        $categoryQuery->where('name', 'like', "%{$search}%");
+                    })
                     ->orWhereHas('carModel', function ($modelQuery) use ($search) {
                         $modelQuery->where('model', 'like', "%{$search}%");
                     })
@@ -47,21 +50,21 @@ class TuningProductController extends Controller
         }
 
         if ($request->filled('min_price')) {
-            $query->where('price', '>=', $request->min_price);
+            $query->where('price', '>=', (int) $request->min_price);
         }
 
         if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
+            $query->where('price', '<=', (int) $request->max_price);
         }
 
-        if ($request->filled('is_in_stock')) {
-            $query->where('is_in_stock', filter_var($request->is_in_stock, FILTER_VALIDATE_BOOLEAN));
+        if ($request->boolean('is_in_stock')) {
+            $query->where('is_in_stock', true);
         }
 
-        if ($request->filled('only_discounted')) {
-            if (filter_var($request->only_discounted, FILTER_VALIDATE_BOOLEAN)) {
-                $query->whereNotNull('old_price');
-            }
+        if ($request->boolean('only_discounted')) {
+            $query
+                ->whereNotNull('old_price')
+                ->whereColumn('old_price', '>', 'price');
         }
 
         match ($request->get('sort')) {
@@ -72,9 +75,7 @@ class TuningProductController extends Controller
             default => $query->orderBy('id'),
         };
 
-        return TuningProductResource::collection(
-            $query->get()
-        );
+        return TuningProductResource::collection($query->get());
     }
 
     public function show(TuningProduct $tuningProduct)
