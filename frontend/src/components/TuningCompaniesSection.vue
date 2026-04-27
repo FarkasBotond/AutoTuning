@@ -2,14 +2,13 @@
 import { ref } from 'vue'
 
 import company1Img from '@/assets/images/sparco.png'
-import company2Img from '@/assets/images/races.jpg'
-import company3Img from '@/assets/images/kn.jpg'
-import company4Img from '@/assets/images/omp.jpg'
-import company5Img from '@/assets/images/foliatec.jpg'
-import company6Img from '@/assets/images/ebc.jpg'
-import logo from '@/assets/logo.png'
-
-
+import company2Img from '@/assets/images/races.png'
+import company3Img from '@/assets/images/remus.png'
+import company4Img from '@/assets/images/alpina.png'
+import company5Img from '@/assets/images/lumma.png'
+import company6Img from '@/assets/images/mansory.png'
+import company7Img from '@/assets/images/maxton.png'
+import company8Img from '@/assets/images/brabus.png'
 
 const companies = [
     {
@@ -24,24 +23,34 @@ const companies = [
     },
     {
         id: 3,
-        name: 'K&N',
+        name: 'REMUS',
         image: company3Img,
     },
     {
         id: 4,
-        name: 'OMP',
+        name: 'Alpina',
         image: company4Img,
     },
     {
         id: 5,
-        name: 'Foliatec',
+        name: 'Lumma Design',
         image: company5Img,
     },
     {
         id: 6,
-        name: 'EBC brakes',
+        name: 'Mansory',
         image: company6Img,
     },
+    {
+        id: 7, 
+        name: 'Maxton Design',
+        image: company7Img,
+    },
+    {
+        id: 8,
+        name: 'Brabus',
+        image: company8Img,
+    }
 ]
 
 const slider = ref(null)

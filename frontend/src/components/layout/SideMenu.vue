@@ -19,52 +19,42 @@ const categories = [
     {
         id: 1,
         title: 'Motor és teljesítménynövelés',
-        image: '',
     },
     {
         id: 2,
         title: 'Kipufogó és szívórendszer',
-        image: '',
     },
     {
         id: 3,
         title: 'Futómű és kormányzás',
-        image: '',
     },
     {
         id: 4,
         title: 'Fékek',
-        image: '',
     },
     {
         id: 5,
         title: 'Felnik, gumik, nyomtávszélesítők',
-        image: '',
     },
     {
         id: 6,
         title: 'Külső kiegészítők',
-        image: '',
     },
     {
         id: 7,
         title: 'Belső tér',
-        image: '',
     },
     {
         id: 8,
         title: 'Világítás és elektronika',
-        image: '',
     },
     {
         id: 9,
         title: 'Szerviz és karbantartás',
-        image: '',
     },
     {
         id: 10,
         title: 'Univerzális kiegészítők',
-        image: '',
     },
 ]
 
