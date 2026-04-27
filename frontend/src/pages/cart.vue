@@ -36,6 +36,10 @@ const goCheckout = () => {
             </h1>
 
             <div v-if="cartStore.items.length === 0" class="glass-panel p-10 text-center">
+                <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-zinc-100 text-4xl">
+                    🛒
+                </div>
+
                 <h2 class="text-2xl font-extrabold text-zinc-900">
                     A kosár üres
                 </h2>
@@ -47,6 +51,9 @@ const goCheckout = () => {
 
             <div v-else class="grid gap-6 lg:grid-cols-[1fr_360px]">
                 <section class="glass-panel space-y-4 p-5 md:p-6">
+                    <div v-if="cartStore.lastError" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                        {{ cartStore.lastError }}
+                    </div>
                     <article v-for="item in cartStore.items" :key="item.id"
                         class="rounded-2xl border border-zinc-200 bg-white p-4">
                         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -128,5 +135,4 @@ const goCheckout = () => {
 name: cart
 meta:
   title: Kosár
-  requiresAuth: true
 </route>
