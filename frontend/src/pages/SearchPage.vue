@@ -11,8 +11,15 @@ import { useTuningProductStore } from '@stores/tuningProductStore'
 const route = useRoute()
 const tuningProductStore = useTuningProductStore()
 
+const normalizeText = (text) => {
+  return String(text ?? '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
+
 const searchText = computed(() => {
-  return String(route.query.q ?? '').trim().toLowerCase()
+  return normalizeText(route.query.q).trim()
 })
 
 const filteredProducts = computed(() => {
@@ -21,7 +28,7 @@ const filteredProducts = computed(() => {
   }
 
   return tuningProductStore.products.filter((product) => {
-    const searchableText = [
+    const searchableText = normalizeText([
       product.name,
       product.brand,
       product.carBrand,
@@ -30,8 +37,7 @@ const filteredProducts = computed(() => {
       product.stockText
     ]
       .filter(Boolean)
-      .join(' ')
-      .toLowerCase()
+      .join(' '))
 
     return searchableText.includes(searchText.value)
   })
@@ -46,6 +52,8 @@ onMounted(async () => {
     }
   }
 })
+
+
 </script>
 
 <template>
