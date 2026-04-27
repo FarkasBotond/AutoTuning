@@ -66,7 +66,7 @@ onMounted(async () => {
                     <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                         <article v-for="company in companies" :key="company.id"
                             class="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                            <RouterLink :to="`/brand/${company.id}`" class="block">
+                            <RouterLink :to="`/company/${company.id}`" class="block">
                                 <div class="flex h-44 items-center justify-center bg-zinc-100 p-4">
                                     <div
                                         class="flex h-full w-full items-center justify-center rounded-xl bg-zinc-200 px-4 text-center text-2xl font-black text-zinc-600">
