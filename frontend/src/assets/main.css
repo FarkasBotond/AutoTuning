@@ -167,3 +167,124 @@
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100;
   }
 }
+
+
+.dark {
+  --app-bg-start: #080f1f;
+  --app-bg-end: #111827;
+  --app-ink: #f9fafb;
+}
+
+.dark body {
+  color: #f9fafb;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(20, 184, 166, 0.16), transparent 34%),
+    radial-gradient(circle at 92% 12%, rgba(249, 115, 22, 0.12), transparent 32%),
+    linear-gradient(160deg, #080f1f, #111827);
+}
+
+.dark .glass-panel {
+  border-color: rgba(63, 63, 70, 0.85);
+  background-color: rgba(24, 24, 27, 0.88);
+  box-shadow: 0 18px 45px -24px rgba(0, 0, 0, 0.9);
+}
+
+.dark .section-title {
+  color: #f9fafb;
+}
+
+.dark .brand-input {
+  border-color: #3f3f46;
+  background-color: #18181b;
+  color: #f9fafb;
+}
+
+.dark .brand-input::placeholder {
+  color: #a1a1aa;
+}
+
+.dark .btn-muted {
+  border-color: #3f3f46;
+  background-color: #27272a;
+  color: #f4f4f5;
+}
+
+.dark .btn-muted:hover {
+  background-color: #3f3f46;
+}
+
+.dark .bg-white,
+.dark .bg-white\/80 {
+  background-color: #18181b !important;
+}
+
+.dark .bg-zinc-50,
+.dark .bg-zinc-50\/80,
+.dark .bg-zinc-100 {
+  background-color: #27272a !important;
+}
+
+.dark .bg-teal-50 {
+  background-color: rgba(15, 118, 110, 0.18) !important;
+}
+
+.dark .bg-orange-50 {
+  background-color: rgba(234, 88, 12, 0.16) !important;
+}
+
+.dark .text-zinc-900,
+.dark .text-zinc-800,
+.dark .text-zinc-700 {
+  color: #f9fafb !important;
+}
+
+.dark .text-zinc-600,
+.dark .text-zinc-500 {
+  color: #d4d4d8 !important;
+}
+
+.dark .text-zinc-400 {
+  color: #a1a1aa !important;
+}
+
+.dark .border-zinc-100,
+.dark .border-zinc-200,
+.dark .border-zinc-300,
+.dark .border-rose-100\/70 {
+  border-color: #3f3f46 !important;
+}
+
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg {
+  box-shadow: 0 18px 45px -24px rgba(0, 0, 0, 0.9) !important;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  border-color: #3f3f46;
+  background-color: #18181b;
+  color: #f9fafb;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #a1a1aa;
+}
+
+.dark table {
+  color: #f9fafb;
+}
+
+.dark thead,
+.dark tbody,
+.dark tr,
+.dark td,
+.dark th {
+  border-color: #3f3f46 !important;
+}
+
+.dark img {
+  color-scheme: dark;
+}
