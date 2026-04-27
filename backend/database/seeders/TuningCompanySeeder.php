@@ -147,7 +147,7 @@ class TuningCompanySeeder extends Seeder
             [
                 'name' => 'Races',
                 'description' => 'Tuning alkatrészek és teljesítménynövelő kiegészítők.',
-                'website_url' => 'https://giphy.com/explore/rick-roll',
+                'website_url' => 'https://www.youtube.com/watch?v=iik25wqIuFo',
                 'image_url' => '/images/companies/races.png',
             ],
             [

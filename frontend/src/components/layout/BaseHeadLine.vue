@@ -93,9 +93,6 @@ const continueAsGuest = () => {
         <button v-if="showDarkToggle" type="button" @click="toggleDarkMode"
           class="order-2 inline-flex shrink-0 items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50 lg:order-2"
           :title="isDarkMode ? 'Világos mód bekapcsolása' : 'Sötét mód bekapcsolása'">
-          <span class="text-lg leading-none">
-            {{ isDarkMode ? '☀️' : '🌙' }}
-          </span>
           <span class="hidden xl:inline">
             {{ isDarkMode ? 'Világos mód' : 'Sötét mód' }}
           </span>
