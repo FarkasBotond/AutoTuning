@@ -1,4 +1,5 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import SearchBar from '@/components/ui/SearchBar.vue'
@@ -8,11 +9,32 @@ defineProps({
   showSearch: {
     type: Boolean,
     default: true
+  },
+  showDarkToggle: {
+    type: Boolean,
+    default: false
   }
 })
 
 const authStore = useAuthStore()
 const router = useRouter()
+
+const isDarkMode = ref(false)
+
+const applyDarkMode = (enabled) => {
+  isDarkMode.value = enabled
+  document.documentElement.classList.toggle('dark', enabled)
+  localStorage.setItem('darkMode', enabled ? 'true' : 'false')
+}
+
+const toggleDarkMode = () => {
+  applyDarkMode(!isDarkMode.value)
+}
+
+onMounted(() => {
+  isDarkMode.value = localStorage.getItem('darkMode') === 'true'
+  document.documentElement.classList.toggle('dark', isDarkMode.value)
+})
 
 const handleLogout = () => {
   authStore.logout()
@@ -33,11 +55,23 @@ const handleLogout = () => {
           </RouterLink>
         </div>
 
-        <div v-if="showSearch" class="order-3 min-w-0 w-full flex-1 lg:order-2 lg:w-auto">
+        <button
+          v-if="showDarkToggle"
+          type="button"
+          @click="toggleDarkMode"
+          class="order-2 inline-flex shrink-0 items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50 lg:order-2"
+          :title="isDarkMode ? 'Világos mód bekapcsolása' : 'Sötét mód bekapcsolása'"
+        >
+          <span class="hidden xl:inline">
+            {{ isDarkMode ? 'Világos mód' : 'Sötét mód' }}
+          </span>
+        </button>
+
+        <div v-if="showSearch" class="order-4 min-w-0 w-full flex-1 lg:order-3 lg:w-auto">
           <SearchBar />
         </div>
 
-        <div class="order-2 flex shrink-0 items-center gap-2 md:gap-3 lg:order-3">
+        <div class="order-3 flex shrink-0 items-center gap-2 md:gap-3 lg:order-4">
           <template v-if="authStore.isAuthenticated">
             <span class="hidden rounded-xl bg-zinc-100 px-3 py-2 text-xs font-semibold text-zinc-600 xl:inline">
               {{ authStore.user?.name || authStore.user?.email }}
@@ -63,7 +97,6 @@ const handleLogout = () => {
                 stroke="currentColor" class="h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M2.25 3h1.386a1.5 1.5 0 0 1 1.455 1.136l.383 1.437M7.5 14.25h8.443a1.5 1.5 0 0 0 1.474-1.227l1.092-6A1.5 1.5 0 0 0 17.033 5.25H5.474M7.5 14.25 5.474 5.25M7.5 14.25l-1.125 2.25m0 0a1.125 1.125 0 1 0 2.25 0m-2.25 0h9.75m0 0a1.125 1.125 0 1 0 2.25 0">
-
                 </path>
               </svg>
               Kosár
