@@ -113,11 +113,11 @@ const getModelName = (model) => {
 
 const updateQuery = (newValues = {}) => {
     const nextQuery = {
-        ...route.query,
+        service_category_id: route.query.service_category_id,
+        brand_id: route.query.brand_id,
+        car_model_id: route.query.car_model_id,
         ...newValues,
     }
-
-    delete nextQuery.id
 
     Object.keys(nextQuery).forEach((key) => {
         if (
