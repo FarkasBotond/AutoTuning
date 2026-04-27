@@ -3,20 +3,29 @@ import { useAuthStore } from '@/stores/authStore'
 export const requireAuth = async (to, from, next) => {
   const authStore = useAuthStore()
 
-  if (!to.meta?.requiresAuth) {
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/register',
+    '/cart',
+    '/checkout',
+    '/SearchPage'
+  ]
+
+  if (publicRoutes.includes(to.path)) {
     next()
     return
   }
 
-  if (authStore.isAuthenticated) {
-    next()
+  if (to.meta?.requiresAuth && !authStore.isAuthenticated) {
+    next('/login')
     return
   }
 
-  next({
-    path: '/login',
-    query: {
-      redirect: to.fullPath
-    }
-  })
+  if (to.meta?.role === 'admin' && !authStore.isAdmin) {
+    next('/')
+    return
+  }
+
+  next()
 }
