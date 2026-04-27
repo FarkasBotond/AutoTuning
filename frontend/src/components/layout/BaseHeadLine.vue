@@ -20,6 +20,7 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const isDarkMode = ref(false)
+const showGuestModal = ref(false)
 
 const applyDarkMode = (enabled) => {
   isDarkMode.value = enabled
@@ -39,6 +40,42 @@ onMounted(() => {
 const handleLogout = () => {
   authStore.logout()
   router.push('/login')
+}
+
+const handleCartClick = () => {
+  if (authStore.isAuthenticated) {
+    router.push('/cart')
+    return
+  }
+
+  showGuestModal.value = true
+}
+
+const goToLogin = () => {
+  showGuestModal.value = false
+
+  router.push({
+    path: '/login',
+    query: {
+      redirect: '/cart'
+    }
+  })
+}
+
+const goToRegister = () => {
+  showGuestModal.value = false
+
+  router.push({
+    path: '/register',
+    query: {
+      redirect: '/cart'
+    }
+  })
+}
+
+const continueAsGuest = () => {
+  showGuestModal.value = false
+  router.push('/cart')
 }
 </script>
 
@@ -62,6 +99,9 @@ const handleLogout = () => {
           class="order-2 inline-flex shrink-0 items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50 lg:order-2"
           :title="isDarkMode ? 'Világos mód bekapcsolása' : 'Sötét mód bekapcsolása'"
         >
+          <span class="text-lg leading-none">
+            {{ isDarkMode ? '☀️' : '🌙' }}
+          </span>
           <span class="hidden xl:inline">
             {{ isDarkMode ? 'Világos mód' : 'Sötét mód' }}
           </span>
@@ -81,26 +121,16 @@ const handleLogout = () => {
               to="/profile"
               class="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:border-teal-200 hover:bg-teal-50"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0" />
-              </svg>
               Az én fiókom
             </RouterLink>
 
-            <RouterLink
-              to="/cart"
+            <button
+              type="button"
+              @click="handleCartClick"
               class="inline-flex items-center gap-2 rounded-xl border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-700 transition hover:bg-orange-100"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M2.25 3h1.386a1.5 1.5 0 0 1 1.455 1.136l.383 1.437M7.5 14.25h8.443a1.5 1.5 0 0 0 1.474-1.227l1.092-6A1.5 1.5 0 0 0 17.033 5.25H5.474M7.5 14.25 5.474 5.25M7.5 14.25l-1.125 2.25m0 0a1.125 1.125 0 1 0 2.25 0m-2.25 0h9.75m0 0a1.125 1.125 0 1 0 2.25 0">
-                </path>
-              </svg>
               Kosár
-            </RouterLink>
+            </button>
 
             <RouterLink
               v-if="authStore.isAdmin"
@@ -119,6 +149,14 @@ const handleLogout = () => {
           </template>
 
           <template v-else>
+            <button
+              type="button"
+              @click="handleCartClick"
+              class="inline-flex items-center gap-2 rounded-xl border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-700 transition hover:bg-orange-100"
+            >
+              Kosár
+            </button>
+
             <RouterLink
               to="/login"
               class="inline-flex items-center rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
@@ -134,6 +172,56 @@ const handleLogout = () => {
             </RouterLink>
           </template>
         </div>
+      </div>
+    </div>
+
+    <div
+      v-if="showGuestModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+      @click.self="showGuestModal = false"
+    >
+      <div class="w-full max-w-lg rounded-3xl border border-zinc-200 bg-white p-6 shadow-2xl">
+        <h2 class="text-2xl font-extrabold text-zinc-900">
+          Vásárlás folytatása
+        </h2>
+
+        <p class="mt-3 text-sm font-medium text-zinc-600">
+          A kosarat vendégként is használhatod, de belépéssel vagy regisztrációval később könnyebben követheted a rendeléseidet.
+        </p>
+
+        <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <button
+            type="button"
+            class="btn-primary"
+            @click="goToLogin"
+          >
+            Belépés
+          </button>
+
+          <button
+            type="button"
+            class="rounded-xl border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-semibold text-teal-700 transition hover:bg-teal-100"
+            @click="goToRegister"
+          >
+            Regisztráció
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="mt-3 w-full rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100"
+          @click="continueAsGuest"
+        >
+          Vendégként maradok
+        </button>
+
+        <button
+          type="button"
+          class="mt-4 w-full text-sm font-semibold text-zinc-500 transition hover:text-zinc-800"
+          @click="showGuestModal = false"
+        >
+          Mégse
+        </button>
       </div>
     </div>
   </header>
