@@ -133,16 +133,16 @@ export const deleteModel = async (id, token) => {
 export const fetchTuningProducts = async (filters = {}) => {
   const params = new URLSearchParams()
 
+  if (filters.car_model_id) {
+    params.append('car_model_id', filters.car_model_id)
+  }
+
   if (filters.service_category_id) {
     params.append('service_category_id', filters.service_category_id)
   }
 
   if (filters.brand_id) {
     params.append('brand_id', filters.brand_id)
-  }
-
-  if (filters.car_model_id) {
-    params.append('car_model_id', filters.car_model_id)
   }
 
   if (filters.search) {
@@ -158,11 +158,11 @@ export const fetchTuningProducts = async (filters = {}) => {
   }
 
   if (filters.is_in_stock) {
-    params.append('is_in_stock', 'true')
+    params.append('is_in_stock', filters.is_in_stock)
   }
 
   if (filters.only_discounted) {
-    params.append('only_discounted', 'true')
+    params.append('only_discounted', filters.only_discounted)
   }
 
   if (filters.sort) {
@@ -262,6 +262,7 @@ export const createOrder = async (data, token = null) => {
 
   return response.json()
 }
+
 export const fetchMyOrders = async (token) => {
-  return fetchWithToken('/orders', { method: 'GET' }, token)
+  return fetchWithToken('/orders/my', { method: 'GET' }, token)
 }
