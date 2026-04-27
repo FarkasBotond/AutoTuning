@@ -28,7 +28,13 @@ const goToDetails = () => {
 }
 
 const handleAddToCart = () => {
-    cartStore.addToCart(props.product)
+    const result = cartStore.addToCart(props.product)
+
+    if (!result?.success) {
+        alert(result?.message || 'Nem sikerült kosárba rakni a terméket.')
+        return
+    }
+
     emit('added-to-cart', props.product)
 }
 </script>
