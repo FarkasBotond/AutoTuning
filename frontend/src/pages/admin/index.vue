@@ -33,7 +33,7 @@ const goToModels = () => {
           @click="goToBrands"
         >
           <div class="flex flex-col items-center gap-4">
-            <div class="text-5xl">🏢</div>
+            <div class="text-5xl"></div>
             <h2 class="text-2xl font-semibold text-zinc-900">Gyártók kezelése</h2>
             <p class="text-zinc-600">Gyártó hozzáadása, szerkesztése és törlése</p>
             <button class="btn-primary mt-2 w-full">Gyártókhoz →</button>
@@ -45,7 +45,7 @@ const goToModels = () => {
           @click="goToModels"
         >
           <div class="flex flex-col items-center gap-4">
-            <div class="text-5xl">🚗</div>
+            <div class="text-5xl"></div>
             <h2 class="text-2xl font-semibold text-zinc-900">Modellek kezelése</h2>
             <p class="text-zinc-600">Modellek hozzáadása, szerkesztése és törlése</p>
             <button class="btn-primary mt-2 w-full">Modellekhez →</button>
