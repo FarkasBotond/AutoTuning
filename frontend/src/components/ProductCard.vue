@@ -1,7 +1,7 @@
 <script setup>
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useCartStore } from '@stores/cartStore'
-import { useAuthStore } from '@stores/authStore'
+
 const props = defineProps({
     product: {
         type: Object,
@@ -9,17 +9,16 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['added-to-cart'])
+
 const router = useRouter()
-const route = useRoute()
-const authStore = useAuthStore()
+const cartStore = useCartStore()
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('hu-HU').format(price)
 }
 
-const cartStore = useCartStore()
-
-const goToDetails = () =>{
+const goToDetails = () => {
     router.push({
         name: 'detailed',
         query: {
@@ -28,45 +27,37 @@ const goToDetails = () =>{
     })
 }
 
-const handleAddToCart = () =>{
-    if (!authStore.isAuthenticated) {
-        router.push({
-            path: '/login',
-            query: {
-                redirect: route.fullPath
-            }
-        })
-        return
-    }
-
+const handleAddToCart = () => {
     cartStore.addToCart(props.product)
     emit('added-to-cart', props.product)
 }
-
-const emit = defineEmits(['added-to-cart'])
 </script>
 
 <template>
     <article
-        class="group overflow-hidden rounded-3xl border border-zinc-200 bg-white text-zinc-900 shadow-[0_18px_40px_-26px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_24px_50px_-22px_rgba(15,118,110,0.28)]">
+        class="group overflow-hidden rounded-3xl border border-zinc-200 bg-white text-zinc-900 shadow-[0_18px_40px_-26px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_24px_50px_-22px_rgba(15,118,110,0.28)]"
+    >
         <div class="relative">
             <div class="flex h-52 items-center justify-center overflow-hidden bg-white border-b border-dashed border-emerald-600">
                 <img
                     v-if="product.image"
                     :src="product.image"
                     :alt="product.name"
-                    class="h-full w-full object-contain object-center p-2 transition duration-300">
+                    class="h-full w-full object-contain object-center p-2 transition duration-300"
+                >
 
                 <div
                     v-else
-                    class="flex h-full w-full items-center justify-center text-sm font-semibold text-zinc-400">
-                    No image
+                    class="flex h-full w-full items-center justify-center text-sm font-semibold text-zinc-400"
+                >
+                    Nincs kép
                 </div>
             </div>
 
             <span
                 v-if="product.badge"
-                class="absolute left-3 top-3 rounded-lg bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
+                class="absolute left-3 top-3 rounded-lg bg-orange-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md"
+            >
                 {{ product.badge }}
             </span>
         </div>
@@ -83,7 +74,8 @@ const emit = defineEmits(['added-to-cart'])
             <div class="flex items-end gap-2">
                 <span
                     v-if="product.oldPrice"
-                    class="text-sm text-zinc-400 line-through">
+                    class="text-sm text-zinc-400 line-through"
+                >
                     {{ formatPrice(product.oldPrice) }} Ft
                 </span>
 
@@ -99,12 +91,17 @@ const emit = defineEmits(['added-to-cart'])
             <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 <button
                     type="button"
-                    class="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-200 active:scale-[0.98]" @click="goToDetails">
+                    class="rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-200 active:scale-[0.98]"
+                    @click="goToDetails"
+                >
                     Megnézem
                 </button>
+
                 <button
                     type="button"
-                    class="rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-800 active:scale-[0.98]" @click="handleAddToCart">
+                    class="rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-800 active:scale-[0.98]"
+                    @click="handleAddToCart"
+                >
                     Kosárba
                 </button>
             </div>
