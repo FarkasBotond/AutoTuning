@@ -10,6 +10,8 @@ const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 
+const authenticatedEmail = computed(() => authStore.user?.email || '')
+
 const isSubmitting = ref(false)
 const errorMessage = ref('')
 const successOrder = ref(null)
@@ -79,38 +81,46 @@ const goBack = () => {
 }
 
 const validateForm = () => {
-    if (!form.value.full_name.trim()) {
-        return 'A teljes név megadása kötelező.'
+    const nameParts = form.value.full_name.trim().split(/\s+/).filter(Boolean)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phonePattern = /^\+36[\s-]?\d{1,2}[\s-]?\d{3}[\s-]?\d{3,4}$/
+
+    if (nameParts.length < 2 || nameParts.some(part => part.length < 3)) {
+        return 'A vezetéknév és a keresztnév is legalább 3 karakter legyen.'
     }
 
-    if (!form.value.email.trim()) {
-        return 'Az email cím megadása kötelező.'
+    if (!form.value.email.trim() || !emailPattern.test(form.value.email.trim())) {
+        return 'Adj meg egy érvényes email címet.'
     }
 
-    if (!form.value.phone.trim()) {
-        return 'A telefonszám megadása kötelező.'
+    if (!phonePattern.test(form.value.phone.trim())) {
+        return 'A telefonszám +36-tal kezdődjön, például: +36 70 123 4567.'
     }
 
-    if (!form.value.country) {
+    if (!form.value.country || form.value.country.length < 3) {
         return 'Az ország kiválasztása kötelező.'
     }
 
     if (isHomeDelivery.value) {
-        if (!form.value.city.trim()) {
-            return 'Házhozszállításnál a város megadása kötelező.'
+        if (form.value.city.trim().length < 2) {
+            return 'Házhozszállításnál a város legalább 2 karakter legyen.'
         }
 
-        if (!form.value.postal_code.trim()) {
-            return 'Házhozszállításnál az irányítószám megadása kötelező.'
+        if (form.value.postal_code.trim().length < 3) {
+            return 'Házhozszállításnál az irányítószám legalább 3 karakter legyen.'
         }
 
-        if (!form.value.street_name.trim()) {
-            return 'Házhozszállításnál az utca név megadása kötelező.'
+        if (form.value.street_name.trim().length < 3) {
+            return 'Házhozszállításnál az utca név legalább 3 karakter legyen.'
         }
 
         if (!form.value.house_number.trim()) {
             return 'Házhozszállításnál a házszám megadása kötelező.'
         }
+    }
+
+    if (form.value.note.length > 150) {
+        return 'A megjegyzés legfeljebb 150 karakter lehet.'
     }
 
     return ''
@@ -136,6 +146,7 @@ const submitOrder = async () => {
     try {
         const payload = {
             ...form.value,
+            email: authStore.isAuthenticated ? authenticatedEmail.value : form.value.email,
             city: isHomeDelivery.value ? form.value.city : null,
             postal_code: isHomeDelivery.value ? form.value.postal_code : null,
             street_name: isHomeDelivery.value ? form.value.street_name : null,
@@ -168,7 +179,21 @@ watch(
     }
 )
 
+watch(
+    authenticatedEmail,
+    (email) => {
+        if (authStore.isAuthenticated) {
+            form.value.email = email
+        }
+    },
+    { immediate: true }
+)
+
 onMounted(() => {
+    if (authStore.isAuthenticated) {
+        form.value.email = authenticatedEmail.value
+    }
+
     if (cartStore.items.length === 0 && !successOrder.value) {
         router.push('/cart')
     }
@@ -234,13 +259,15 @@ onMounted(() => {
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Email</label>
                                     <input v-model="form.email" type="email" class="brand-input"
-                                        placeholder="emailcím@gmail.com">
+                                        placeholder="emailcím@gmail.com"
+                                        :readonly="authStore.isAuthenticated"
+                                        :class="authStore.isAuthenticated ? 'cursor-not-allowed bg-zinc-100 text-zinc-500' : ''">
                                 </div>
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-zinc-700">Telefonszám</label>
                                     <input v-model="form.phone" type="tel" class="brand-input"
-                                        placeholder="+36 30 123 4567">
+                                        placeholder="+36 70 123 4567">
                                 </div>
 
                                 <div>
@@ -350,7 +377,11 @@ onMounted(() => {
                         <section>
                             <label class="mb-2 block text-sm font-semibold text-zinc-700">Megjegyzés</label>
                             <textarea v-model="form.note" class="brand-input min-h-[110px] resize-y"
+                                maxlength="150"
                                 placeholder="Pl. pontosítás a rendeléshez vagy átvételhez"></textarea>
+                            <p class="mt-1 text-right text-xs font-medium text-zinc-500">
+                                {{ form.note.length }} / 150 karakter
+                            </p>
                         </section>
 
                         <div v-if="errorMessage"
