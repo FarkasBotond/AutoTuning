@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CarModelSeeder::class,
             ServiceCategorySeeder::class,
             TuningProductSeeder::class,
+            TuningCompanySeeder::class,
 ]);
 
         User::factory()->create([

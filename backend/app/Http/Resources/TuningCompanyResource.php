@@ -14,6 +14,7 @@ class TuningCompanyResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'website_url' => $this->website_url,
+            'image_url' => $this->image_url,
         ];
     }
 }
