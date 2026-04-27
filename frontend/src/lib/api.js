@@ -133,12 +133,40 @@ export const deleteModel = async (id, token) => {
 export const fetchTuningProducts = async (filters = {}) => {
   const params = new URLSearchParams()
 
+  if (filters.service_category_id) {
+    params.append('service_category_id', filters.service_category_id)
+  }
+
+  if (filters.brand_id) {
+    params.append('brand_id', filters.brand_id)
+  }
+
   if (filters.car_model_id) {
     params.append('car_model_id', filters.car_model_id)
   }
 
-  if (filters.service_category_id) {
-    params.append('service_category_id', filters.service_category_id)
+  if (filters.search) {
+    params.append('search', filters.search)
+  }
+
+  if (filters.min_price) {
+    params.append('min_price', filters.min_price)
+  }
+
+  if (filters.max_price) {
+    params.append('max_price', filters.max_price)
+  }
+
+  if (filters.is_in_stock) {
+    params.append('is_in_stock', filters.is_in_stock)
+  }
+
+  if (filters.only_discounted) {
+    params.append('only_discounted', filters.only_discounted)
+  }
+
+  if (filters.sort) {
+    params.append('sort', filters.sort)
   }
 
   const query = params.toString()
