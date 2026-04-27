@@ -10,6 +10,8 @@ export const useTuningProductStore = defineStore('tuningProduct', () => {
   const productCount = computed(() => products.value.length)
 
   const normalizeProduct = (rawProduct) => {
+    const isInStock = rawProduct.is_in_stock === true || rawProduct.is_in_stock === 1 || rawProduct.is_in_stock === '1'
+
     return {
       id: rawProduct.id,
       name: rawProduct.name,
@@ -18,8 +20,8 @@ export const useTuningProductStore = defineStore('tuningProduct', () => {
       badge: rawProduct.badge,
       oldPrice: rawProduct.old_price,
       price: rawProduct.price,
-      stockText: rawProduct.is_in_stock ? 'Raktáron' : 'Rendelhető',
-      isInStock: rawProduct.is_in_stock,
+      stockText: isInStock ? 'Raktáron' : 'Rendelhető',
+      isInStock,
       carModelId: rawProduct.car_model_id,
       serviceCategoryId: rawProduct.service_category_id,
       carBrand: rawProduct.car_model?.brand?.name ?? null,
