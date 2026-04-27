@@ -133,40 +133,12 @@ export const deleteModel = async (id, token) => {
 export const fetchTuningProducts = async (filters = {}) => {
   const params = new URLSearchParams()
 
-  if (filters.service_category_id) {
-    params.append('service_category_id', filters.service_category_id)
-  }
-
-  if (filters.brand_id) {
-    params.append('brand_id', filters.brand_id)
-  }
-
   if (filters.car_model_id) {
     params.append('car_model_id', filters.car_model_id)
   }
 
-  if (filters.search) {
-    params.append('search', filters.search)
-  }
-
-  if (filters.min_price) {
-    params.append('min_price', filters.min_price)
-  }
-
-  if (filters.max_price) {
-    params.append('max_price', filters.max_price)
-  }
-
-  if (filters.is_in_stock) {
-    params.append('is_in_stock', filters.is_in_stock)
-  }
-
-  if (filters.only_discounted) {
-    params.append('only_discounted', filters.only_discounted)
-  }
-
-  if (filters.sort) {
-    params.append('sort', filters.sort)
+  if (filters.service_category_id) {
+    params.append('service_category_id', filters.service_category_id)
   }
 
   const query = params.toString()
@@ -234,6 +206,30 @@ export const fetchTuningCompany = async (id) => {
 
   if (!response.ok) {
     throw await buildApiError(response, 'Nem sikerült betölteni a tuning céget')
+  }
+
+  return response.json()
+}
+
+export const createOrder = async (data, token = null) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  const response = await fetch(`${API_BASE_URL}/orders`, {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify(data)
+  })
+
+  if (!response.ok) {
+    throw await buildApiError(response, 'A rendelés leadása nem sikerült.')
   }
 
   return response.json()
