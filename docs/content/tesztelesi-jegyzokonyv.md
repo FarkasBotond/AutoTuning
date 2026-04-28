@@ -7,6 +7,16 @@
 - Backend: Laravel Feature testek (`php artisan test`)
 - Frontend: Playwright E2E testek Docker konténerben
 
+## Alkalmazott tesztelési eszközök
+
+- Backend automatizált tesztelés: `Laravel Feature` tesztek, futtatás `php artisan test` paranccsal
+- Frontend automatizált tesztelés: `Playwright` E2E tesztek, futtatás konténeren belül (`pnpm test:e2e`)
+- Konténerizált környezet és futtatás: `Docker Compose`
+
+## Szerzőségi megjegyzés
+
+- A jelen jegyzőkönyvben felsorolt tesztesetek Bárdos Simon munkái.
+
 ## Futtatott parancsok és eredmények
 
 ### Backend
@@ -133,3 +143,5 @@ docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium fro
 - Backend és frontend tesztkör sikeresen lefutott.
 - A tesztek a guards, authentikáció/felhasználókezelés, valamint márka/modell funkciókat lefedik.
 - A jegyzőkönyv a futtatott tesztek teljes listáját és az összesített eredményeket tartalmazza.
+
+---
