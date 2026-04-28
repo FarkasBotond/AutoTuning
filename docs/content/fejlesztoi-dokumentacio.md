@@ -106,3 +106,94 @@ Store-ok:
 - Az admin műveletek minden szinten védettek:
   - route middleware (`admin`),
   - request `authorize()` ellenőrzés.
+
+
+5. Főoldal architektúra (frontend/src/pages/index.vue)
+
+Az index.vue a frontend központi entry oldala, amely a tuning termékek listázását és megjelenítését végzi.
+
+Komponens struktúra
+
+Az oldal komponensekből épül fel:
+
+BaseHeadLine – oldal fejléc
+SideMenu – szűrési/kategória panel
+ProductCard – egy termék megjelenítése
+TuningCompaniesSection – tuning cégek blokk
+BaseFooter – lábléc
+Toast – visszajelző üzenetek
+
+Az oldal layout-ja grid alapú és reszponzív.
+
+State kezelés
+
+A komponens a következő reaktív state-eket használja:
+
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+const toastVisible = ref(false)
+const toastMessage = ref('')
+
+Külső state:
+
+const tuningProductStore = useTuningProductStore()
+Adatfolyam (Data Flow)
+Komponens mount:
+onMounted()
+Store hívás:
+tuningProductStore.fetchProducts() (vagy hasonló)
+API hívás:
+backend → termék lista
+Store frissül:
+products tömb
+UI automatikusan frissül (Vue reaktivitás)
+Pagination logika
+
+A lapozás computed property-kkel történik:
+
+const totalPages = computed(() => {
+    const total = Math.ceil(tuningProductStore.products.length / itemsPerPage)
+    return total > 0 ? total : 1
+})
+const paginatedProducts = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    return tuningProductStore.products.slice(start, start + itemsPerPage)
+})
+
+Megjegyzés:
+
+Mindig legalább 1 oldal van
+Slice alapú pagination (frontend oldali)
+Rendering logika
+
+A template-ben:
+
+v-for iterál a paginatedProducts listán
+Minden elem egy ProductCard komponens
+<ProductCard
+  v-for="product in paginatedProducts"
+  :key="product.id"
+  :product="product"
+/>
+Store integráció
+
+A tuningProductStore felel:
+
+API kommunikációért
+State kezelésért
+Hibakezelésért
+
+Tipikus store mezők:
+
+products
+loading
+error
+Toast rendszer
+
+Visszajelzés kezelés:
+
+Siker → toast megjelenik
+Hiba → toast hibaüzenettel
+toastMessage.value = 'Hiba történt'
+toastVisible.value = true

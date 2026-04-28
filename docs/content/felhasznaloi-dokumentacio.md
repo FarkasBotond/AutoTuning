@@ -68,3 +68,97 @@ Egy modell esetében az alábbi adatok adhatók meg:
 - **„Hibás e-mail vagy jelszó”**: ellenőrizze a megadott bejelentkezési adatokat.
 - **„Unauthorized / 403”**: nem megfelelő jogosultság (nem admin, vagy nincs bejelentkezve).
 - **Mentési hiba profilmódosításkor**: gyakori ok a hibás jelenlegi jelszó.
+
+## 10. Főoldal működése (/ - index.vue)
+
+A főoldal az alkalmazás központi felülete, ahol a felhasználó a tuning termékeket és cégeket böngészheti.
+
+Megjelenített elemek
+
+A főoldal az alábbi komponensekből épül fel:
+
+BaseHeadLine
+Az oldal címe és vizuális fejléc
+SideMenu
+Kategóriák vagy szűrési lehetőségek megjelenítése
+ProductCard
+Egy adott termék megjelenítése (kártya formában)
+TuningCompaniesSection
+Kiemelt tuning cégek listája
+BaseFooter
+Oldal alja (kapcsolati információk)
+Toast
+Visszajelző üzenetek (pl. sikeres művelet)
+Adatkezelés
+
+A főoldal a tuningProductStore (Pinia store) segítségével kezeli az adatokat.
+
+Főbb jellemzők:
+
+A termékek betöltése a backend API-ból történik
+Az adatok reaktívan frissülnek
+A komponensek automatikusan újrarenderelődnek változás esetén
+Lapozás (Pagination)
+
+A főoldal lapozást használ a termékek megjelenítéséhez.
+
+Működés:
+
+currentPage tárolja az aktuális oldalt
+itemsPerPage meghatározza, hány elem jelenik meg egyszerre
+A megjelenített termékek számítása:
+const start = (currentPage.value - 1) * itemsPerPage
+A teljes oldalszám:
+Math.ceil(tuningProductStore.products.length / itemsPerPage)
+
+Szabály:
+
+Minimum 1 oldal mindig létezik
+Dinamikus terméklista
+
+A megjelenített termékek:
+
+Szűrve és lapozva jelennek meg
+A paginatedProducts computed property számolja ki őket
+Minden termék külön ProductCard komponensben jelenik meg
+Toast értesítések
+
+A rendszer vizuális visszajelzést ad:
+
+toastVisible → megjelenítés vezérlése
+toastMessage → üzenet tartalma
+
+Példák:
+
+Sikeres adatbetöltés
+Hiba API hívásnál
+Életciklus (Lifecycle)
+
+A főoldal betöltésekor:
+
+onMounted()
+
+történik:
+
+Termékek lekérése API-ból
+Inicializálás
+Felhasználói interakciók
+
+A felhasználó az alábbiakat tudja:
+
+Termékek böngészése
+Lapozás oldalak között
+Szűrés (SideMenu segítségével)
+Tuning cégek megtekintése
+Hibakezelés
+
+Lehetséges hibák:
+
+API nem elérhető
+Üres terméklista
+Lassú betöltés
+
+Kezelés:
+
+Toast üzenet
+Üres lista esetén fallback megjelenítés
