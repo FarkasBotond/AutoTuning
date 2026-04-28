@@ -121,6 +121,41 @@ docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium fro
 
 1. `test_the_application_returns_a_successful_response`
 
+
+## `frontend`
+
+## `company-detail.spec.js`
+
+1. `test_ha_a_cegnek_nincs_weboldala_akkor_a_Weboldal_gomb_nem_jelenik_meg_a_kartyán`
+
+2.`test_ha_a_cegnek_nincs_weboldala_akkor_a_reszletes_oldalon_sem_jelenik_meg_a_kulso_weboldal_gomb`
+
+3.`test_ha_a_cegnek_van_weboldala_akkor_a_reszletes_oldalon_megjelenik_a_kulso_weboldal_gomb`
+
+4.`test_nem_letezo_tuning_ceg_eseten_hibauzenet_jelenik_meg`
+
+## `product-detail.spec.js`
+1.`test_termékkártyára_kattintva_átvisz_a_részletes_oldalra`
+2.`test_részletes_oldalon_megjelennek_a_termék_adatai`
+3.`test_termék_kosárba_rakható_a_részletes_oldalról`
+4.`test_kosárba_rakás_után_a_kosár_oldalon_is_látszik_a_termék`
+
+## `tuning-companies.spec.js`
+1. `test_Mutass_mindent_gomb_átvisz_a_tuning_cégek_oldalra`
+2. `test_a_cégek_megjelennek_API_mockból`
+3. `test_mindegyik_mockolt_céghez_megjelenik_az_Adatlap_gomb`
+4. `test_Adatlap_gomb_átvisz_a_company_detail_oldalra`
+4. `test_külső_weboldal_gomb_látszik_a_céges_kártyán`
+4. `test_külső_weboldal_gomb_látszik_a_részletes_oldalon_is`
+
+
+## `cart-spec.js`
+1. `test_üres_kosár_esetén_megjelenik_az_üres_kosár_üzenet`
+2. `test_mennyiség_növelése_és_csökkentése_működik`
+3. `test_termék_törlése_után_megfelelően_frissül_a_kosár`
+4. `test_több_termék_esetén_az_összesítő_helyesen_működik`
+5. `test_a_pénztár_gomb_akkor_is_kattintható_ha_van_termék`
+
 ## Összegzés
 
 - Backend tesztkör sikeresen lefutott.
