@@ -121,6 +121,16 @@ docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium fro
 
 1. `test_the_application_returns_a_successful_response`
 
+## `Route.Test.php`
+
+1. `test_public_routes_are_accessible`
+
+2. `test_protected_routes_require_authentication`
+
+3. `test_admin_routes_require_authentication`
+
+4. `test_normal_user_cannot_access_admin_routes`
+
 
 ## `frontend`
 
