@@ -8,6 +8,7 @@ export const useCartStore = defineStore('cart', {
         items: [],
         lastError: ''
     }),
+    persist: true,
     getters: {
         totalItems: (state) => {
             return state.items.reduce((sum, item) => sum + item.quantity, 0)
