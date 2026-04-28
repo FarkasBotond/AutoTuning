@@ -34,8 +34,8 @@ docker compose exec backend php artisan test
 docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium frontend pnpm test:e2e
 ```
 
-- Eredmény: **PASS**
-- Összesített kimenet: **6 passed**
+- Eredmény: 
+- Összesített kimenet: 
 
 ## Backend tesztesetek (minden egyes teszt)
 
