@@ -1,70 +1,70 @@
 # Felhasználói dokumentáció
 
-Ez az oldal a következő funkciókat foglalja össze:
-- Felhasználókezelés és authentikáció
-- Márkák és modellek admin kezelése
+Ez a dokumentum az alkalmazás alábbi funkcionális területeit foglalja össze:
+- Felhasználókezelés és hitelesítés
+- Márkák és modellek adminisztratív kezelése
 
 ## 1. Fiókkezelés és bejelentkezés
 
 ### Regisztráció
-1. Nyisd meg a `Regisztráció` oldalt (`/register`).
-2. Töltsd ki a nevet, email címet, jelszót és jelszó megerősítést.
-3. Sikeres regisztráció után a rendszer automatikusan bejelentkeztet.
+1. Nyissa meg a `Regisztráció` oldalt (`/register`).
+2. Töltse ki a név, e-mail-cím, jelszó és jelszó-megerősítés mezőket.
+3. Sikeres regisztráció esetén a rendszer automatikusan bejelentkezteti.
 
 Követelmények:
-- Érvényes email fromátum az email mezőben.
-- Jelszó minimum 8 karakter.
+- Az e-mail mezőben érvényes e-mail-formátum megadása szükséges.
+- A jelszónak legalább 8 karakter hosszúnak kell lennie.
 
 ### Bejelentkezés
-1. Nyisd meg a `Bejelentkezés` oldalt (`/login`).
-2. Add meg az email címet és jelszót.
-3. Siker esetén a rendszer bejelentkeztet, és elérhetővé válnak a védett oldalak.
+1. Nyissa meg a `Bejelentkezés` oldalt (`/login`).
+2. Adja meg az e-mail-címet és a jelszót.
+3. Sikeres bejelentkezés után a védett oldalak elérhetővé válnak.
 
 ### Kijelentkezés
-- A kijelentkezés a fiókhoz tartozó aktuális hozzáférési tokent érvényteleníti.
+- A kijelentkezés érvényteleníti a fiókhoz tartozó aktuális hozzáférési tokent.
 
-### Profil módosítás (`/profile`)
-A profil oldalon két fő művelet van:
-- **Email cím módosítása**: új email + jelenlegi jelszó megadása szükséges.
-- **Jelszó módosítása**: jelenlegi jelszó + új jelszó + megerősítés.
+### Profil módosítása (`/profile`)
+A profiloldalon két fő művelet érhető el:
+- **E-mail-cím módosítása**: az új e-mail-cím és a jelenlegi jelszó megadása szükséges.
+- **Jelszó módosítása**: a jelenlegi jelszó, az új jelszó és annak megerősítése szükséges.
 
 Megjegyzés:
-- Profil oldalt csak bejelentkezett felhasználó éri el.
+- A profiloldal kizárólag bejelentkezett felhasználók számára érhető el.
 
 ## 2. Márkák és modellek kezelése (admin)
 
-Az admin felület (`/admin`) csak admin jogosultsággal érhető el.
+Az adminisztrációs felület (`/admin`) kizárólag admin jogosultsággal érhető el.
 
 ### Márkák kezelése (`/admin/brands`)
-- Márka lista megtekintése.
-- Új márka létrehozása.
-- Márka szerkesztése.
-- Márka törlése.
+- Márkalista megtekintése
+- Új márka létrehozása
+- Márka szerkesztése
+- Márka törlése
 
 Fontos:
-- Márka törlésekor a hozzá kapcsolódó modellek is törlődnek.
+- Márka törlésekor a hozzá kapcsolódó modellek is törlésre kerülnek.
 
 ### Modellek kezelése (`/admin/models`)
-- Modell lista megtekintése.
-- Szűrés márka és gyártási év szerint.
-- Új modell létrehozása.
-- Modell szerkesztése.
-- Modell törlése.
+- Modelllista megtekintése
+- Szűrés márka és gyártási év szerint
+- Új modell létrehozása
+- Modell szerkesztése
+- Modell törlése
 
-Egy modellnél megadható:
+Egy modell esetében az alábbi adatok adhatók meg:
 - Márka
 - Modellnév
 - Kezdő év
-- Záró év (opcionális, ha nem adunk meg azt jelenti hogy a gyártás még nem fejeződött be)
+- Záró év (opcionális; amennyiben nincs megadva, a gyártás folyamatban lévőnek tekintendő)
 
 ## 3. Jogosultságok röviden
 
-- Nyilvános oldalak: pl. főoldal, bejelentkezés, regisztráció.
-- Bejelentkezéshez kötött oldalak: pl. profil.
-- Admin oldalak: csak admin szerepkörrel (`role = admin`).
+- Nyilvános oldalak: például főoldal, bejelentkezés, regisztráció.
+- Bejelentkezéshez kötött oldalak: például profil.
+- Admin oldalak: kizárólag admin szerepkörrel (`role = admin`).
 
 ## 4. Gyakori hibák
 
-- **„Hibás email vagy jelszó”**: ellenőrizd a bejelentkezési adatokat.
-- **„Unauthorized / 403”**: nincs megfelelő jogosultság (nem admin vagy nem vagy bejelentkezve).
-- **Mentési hiba profilnál**: gyakori ok a hibás jelenlegi jelszó.
+- **„Hibás e-mail vagy jelszó”**: ellenőrizze a megadott bejelentkezési adatokat.
+- **„Unauthorized / 403”**: nem megfelelő jogosultság (nem admin, vagy nincs bejelentkezve).
+- **Mentési hiba profilmódosításkor**: gyakori ok a hibás jelenlegi jelszó.
