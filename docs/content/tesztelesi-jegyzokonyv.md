@@ -121,26 +121,9 @@ docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium fro
 
 1. `test_the_application_returns_a_successful_response`
 
-## Frontend E2E tesztesetek (minden egyes teszt)
-
-### `frontend/tests/e2e/admin-catalog.spec.js`
-
-1. `admin can view brands list page`
-2. `admin can view models list page`
-
-### `frontend/tests/e2e/auth-flow.spec.js`
-
-1. `user can login and gets redirected to home`
-
-### `frontend/tests/e2e/auth-guards.spec.js`
-
-1. `unauthenticated user is redirected to login from admin page`
-2. `non-admin user is redirected to home from admin page`
-3. `authenticated user can open profile page`
-
 ## Összegzés
 
-- Backend és frontend tesztkör sikeresen lefutott.
+- Backend tesztkör sikeresen lefutott.
 - A tesztek a guards, authentikáció/felhasználókezelés, valamint márka/modell funkciókat lefedik.
 - A jegyzőkönyv a futtatott tesztek teljes listáját és az összesített eredményeket tartalmazza.
 
