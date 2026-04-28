@@ -144,4 +144,4 @@ docker compose exec -e PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium fro
 - A tesztek a guards, authentikáció/felhasználókezelés, valamint márka/modell funkciókat lefedik.
 - A jegyzőkönyv a futtatott tesztek teljes listáját és az összesített eredményeket tartalmazza.
 
----
+---------------------------------------------------------------------------------------------------------------------------------
