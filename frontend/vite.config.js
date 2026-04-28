@@ -25,7 +25,16 @@ export default ({ mode }) => {
         'localhost',
         '127.0.0.1',
         'frontend'
-      ]
+      ],
+      fs: {
+        exclude: ['playwright-report', 'test-results']
+      },
+      hmr: process.env.VITE_FRONTEND_URL ? {
+        host: process.env.VITE_FRONTEND_URL,
+        port: 80,
+        protocol: 'ws'
+      } : undefined,
+      middlewareMode: false
     },
     resolve: {
       alias: {
