@@ -14,6 +14,7 @@ const selectedBrandId = ref('')
 const selectedYearMin = ref(null)
 const selectedYearMax = ref(null)
 const currentYear = new Date().getFullYear()
+const pageError = ref('')
 
 const isAdmin = computed(() => authStore.user?.role === 'admin')
 
@@ -24,21 +25,23 @@ onMounted(async () => {
   }
 
   try {
+    pageError.value = ''
     await Promise.all([
       modelStore.fetchAllModels(),
       brandStore.fetchAllBrands()
     ])
   } catch (error) {
-    console.error('Nem sikerült adatot betölteni:', error)
+    pageError.value = error?.message || 'Nem sikerült betölteni az adatokat.'
   }
 })
 
 const handleDelete = async (modelId) => {
   if (confirm('Biztosan szeretné törölni ezt a modellt?')) {
     try {
+      pageError.value = ''
       await modelStore.destroy(modelId)
     } catch (error) {
-      console.error('A törlés nem sikerült:', error)
+      pageError.value = error?.message || 'A törlés nem sikerült.'
     }
   }
 }
@@ -92,12 +95,14 @@ watch(yearBounds, (bounds) => {
 
 const onMinYearInput = (event) => {
   const value = Number(event.target.value)
-  selectedYearMin.value = Math.min(value, selectedYearMax.value ?? value)
+  const boundedValue = Math.max(yearBounds.value.min, Math.min(value, yearBounds.value.max))
+  selectedYearMin.value = Math.min(boundedValue, selectedYearMax.value ?? boundedValue)
 }
 
 const onMaxYearInput = (event) => {
   const value = Number(event.target.value)
-  selectedYearMax.value = Math.max(value, selectedYearMin.value ?? value)
+  const boundedValue = Math.max(yearBounds.value.min, Math.min(value, yearBounds.value.max))
+  selectedYearMax.value = Math.max(boundedValue, selectedYearMin.value ?? boundedValue)
 }
 
 const filteredModels = computed(() => {
@@ -146,6 +151,10 @@ const goToEdit = (modelId) => {
           </button>
         </div>
 
+        <div v-if="pageError" class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {{ pageError }}
+        </div>
+
         <div v-if="modelStore.isLoading || brandStore.isLoading" class="text-center py-8">
           <p class="text-zinc-500">Betöltés...</p>
         </div>
@@ -171,11 +180,11 @@ const goToEdit = (modelId) => {
               <label class="mb-2 block text-sm font-semibold text-zinc-700">Gyártási év szűrő (intervallum)</label>
               <div class="relative h-10">
                 <div class="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-zinc-300"></div>
-                <input :min="yearBounds.min" :max="yearBounds.max" :value="selectedYearMin" type="range"
-                  class="pointer-events-none absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-teal-600"
+                <input :min="yearBounds.min" :max="yearBounds.max" v-model.number="selectedYearMin" type="range"
+                  class="pointer-events-none absolute left-0 top-1/2 z-20 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-teal-600 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-teal-600"
                   @input="onMinYearInput" />
-                <input :min="yearBounds.min" :max="yearBounds.max" :value="selectedYearMax" type="range"
-                  class="pointer-events-none absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500"
+                <input :min="yearBounds.min" :max="yearBounds.max" v-model.number="selectedYearMax" type="range"
+                  class="pointer-events-none absolute left-0 top-1/2 z-30 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-orange-500"
                   @input="onMaxYearInput" />
               </div>
               <div class="mt-2 flex items-center justify-between text-sm font-semibold text-zinc-700">

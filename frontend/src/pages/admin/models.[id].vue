@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useModelStore } from '@stores/modelStore'
 import { useBrandStore } from '@stores/brandStore'
@@ -12,10 +12,27 @@ const route = useRoute()
 const modelStore = useModelStore()
 const brandStore = useBrandStore()
 const authStore = useAuthStore()
+const pageError = ref('')
 
 const modelId = computed(() => route.params.id)
 const isEditMode = computed(() => modelId.value && modelId.value !== 'new')
 const pageTitle = computed(() => isEditMode.value ? 'Edit Model' : 'Create Model')
+
+const buildUiErrorMessage = (error, fallback) => {
+  const validationErrors = error?.data?.errors
+
+  if (validationErrors && typeof validationErrors === 'object') {
+    const firstValidationMessage = Object.values(validationErrors)
+      .flat()
+      .find(message => typeof message === 'string' && message.trim())
+
+    if (firstValidationMessage) {
+      return firstValidationMessage
+    }
+  }
+
+  return error?.message || fallback
+}
 
 onMounted(async () => {
   if (!authStore.isAuthenticated) {
@@ -24,18 +41,20 @@ onMounted(async () => {
   }
 
   try {
+    pageError.value = ''
     await brandStore.fetchAllBrands()
     if (isEditMode.value) {
       await modelStore.fetchSingleModel(modelId.value)
     }
   } catch (error) {
-    console.error('Nem sikerült adatot betölteni:', error)
+    pageError.value = buildUiErrorMessage(error, 'Nem sikerült adatot betölteni.')
     router.push('/admin/models')
   }
 })
 
 const handleSubmit = async (data) => {
   try {
+    pageError.value = ''
     if (isEditMode.value) {
       await modelStore.update(modelId.value, data)
     } else {
@@ -43,7 +62,7 @@ const handleSubmit = async (data) => {
     }
     router.push('/admin/models')
   } catch (error) {
-    console.error('Nem sikerült a mentés:', error)
+    pageError.value = buildUiErrorMessage(error, 'Nem sikerült a mentés.')
   }
 }
 
@@ -62,6 +81,10 @@ const handleCancel = () => {
       <div class="mb-5">
         <h1 class="text-3xl font-extrabold text-zinc-900">{{ isEditMode ? 'Modell szerkesztése' : 'Új modell létrehozása' }}</h1>
         <p class="mt-2 text-sm text-zinc-500">Válassz gyártót, add meg a modell adatait, majd mentsd a módosítást.</p>
+      </div>
+
+      <div v-if="pageError" class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+        {{ pageError }}
       </div>
 
       <ModelForm

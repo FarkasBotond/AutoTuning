@@ -1,5 +1,22 @@
 const API_BASE_URL = 'http://localhost/api'
 
+const parseJsonResponse = async (response) => {
+  if (response.status === 204 || response.status === 205) {
+    return null
+  }
+
+  const contentLength = response.headers.get('content-length')
+  if (contentLength === '0') {
+    return null
+  }
+
+  try {
+    return await response.json()
+  } catch {
+    return null
+  }
+}
+
 const buildApiError = async (response, fallbackMessage) => {
   let payload = null
 
@@ -84,7 +101,7 @@ export const fetchWithToken = async (endpoint, options = {}, token) => {
     throw await buildApiError(response)
   }
 
-  return response.json()
+  return parseJsonResponse(response)
 }
 
 // Car Brands API
